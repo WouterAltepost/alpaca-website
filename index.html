@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>alpaca AI — Build Smarter with AI</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base:    '#070707',
+            surface: '#111111',
+            card:    '#181818',
+            raised:  '#1f1f1f',
+            border:  'rgba(255,255,255,0.07)',
+            accent:  '#F09537',
+            'accent-dim': 'rgba(240,149,55,0.12)',
+            'accent-glow': 'rgba(240,149,55,0.25)',
+            ink:     '#f0f0f0',
+            muted:   '#888888',
+            subtle:  '#363636',
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body:    ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight3: '-0.03em',
+            tight4: '-0.04em',
+            tight5: '-0.05em',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { background: #070707; }
+
+    body {
+      background: #070707;
+      color: #f0f0f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* Hero radial glow */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(240,149,55,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 60%, rgba(240,149,55,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 20% 80%, rgba(255,255,255,0.02) 0%, transparent 60%);
+    }
+
+    /* Typography */
+    .display-xl {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+    .display-lg {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+    }
+    .body-relaxed { line-height: 1.75; }
+
+    /* Accent highlight text */
+    .text-accent { color: #F09537; }
+
+    /* Card styles */
+    .card {
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(240,149,55,0.06);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #F09537;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+      box-shadow: 0 0 0 0 rgba(240,149,55,0);
+    }
+    .btn-primary:hover {
+      background: #ff9f4a;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(240,149,55,0.3);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(240,149,55,0.5);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #f0f0f0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      padding: 13px 27px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-1px);
+    }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.2);
+    }
+
+    /* Nav — solid black so logo's black bg is invisible */
+    nav {
+      background: #000000;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Service icon container */
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(240,149,55,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(240,149,55,0.15);
+    }
+
+    /* Step number */
+    .step-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 4.5rem;
+      letter-spacing: -0.05em;
+      color: rgba(255,255,255,0.18);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Stats */
+    .stat-value {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Glowing border on CTA card */
+    .cta-card {
+      background: linear-gradient(135deg, #161616 0%, #111111 100%);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 100%, rgba(240,149,55,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Scroll fade-in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Tag pill */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(240,149,55,0.1);
+      border: 1px solid rgba(240,149,55,0.2);
+      color: #F09537;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+
+    .logo-wrap {
+      display: block;
+      line-height: 0;
+    }
+    /* Full logo (footer) */
+    .logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+      border-radius: 10px;
+    }
+    /*
+      Icon-only crop — 880×578 source image.
+      Alpaca icon occupies original x ≈ 130–400, y = 0–578.
+      At bg-size: auto 80px → scale = 80/578 = 0.1384
+        icon left  = 130 × 0.1384 = 18px → shift bg left by 18px
+        icon right = 400 × 0.1384 = 55.4px → div width = 55–18 = 37px
+    */
+    .logo-icon {
+      display: block;
+      flex-shrink: 0;
+      width: 37px;
+      height: 80px;
+      background-image: url('brand_assets/logo-v1.3.png');
+      background-size: auto 80px;
+      background-position: -18px 0;
+      background-repeat: no-repeat;
+      mix-blend-mode: screen;
+    }
+    /* keep old classes as no-ops so nothing breaks */
+    .logo-icon-wrap { display: contents; }
+    .logo-icon-img  { display: none; }
+
+    /* Nav link */
+    .nav-link {
+      color: #5a5a5a;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+    .nav-link:hover { color: #f0f0f0; }
+    .nav-link:focus-visible { outline: 2px solid rgba(240,149,55,0.5); border-radius: 4px; }
+
+    /* Floating badge */
+    .floating-badge {
+      background: #181818;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 8px 16px 8px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #5a5a5a;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #F09537;
+      box-shadow: 0 0 8px rgba(240,149,55,0.6);
+      animation: pulse-dot 2s ease infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 8px rgba(240,149,55,0.6); }
+      50%       { box-shadow: 0 0 16px rgba(240,149,55,1); }
+    }
+
+    /* Testimonial quote */
+    .testimonial-card {
+      background: #131313;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      transition: border-color 200ms ease;
+    }
+    .testimonial-card:hover { border-color: rgba(255,255,255,0.12); }
+
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #F09537;
+      flex-shrink: 0;
+    }
+
+    /* Section spacing */
+    .section { padding: 120px 0; }
+    @media (max-width: 768px) {
+      .section { padding: 80px 0; }
+      .display-xl { font-size: clamp(2.5rem, 8vw, 5rem); }
+    }
+
+    /* Responsive hero type */
+    .hero-headline { font-size: clamp(3rem, 7vw, 6.5rem); }
+
+    /* Horizontal rule with label */
+    .rule-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #363636;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .rule-label::before,
+    .rule-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* ── Language toggle ──────────────────────────────── */
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 3px;
+      gap: 1px;
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #5a5a5a;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+      line-height: 1;
+    }
+    .lang-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: #f0f0f0;
+    }
+    .lang-btn:hover:not(.active) { color: #aaa; }
+    .lang-btn:focus-visible {
+      outline: 2px solid rgba(240,149,55,0.5);
+      outline-offset: 2px;
+      border-radius: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Logo: alpaca icon only -->
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="alpaca AI home" style="display: block; line-height: 0;">
+          <img src="brand_assets/alpaca-icon.png" alt="alpaca AI" style="height: 48px; width: auto; display: block;">
+        </a>
+
+        <!-- Links -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="#process"  class="nav-link" data-i18n="nav-process">Process</a>
+          <a href="#about"    class="nav-link" data-i18n="nav-about">About</a>
+          <a href="#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
+        </div>
+
+        <!-- CTA + lang toggle + hamburger -->
+        <div class="flex items-center gap-3">
+
+          <!-- Language toggle — always visible -->
+          <div class="lang-toggle" role="group" aria-label="Select language">
+            <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
+            <button class="lang-btn" data-lang="nl" onclick="setLanguage('nl')" aria-label="Nederlands">NL</button>
+          </div>
+
+          <a href="#contact" class="hidden sm:inline-flex btn-primary text-sm px-5 py-2.5" style="color:#ffffff;">
+            <span data-i18n="nav-cta">Get in touch</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" aria-label="Open menu" aria-expanded="false">
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#f0f0f0; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#f0f0f0; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#f0f0f0; transition: transform 250ms ease, opacity 250ms ease;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
+      <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
+        <a href="#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(255,255,255,0.06);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(255,255,255,0.06);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
+        <a href="#about"    class="nav-link py-3 text-base border-b" style="border-color: rgba(255,255,255,0.06);" onclick="closeMobileMenu()" data-i18n="nav-about">About</a>
+        <a href="#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(255,255,255,0.06);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
+        <a href="#contact" class="btn-primary mt-4 justify-center" onclick="closeMobileMenu()" style="color:#ffffff;" data-i18n="nav-cta">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="relative min-h-screen flex flex-col justify-center pt-20" style="padding: 120px 0 0;">
+    <div class="hero-glow"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
+
+      <!-- Split layout: text left, visual right -->
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- LEFT: copy -->
+        <div>
+          <!-- Badge -->
+          <div class="mb-8 fade-up">
+            <div class="floating-badge" style="display: inline-flex;">
+              <span class="badge-dot"></span>
+              <span data-i18n="hero-badge">alpaca AI. From idea to impact</span>
+            </div>
+          </div>
+
+          <!-- Headline -->
+          <div class="fade-up" style="transition-delay: 80ms;">
+            <h1 class="display-xl hero-headline text-ink" style="font-size: clamp(2.75rem, 5.5vw, 5.5rem); max-width: 620px;" data-i18n="hero-headline" data-i18n-html>
+              AI that actually
+              <span class="text-accent"> moves</span>
+              your business forward
+            </h1>
+          </div>
+
+          <!-- Subheadline -->
+          <div class="fade-up mt-6" style="transition-delay: 160ms;">
+            <p class="body-relaxed text-lg" style="color: #888; max-width: 480px; line-height: 1.7;" data-i18n="hero-sub">
+              We design, build, and deploy custom AI systems for ambitious companies — from strategy to production, end to end.
+            </p>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-start gap-4 mt-10 fade-up" style="transition-delay: 240ms;">
+            <a href="#contact" class="btn-primary" style="color:#ffffff;">
+              <span data-i18n="hero-cta1">Start a project</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="#services" class="btn-ghost" data-i18n="hero-cta2">
+              See what we build
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT: AI chat interface mockup -->
+        <div class="hidden lg:flex items-center justify-center fade-up" style="transition-delay: 200ms;">
+          <div style="width: 100%; max-width: 500px; position: relative;">
+
+            <!-- Ambient glow -->
+            <div style="position: absolute; inset: -60px; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(240,149,55,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+
+            <!-- Chat card -->
+            <div style="background: #0e0e0e; border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.03); position: relative;">
+
+              <!-- Window chrome -->
+              <div style="padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02);">
+                <div style="display: flex; gap: 6px;">
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.07);"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.07);"></span>
+                  <span style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.07);"></span>
+                </div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;">
+                  <div style="width: 9px; height: 18px; overflow: hidden; position: relative; flex-shrink: 0; opacity: 0.7;">
+                    <img src="brand_assets/logo-v1.3.png" alt="" aria-hidden="true"
+                         style="position: absolute; height: 18px; width: auto; left: -4px; top: 0;" />
+                  </div>
+                  <span style="font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 600; color: #4a4a4a; letter-spacing: -0.01em;">alpaca AI</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 5px; background: rgba(240,149,55,0.08); border: 1px solid rgba(240,149,55,0.15); border-radius: 100px; padding: 3px 8px;">
+                  <span style="width: 5px; height: 5px; border-radius: 50%; background: #F09537; box-shadow: 0 0 5px rgba(240,149,55,0.9); animation: pulse-dot 2s ease infinite;"></span>
+                  <span style="font-size: 0.65rem; font-weight: 700; color: #F09537; letter-spacing: 0.05em;">LIVE</span>
+                </div>
+              </div>
+
+              <!-- Messages area -->
+              <div style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+
+                <!-- User message -->
+                <div style="display: flex; justify-content: flex-end;">
+                  <div style="background: rgba(240,149,55,0.1); border: 1px solid rgba(240,149,55,0.18); border-radius: 14px 14px 4px 14px; padding: 10px 14px; max-width: 82%;">
+                    <p style="font-size: 0.8125rem; color: #d0d0d0; line-height: 1.5; margin: 0;">How do I cut our support volume by 40%?</p>
+                  </div>
+                </div>
+
+                <!-- AI thinking -->
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                  <div style="width: 28px; height: 28px; border-radius: 8px; background: rgba(240,149,55,0.1); border: 1px solid rgba(240,149,55,0.2); flex-shrink: 0; overflow: hidden; background-image: url('brand_assets/logo-v1.3.png'); background-size: auto 28px; background-position: -6px 0; background-repeat: no-repeat;"></div>
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+                      <span style="font-size: 0.7rem; color: #3a3a3a; font-weight: 500;">Analysing 8 months of ticket data</span>
+                      <span style="display: inline-flex; gap: 2px; align-items: center;">
+                        <span style="width: 3px; height: 3px; border-radius: 50%; background: #F09537; opacity: 0.9; animation: pulse-dot 1.2s ease infinite;"></span>
+                        <span style="width: 3px; height: 3px; border-radius: 50%; background: #F09537; opacity: 0.6; animation: pulse-dot 1.2s ease 0.2s infinite;"></span>
+                        <span style="width: 3px; height: 3px; border-radius: 50%; background: #F09537; opacity: 0.3; animation: pulse-dot 1.2s ease 0.4s infinite;"></span>
+                      </span>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 4px 14px 14px 14px; padding: 14px;">
+                      <p style="font-size: 0.8rem; color: #666; line-height: 1.6; margin: 0 0 12px;">Here's what's driving your volume — and the fix:</p>
+
+                      <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px;">
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 9px 11px; background: rgba(240,149,55,0.06); border: 1px solid rgba(240,149,55,0.12); border-radius: 10px;">
+                          <span style="font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 800; color: #F09537; line-height: 1; flex-shrink: 0; margin-top: 1px;">63%</span>
+                          <span style="font-size: 0.75rem; color: #666; line-height: 1.4;">repeat questions — deploy a self-serve FAQ agent</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 9px 11px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;">
+                          <span style="font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 800; color: #888; line-height: 1; flex-shrink: 0; margin-top: 1px; white-space: nowrap;">Mon 9–11</span>
+                          <span style="font-size: 0.75rem; color: #666; line-height: 1.4;">peak surge — pre-load AI responses before office hours</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 10px; padding: 9px 11px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;">
+                          <span style="font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 800; color: #888; line-height: 1; flex-shrink: 0; margin-top: 1px; white-space: nowrap;">22%</span>
+                          <span style="font-size: 0.75rem; color: #666; line-height: 1.4;">onboarding friction — add contextual in-app guidance</span>
+                        </div>
+                      </div>
+
+                      <div style="padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 0.7rem; color: #2a2a2a; font-weight: 500;">Combined reduction</span>
+                        <div style="display: flex; align-items: baseline; gap: 4px;">
+                          <span style="font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.25rem; color: #F09537; letter-spacing: -0.04em; line-height: 1;">−47%</span>
+                          <span style="font-size: 0.65rem; color: #3a3a3a;">tickets / mo</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Input bar -->
+              <div style="padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.01);">
+                <div style="flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 9px 13px;">
+                  <span style="font-size: 0.75rem; color: #222; font-weight: 400;">Ask anything about your business…</span>
+                </div>
+                <div style="width: 32px; height: 32px; border-radius: 9px; background: #F09537; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; box-shadow: 0 4px 12px rgba(240,149,55,0.35);">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M8 3l3.5 3.5L8 10" stroke="#070707" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Floating stat: top-right -->
+            <div style="position: absolute; top: -16px; right: -20px; background: #181818; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 11px 15px; box-shadow: 0 16px 40px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px;">
+              <div style="width: 34px; height: 34px; border-radius: 10px; background: rgba(240,149,55,0.1); border: 1px solid rgba(240,149,55,0.15); display: flex; align-items: center; justify-content: center;">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 11L5.5 6.5l3 3 4.5-5.5" stroke="#F09537" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #f0f0f0; letter-spacing: -0.03em; line-height: 1;">3× ROI</div>
+                <div style="font-size: 0.62rem; color: #3a3a3a; font-weight: 500; margin-top: 2px;" data-i18n="stat-roi-label">avg. across clients</div>
+              </div>
+            </div>
+
+            <!-- Floating stat: bottom-left -->
+            <div style="position: absolute; bottom: -16px; left: -20px; background: #181818; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 11px 15px; box-shadow: 0 16px 40px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px;">
+              <div style="width: 34px; height: 34px; border-radius: 10px; background: rgba(240,149,55,0.1); border: 1px solid rgba(240,149,55,0.15); display: flex; align-items: center; justify-content: center;">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#F09537" stroke-width="1.5"/><path d="M7.5 5v2.5l1.5 1.5" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 800; color: #f0f0f0; letter-spacing: -0.03em; line-height: 1;">5 wks</div>
+                <div style="font-size: 0.62rem; color: #3a3a3a; font-weight: 500; margin-top: 2px;" data-i18n="stat-weeks-label">avg. to launch</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Stats row -->
+      <div class="mt-24 fade-up" style="transition-delay: 320ms;">
+        <div class="divider"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-px" style="background: rgba(255,255,255,0.06);">
+          <div class="bg-base px-8 py-8 text-center" style="background: #070707;">
+            <div class="stat-value text-5xl text-ink">60+</div>
+            <div class="mt-2 text-sm" style="color: #7a7a7a; font-weight: 500;" data-i18n="stat-projects">Projects delivered</div>
+          </div>
+          <div class="bg-base px-8 py-8 text-center" style="background: #070707;">
+            <div class="stat-value text-5xl text-ink">3×</div>
+            <div class="mt-2 text-sm" style="color: #7a7a7a; font-weight: 500;" data-i18n="stat-roi">Average ROI</div>
+          </div>
+          <div class="bg-base px-8 py-8 text-center" style="background: #070707;">
+            <div class="stat-value text-5xl text-ink">5</div>
+            <div class="mt-2 text-sm" style="color: #7a7a7a; font-weight: 500;" data-i18n="stat-weeks">Week avg. to launch</div>
+          </div>
+          <div class="bg-base px-8 py-8 text-center" style="background: #070707;">
+            <div class="stat-value text-5xl text-ink">98%</div>
+            <div class="mt-2 text-sm" style="color: #7a7a7a; font-weight: 500;" data-i18n="stat-retention">Client retention</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       TRUSTED BY
+  ═══════════════════════════════════════ -->
+  <section style="padding: 56px 0; border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="text-center text-xs font-semibold tracking-widest uppercase mb-10 fade-up" style="color: #333; letter-spacing: 0.12em;" data-i18n="trusted-label">Trusted by teams at</p>
+      <div class="flex flex-wrap items-center justify-center gap-10 md:gap-16 fade-up" style="transition-delay: 60ms;">
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <polygon points="10,2 18,7 18,13 10,18 2,13 2,7" fill="none" stroke="#f0f0f0" stroke-width="1.5"/>
+            <circle cx="10" cy="10" r="3" fill="#f0f0f0"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Meridian</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 1L16 5.5V12.5L9 17L2 12.5V5.5L9 1Z" fill="none" stroke="#f0f0f0" stroke-width="1.5"/>
+            <path d="M6 9.5L8.5 12L12.5 7" stroke="#f0f0f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Volta</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+            <path d="M9 1L16 5V15L9 19L2 15V5L9 1Z" fill="rgba(240,149,55,0.15)" stroke="#F09537" stroke-width="1.3"/>
+            <circle cx="9" cy="10" r="2.5" fill="#F09537" opacity="0.6"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Lumen Labs</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="22" height="14" viewBox="0 0 22 14" fill="none">
+            <rect y="0" width="22" height="3.5" rx="1.75" fill="#f0f0f0"/>
+            <rect y="5.25" width="16" height="3.5" rx="1.75" fill="#f0f0f0"/>
+            <rect y="10.5" width="10" height="3.5" rx="1.75" fill="#f0f0f0"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Stratum</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="#f0f0f0" stroke-width="1.5"/>
+            <ellipse cx="10" cy="10" rx="4" ry="8" stroke="#f0f0f0" stroke-width="1.2"/>
+            <line x1="2" y1="10" x2="18" y2="10" stroke="#f0f0f0" stroke-width="1.2"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Aether</span>
+        </div>
+
+        <div class="flex items-center gap-2.5 opacity-25 hover:opacity-50 transition-opacity duration-200" style="transition: opacity 200ms ease;">
+          <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+            <path d="M8 1V13M8 13L3 8M8 13L13 8" stroke="#f0f0f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1 17h14" stroke="#f0f0f0" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3.5 19.5h9" stroke="#f0f0f0" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: -0.02em;">Forge</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       SERVICES
+  ═══════════════════════════════════════ -->
+  <section id="services" class="section">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+      <div class="max-w-xl mb-16 fade-up">
+        <div class="tag mb-4">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
+            <circle cx="5" cy="5" r="2" fill="#F09537"/>
+          </svg>
+          <span data-i18n="services-tag">What we do</span>
+        </div>
+        <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="services-h2">
+          Full-stack AI, built to last
+        </h2>
+        <p class="mt-4 body-relaxed" style="color: #888; line-height: 1.7;" data-i18n="services-sub">
+          We don't sell demos. We build systems your team actually uses — reliable, scalable, and tailored to how you work.
+        </p>
+      </div>
+
+      <!-- Service cards grid -->
+      <div class="grid md:grid-cols-2 gap-4">
+
+        <!-- Card 1 -->
+        <div class="card p-8 fade-up">
+          <div class="service-icon mb-5">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M11 2L20 7v8l-9 5-9-5V7l9-5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M11 2v14M2 7l9 5M20 7l-9 5" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s1-title">AI Strategy & Consulting</h3>
+          <p class="body-relaxed text-base" style="color: #888; line-height: 1.7;" data-i18n="s1-body">
+            We map your business to the right AI opportunities — cutting through the noise to find what will actually drive outcomes. Roadmaps, use-case prioritisation, build-vs-buy analysis.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s1-t1">Roadmapping</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s1-t2">Use-case audit</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s1-t3">ROI modelling</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card p-8 fade-up" style="transition-delay: 60ms;">
+          <div class="service-icon mb-5">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"/>
+              <rect x="12" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"/>
+              <rect x="3" y="12" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"/>
+              <path d="M15.5 12v7M12 15.5h7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s2-title">Custom AI Development</h3>
+          <p class="body-relaxed text-base" style="color: #888; line-height: 1.7;" data-i18n="s2-body">
+            From LLM-powered applications to fine-tuned models and agent pipelines — we build bespoke AI systems designed around your data, your processes, and your users.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s2-t1">LLM apps</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s2-t2">Fine-tuning</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s2-t3">AI agents</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card p-8 fade-up" style="transition-delay: 120ms;">
+          <div class="service-icon mb-5">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M4 11h14M11 4l7 7-7 7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="11" cy="11" r="9" stroke="#F09537" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s3-title">AI Integration & APIs</h3>
+          <p class="body-relaxed text-base" style="color: #888; line-height: 1.7;" data-i18n="s3-body">
+            Embed AI into your existing stack without rebuilding from scratch. We connect models to your CRM, ERP, or internal tools — and make sure everything stays in sync.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s3-t1">API design</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s3-t2">Stack integration</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s3-t3">Data pipelines</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card p-8 fade-up" style="transition-delay: 180ms;">
+          <div class="service-icon mb-5">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M5 17L3 19V7a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M8 10h6M8 13h4" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s4-title">AI Automation</h3>
+          <p class="body-relaxed text-base" style="color: #888; line-height: 1.7;" data-i18n="s4-body">
+            Turn manual, repetitive workflows into autonomous systems. Document processing, customer triage, reporting, research — we automate the work so your team can focus on what matters.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s4-t1">Workflow automation</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s4-t2">Document AI</span>
+            <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(255,255,255,0.05); color: #4a4a4a; border: 1px solid rgba(255,255,255,0.07);" data-i18n="s4-t3">Intelligent triage</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       PROCESS
+  ═══════════════════════════════════════ -->
+  <section id="process" class="section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+      <div class="max-w-xl mb-16 fade-up">
+        <div class="tag mb-4">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
+            <circle cx="5" cy="5" r="2" fill="#F09537"/>
+          </svg>
+          <span data-i18n="process-tag">How we work</span>
+        </div>
+        <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="process-h2" data-i18n-html>
+          From brief to live in weeks,<br>not months
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-8">
+
+        <div class="fade-up">
+          <div class="step-num">01</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step1-title">Discovery</h3>
+          <p class="text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="step1-body">
+            We dig into your business, data, and team to understand what's really holding you back — and what AI can actually solve.
+          </p>
+        </div>
+
+        <div class="fade-up" style="transition-delay: 80ms;">
+          <div class="step-num">02</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step2-title">Blueprint</h3>
+          <p class="text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="step2-body">
+            A clear technical plan: architecture, models, integrations, and a delivery timeline — no ambiguity, no surprises.
+          </p>
+        </div>
+
+        <div class="fade-up" style="transition-delay: 160ms;">
+          <div class="step-num">03</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step3-title">Build</h3>
+          <p class="text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="step3-body">
+            Rapid iteration in 2-week sprints. You see working software early and often — not at the end.
+          </p>
+        </div>
+
+        <div class="fade-up" style="transition-delay: 240ms;">
+          <div class="step-num">04</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step4-title">Launch & Scale</h3>
+          <p class="text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="step4-body">
+            Production deployment, monitoring, and ongoing optimisation. We stay in the loop as your system learns and grows.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       TESTIMONIALS
+  ═══════════════════════════════════════ -->
+  <section id="about" class="section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+      <div class="rule-label mb-12 fade-up" data-i18n="testimonials-label">What our clients say</div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+
+        <div class="testimonial-card p-7 fade-up">
+          <p class="text-base leading-relaxed mb-6" style="color: #888; line-height: 1.75;" data-i18n="t1-quote">
+            "alpaca AI took us from a vague idea to a live document processing system in 11 weeks. The quality of thinking they bring to every decision is unlike any agency we've worked with."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="avatar">S</div>
+            <div>
+              <div class="text-sm font-semibold text-ink">Sarah M.</div>
+              <div class="text-xs" style="color: #7a7a7a;" data-i18n="t1-role">COO, FinTech startup</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card p-7 fade-up" style="transition-delay: 80ms;">
+          <p class="text-base leading-relaxed mb-6" style="color: #888; line-height: 1.75;" data-i18n="t2-quote">
+            "We've cut our support ticket handling time by 70%. The AI triage system alpaca built is genuinely impressive — and it keeps getting better."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="avatar">J</div>
+            <div>
+              <div class="text-sm font-semibold text-ink">James K.</div>
+              <div class="text-xs" style="color: #7a7a7a;" data-i18n="t2-role">VP Operations, SaaS company</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card p-7 fade-up" style="transition-delay: 160ms;">
+          <p class="text-base leading-relaxed mb-6" style="color: #888; line-height: 1.75;" data-i18n="t3-quote">
+            "The strategy sessions alone were worth the engagement. They helped us realise we were solving the wrong problem — and pointed us toward a much bigger opportunity."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="avatar">L</div>
+            <div>
+              <div class="text-sm font-semibold text-ink">Lara T.</div>
+              <div class="text-xs" style="color: #7a7a7a;" data-i18n="t3-role">Founder, E-commerce brand</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FAQ
+  ═══════════════════════════════════════ -->
+  <section class="section" style="border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+
+        <!-- Left: header -->
+        <div class="fade-up">
+          <div class="tag mb-4">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
+              <circle cx="5" cy="5" r="2" fill="#F09537"/>
+            </svg>
+            <span data-i18n="faq-tag">FAQ</span>
+          </div>
+          <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="faq-h2">Common questions</h2>
+          <p class="mt-4 body-relaxed" style="color: #888; line-height: 1.7;" data-i18n="faq-sub">
+            Still wondering if we're the right fit? Here are the questions we hear most often.
+          </p>
+          <a href="#contact" class="btn-ghost mt-8 inline-flex" data-i18n="faq-cta">Ask us anything →</a>
+        </div>
+
+        <!-- Right: accordion -->
+        <div class="fade-up" style="transition-delay: 80ms;" id="faq-list">
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq1-q">What kinds of businesses do you work with?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5a5a5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="faq1-a">
+                We work with ambitious teams across sectors — from Series A startups to mid-market enterprises. What matters most is that you have a real problem AI can help solve and the commitment to see it through properly.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq2-q">How long does a typical project take?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5a5a5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="faq2-a">
+                Most projects move from discovery to production in 8–16 weeks. Strategy and consulting engagements can run shorter. Ongoing retainers are structured as monthly sprints so you always know what's shipping next.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq3-q">Do we need to have data ready before starting?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5a5a5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="faq3-a">
+                Not at all — part of discovery is understanding your data landscape. We'll assess what you have, identify gaps, and design the system around your real starting point. Some of our best work has started from near-zero data.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq4-q">What does the engagement look like day-to-day?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5a5a5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="faq4-a">
+                You get a dedicated Slack channel, weekly check-ins, and a shared project board. You'll always know what's being worked on, what's next, and why. No black-box development — we keep you in the loop throughout.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq5-q">Do you offer ongoing support after launch?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5a5a5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #888; line-height: 1.75;" data-i18n="faq5-a">
+                Yes — we offer post-launch retainers for monitoring, retraining, and continuous improvement. AI systems need to evolve with your business and your data, and we're set up to grow with you long-term.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       CTA
+  ═══════════════════════════════════════ -->
+  <section id="contact" class="section" style="padding-top: 80px; border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="cta-card px-8 py-16 md:px-16 md:py-20 text-center fade-up">
+
+        <div class="tag mb-6 mx-auto" style="display: inline-flex;" data-i18n="cta-tag">
+          Let's talk
+        </div>
+
+        <h2 class="display-lg text-ink mx-auto mb-6" style="font-size: clamp(2.25rem, 5vw, 4rem); max-width: 700px;" data-i18n="cta-h2" data-i18n-html>
+          Ready to build your<br>
+          <span class="text-accent">AI advantage?</span>
+        </h2>
+
+        <p class="mb-10 mx-auto body-relaxed" style="color: #888; max-width: 480px; line-height: 1.7;" data-i18n="cta-body">
+          Tell us about your project. We typically respond within 24 hours and offer a free 30-minute discovery call.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="mailto:wout@alpacaai.nl" class="btn-primary text-base px-8 py-4" style="color: #ffffff;">
+            wout@alpacaai.nl
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#" class="btn-ghost text-base px-8 py-4" style="color: #f0f0f0;" data-i18n="cta-btn2">
+            Book a discovery call
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.06); padding: 80px 0 40px; overflow: hidden; position: relative;">
+
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(240,149,55,0.04) 0%, transparent 70%); pointer-events: none;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+
+      <!-- Top row: links + contact -->
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #333; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
+          <div class="flex flex-col gap-3">
+            <a href="#services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
+            <a href="#about"    class="nav-link text-sm" data-i18n="nav-about">About</a>
+            <a href="#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #333; letter-spacing: 0.1em;" data-i18n="footer-contact-label">Get in touch</p>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #5a5a5a;">wout@alpacaai.nl</a>
+            <a href="tel:+31621676467" class="nav-link text-sm" style="color: #5a5a5a;">+31 6 21676467</a>
+            <p class="text-sm" style="color: #5a5a5a; line-height: 1.6;">Vrijheidslaan 18<br>1078 PJ Amsterdam</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #333; letter-spacing: 0.1em;" data-i18n="footer-legal-label">Legal</p>
+          <p class="text-sm" style="color: #333;" data-i18n="footer-copy">© 2026 alpaca AI</p>
+          <p class="text-xs mt-1" style="color: #222;" data-i18n="footer-rights">All rights reserved.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background: #070707; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.04);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="alpaca AI home" style="display: block; line-height: 0;">
+          <img src="brand_assets/alpaca-icon.png" alt="alpaca AI" style="height: 32px; width: auto; display: block; opacity: 0.5;">
+        </a>
+        <p class="text-xs" style="color: #252525;" data-i18n="footer-built">Built with care in 2026 · alpaca AI</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script>
+
+    // ── i18n ────────────────────────────────────────────────────
+    const translations = {
+      nl: {
+        // Nav
+        'nav-services':        'Services',
+        'nav-process':         'Proces',
+        'nav-about':           'Over ons',
+        'nav-contact':         'Contact',
+        'nav-cta':             'Neem contact op',
+
+        // Hero
+        'hero-badge':  'Beperkte plekken beschikbaar · Q2 2026',
+        'hero-headline':
+          'AI die jouw bedrijf echt\n              <span class="text-accent"> vooruit</span>\n              helpt',
+        'hero-sub':
+          'Wij ontwerpen, bouwen en implementeren AI-systemen op maat voor ambitieuze bedrijven — van strategie tot productie, end to end.',
+        'hero-cta1':   'Start een project',
+        'hero-cta2':   'Bekijk wat we bouwen',
+
+        // Floating card labels
+        'stat-roi-label':   'gem. per klant',
+        'stat-weeks-label': 'gem. tot lancering',
+
+        // Stats row
+        'stat-projects':  'Afgeronde projecten',
+        'stat-roi':       'Gemiddelde ROI',
+        'stat-weeks':     'Weken gem. tot lancering',
+        'stat-retention': 'Klantbehoud',
+
+        // Trusted by
+        'trusted-label': 'Vertrouwd door teams bij',
+
+        // Services
+        'services-tag': 'Wat we doen',
+        'services-h2':  'Full-stack AI, gebouwd om te blijven',
+        'services-sub': "Wij verkopen geen demo's. Wij bouwen systemen die jouw team daadwerkelijk gebruikt — betrouwbaar, schaalbaar en afgestemd op hoe jij werkt.",
+
+        's1-title': 'AI Strategie & Advies',
+        's1-body':  'Wij brengen jouw bedrijf in kaart en koppelen het aan de juiste AI-kansen — we snijden door de ruis om te vinden wat écht resultaat oplevert. Roadmaps, use-case prioritering, build-vs-buy analyse.',
+        's1-t1': 'Roadmapping',
+        's1-t2': 'Use-case analyse',
+        's1-t3': 'ROI-modellering',
+
+        's2-title': 'Maatwerk AI-ontwikkeling',
+        's2-body':  'Van LLM-aangedreven applicaties tot fijnafgestemde modellen en agentpijplijnen — wij bouwen op maat gemaakte AI-systemen rondom jouw data, processen en gebruikers.',
+        's2-t1': 'LLM-apps',
+        's2-t2': 'Fine-tuning',
+        's2-t3': 'AI-agenten',
+
+        's3-title': "AI-integratie & API's",
+        's3-body':  'Integreer AI in jouw bestaande stack zonder opnieuw te beginnen. Wij koppelen modellen aan jouw CRM, ERP of interne tools — en zorgen dat alles gesynchroniseerd blijft.',
+        's3-t1': 'API-ontwerp',
+        's3-t2': 'Stackintegratie',
+        's3-t3': 'Datapijplijnen',
+
+        's4-title': 'AI-automatisering',
+        's4-body':  'Verander handmatige, repetitieve werkstromen in autonome systemen. Documentverwerking, klanttriage, rapportage, onderzoek — wij automatiseren het werk zodat jouw team zich kan richten op wat ertoe doet.',
+        's4-t1': 'Werkstroomautomatisering',
+        's4-t2': 'Document AI',
+        's4-t3': 'Intelligente triage',
+
+        // Process
+        'process-tag': 'Hoe we werken',
+        'process-h2':  'Van briefing naar live in weken,<br>niet maanden',
+        'step1-title': 'Verkenning',
+        'step1-body':  'Wij duiken in jouw bedrijf, data en team om te begrijpen wat je echt tegenhoudt — en wat AI daadwerkelijk kan oplossen.',
+        'step2-title': 'Blauwdruk',
+        'step2-body':  'Een helder technisch plan: architectuur, modellen, integraties en een leveringsplanning — geen onduidelijkheid, geen verrassingen.',
+        'step3-title': 'Bouwen',
+        'step3-body':  'Snelle iteratie in sprints van 2 weken. Je ziet werkende software vroeg en regelmatig — niet pas aan het einde.',
+        'step4-title': 'Lanceer & Groei',
+        'step4-body':  'Productie-implementatie, monitoring en doorlopende optimalisatie. Wij blijven betrokken terwijl jouw systeem leert en groeit.',
+
+        // Testimonials
+        'testimonials-label': 'Wat onze klanten zeggen',
+        't1-quote': '"alpaca AI bracht ons van een vaag idee naar een live documentverwerkingssysteem in 11 weken. De kwaliteit van denken die ze bij elke beslissing inbrengen is ongelijk aan elk bureau waarmee we hebben gewerkt."',
+        't1-role':  'COO, FinTech startup',
+        't2-quote': '"We hebben onze afhandelingstijd voor supporttickets met 70% verminderd. Het AI-triagesysteem dat alpaca heeft gebouwd is echt indrukwekkend — en het wordt steeds beter."',
+        't2-role':  'VP Operations, SaaS bedrijf',
+        't3-quote': '"De strategiesessies alleen al waren de samenwerking waard. Ze hielpen ons beseffen dat we het verkeerde probleem oplosten — en wezen ons op een veel grotere kans."',
+        't3-role':  'Oprichter, E-commerce merk',
+
+        // FAQ
+        'faq-tag': 'FAQ',
+        'faq-h2':  'Veelgestelde vragen',
+        'faq-sub': 'Nog twijfels of we de juiste match zijn? Dit zijn de vragen die we het meest horen.',
+        'faq-cta': 'Stel ons een vraag →',
+        'faq1-q':  'Met wat voor soort bedrijven werken jullie?',
+        'faq1-a':  'Wij werken met ambitieuze teams in verschillende sectoren — van Series A-startups tot middelgrote ondernemingen. Wat het meest telt, is dat je een echt probleem hebt dat AI kan helpen oplossen en de toewijding om het goed door te voeren.',
+        'faq2-q':  'Hoe lang duurt een typisch project?',
+        'faq2-a':  'De meeste projecten gaan van verkenning naar productie in 8–16 weken. Strategie- en adviestrajecten kunnen korter zijn. Doorlopende retainers zijn gestructureerd als maandelijkse sprints, zodat je altijd weet wat er als volgende wordt opgeleverd.',
+        'faq3-q':  'Moeten we data klaar hebben voordat we beginnen?',
+        'faq3-a':  "Helemaal niet — onderdeel van de verkenningsfase is het begrijpen van jouw datalandschap. We beoordelen wat je hebt, identificeren hiaten en ontwerpen het systeem rondom jouw werkelijke startpunt. Sommige van ons beste werk begon vanuit bijna nul data.",
+        'faq4-q':  'Hoe ziet de samenwerking er dagelijks uit?',
+        'faq4-a':  'Je krijgt een dedicated Slack-kanaal, wekelijkse check-ins en een gedeeld projectbord. Je weet altijd waar aan gewerkt wordt, wat er volgt en waarom. Geen black-box ontwikkeling — wij houden je gedurende het hele proces op de hoogte.',
+        'faq5-q':  'Bieden jullie doorlopende ondersteuning na de lancering?',
+        'faq5-a':  'Ja — wij bieden retainers na de lancering voor monitoring, hertraining en doorlopende verbetering. AI-systemen moeten meegroeien met jouw bedrijf en data, en wij zijn ingericht om op de lange termijn met je mee te groeien.',
+
+        // CTA section
+        'cta-tag':  'Laten we praten',
+        'cta-h2':   'Klaar om jouw<br><span class="text-accent">AI-voordeel te bouwen?</span>',
+        'cta-body': 'Vertel ons over jouw project. We reageren doorgaans binnen 24 uur en bieden een gratis kennismakingsgesprek van 30 minuten aan.',
+        'cta-btn2': 'Plan een kennismakingsgesprek',
+
+        // Footer
+        'footer-nav':           'Navigatie',
+        'footer-contact-label': 'Neem contact op',
+        'footer-legal-label':   'Juridisch',
+        'footer-copy':          '© 2026 alpaca AI',
+        'footer-rights':        'Alle rechten voorbehouden.',
+        'footer-built':         'Met zorg gebouwd in 2026 · alpaca AI',
+      }
+    };
+
+    let currentLang = localStorage.getItem('alpaca-lang') || 'en';
+
+    // On load: snapshot EN content, then apply stored language
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const isHtml = el.hasAttribute('data-i18n-html');
+        el.dataset.enContent = isHtml ? el.innerHTML : el.textContent.trim();
+      });
+      if (currentLang === 'nl') setLanguage('nl', false);
+      updateToggleUI();
+    });
+
+    function setLanguage(lang, persist = true) {
+      const t = translations[lang] || {};
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key    = el.dataset.i18n;
+        const isHtml = el.hasAttribute('data-i18n-html');
+        const content = (lang === 'en')
+          ? el.dataset.enContent
+          : (t[key] !== undefined ? t[key] : el.dataset.enContent);
+        if (content === undefined) return;
+        if (isHtml) { el.innerHTML   = content; }
+        else        { el.textContent = content; }
+      });
+      document.documentElement.lang = lang;
+      currentLang = lang;
+      if (persist) localStorage.setItem('alpaca-lang', lang);
+      updateToggleUI();
+    }
+
+    function updateToggleUI() {
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === currentLang);
+      });
+    }
+
+    // ── Scroll fade-in ──────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Trigger immediately for above-the-fold elements
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
+
+    // ── FAQ accordion ──────────────────────────────────────────
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item   = btn.closest('.faq-item');
+        const body   = item.querySelector('.faq-body');
+        const icon   = btn.querySelector('.faq-icon');
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all others
+        document.querySelectorAll('.faq-btn').forEach(b => {
+          if (b !== btn) {
+            b.setAttribute('aria-expanded', 'false');
+            b.closest('.faq-item').querySelector('.faq-body').style.maxHeight = '0';
+            b.closest('.faq-item').querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+            b.closest('.faq-item').querySelector('.faq-icon').style.background = 'rgba(255,255,255,0.05)';
+          }
+        });
+
+        // Toggle current
+        if (isOpen) {
+          btn.setAttribute('aria-expanded', 'false');
+          body.style.maxHeight = '0';
+          icon.style.transform = 'rotate(0deg)';
+          icon.style.background = 'rgba(255,255,255,0.05)';
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          body.style.maxHeight = body.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+          icon.style.background = 'rgba(240,149,55,0.1)';
+        }
+      });
+    });
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn   = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-menu');
+    const lines     = menuBtn.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+
+    function closeMobileMenu() {
+      menuOpen = false;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.style.maxHeight = '0';
+      mobileNav.style.borderTopColor = 'transparent';
+      lines[0].style.transform = 'none';
+      lines[1].style.opacity = '1';
+      lines[2].style.transform = 'none';
+    }
+
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.setAttribute('aria-expanded', String(menuOpen));
+      if (menuOpen) {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 300 + 'px';
+        mobileNav.style.borderTopColor = 'rgba(255,255,255,0.06)';
+        lines[0].style.transform = 'translateY(8px) rotate(45deg)';
+        lines[1].style.opacity = '0';
+        lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+      } else {
+        closeMobileMenu();
+      }
+    });
+
+    // Close menu on outside click
+    document.addEventListener('click', e => {
+      if (menuOpen && !menuBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+  </script>
+
+</body>
+</html>
