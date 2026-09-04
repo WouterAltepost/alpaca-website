@@ -61,6 +61,23 @@ If the n8n workspace ever moves, change that one constant and push. While it poi
 | GET slots | `{ "taken": ["2026-09-15T08:00:00.000Z", ...] }` | anything else: page assumes no taken slots |
 | POST book | 200 `{ "ok": true }` | 409 `{ "ok": false, "error": "slot_taken" }`, 400 `{ "ok": false, "error": "..." }` |
 
+## Updating the live n8n workflow after editing the JSON
+
+The workflow in n8n Cloud is a copy. When `n8n/alpaca-booking.workflow.json` changes (last: 2026-09-04, logo in the client email and the busy pattern in "Code · Validate"), bring the live one in line:
+
+1. n8n, Workflows, open the existing "Alpaca booking" workflow and deactivate it.
+2. Workflows, Import from file, pick the JSON. Select the Supabase credential in both Supabase nodes and the Gmail credential in both Gmail nodes. CORS is already set in the file.
+3. Activate the imported workflow, then delete the old one. The webhook URLs stay the same because the paths are fixed in the file.
+4. Re-run the curl tests above.
+
+## "Semi busy" availability pattern
+
+`book.html` marks some slots and a few whole days as taken, deterministically per date, so every visitor sees the same availability and nothing depends on the database. Roughly a quarter of the slots and about one to two weekdays per month are blocked. The same function lives in the n8n "Code · Validate" node and rejects those slots with `slot_taken`, so they cannot be booked by calling the webhook directly. Switch it off by setting `BUSY_PATTERN = false` in both places; tune the density via `seed % 10` (whole days) and `1 + (seed >>> 8) % 4` (blocks per day), again in both places.
+
+## Client email logo
+
+The confirmation email loads `https://alpacaai.dev/brand_assets/logo-email.png` (dark logo, transparent background, generated from `brand_assets/logo-v1.3.png`). It must stay at that path on the live site.
+
 ## Possible follow-ups
 
 - Attach an `.ics` invite to the confirmation email (Code node builds it, Gmail node attaches it).

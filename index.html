@@ -126,7 +126,7 @@
       mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
     }
     .rings circle {
-      opacity: 0.42;
+      opacity: 0.26;
       vector-effect: non-scaling-stroke;
     }
     /* One ripple per set: a single ring that expands outward and fades */
@@ -138,8 +138,8 @@
     }
     .rings-bottom .ripple { animation-delay: 4.5s; }
     @keyframes ripple {
-      0%   { transform: scale(0.6); opacity: 0.9; }
-      70%  { opacity: 0.25; }
+      0%   { transform: scale(0.6); opacity: 0.6; }
+      70%  { opacity: 0.18; }
       100% { transform: scale(9.5); opacity: 0; }
     }
 
@@ -149,6 +149,15 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .rings .ripple { animation: none; opacity: 0; }
+    }
+
+    /* Soft veil behind text blocks so the rings never cut through copy */
+    .text-veil {
+      position: absolute;
+      inset: -48px -12%;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(250,248,244,0.96) 0%, rgba(250,248,244,0.78) 42%, rgba(250,248,244,0) 74%);
     }
 
     /* Typography */
@@ -553,6 +562,7 @@
   <section class="relative flex flex-col justify-center" style="min-height: min(88vh, 860px); padding: 160px 0 112px;">
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
+      <div class="text-veil" aria-hidden="true"></div>
       <div class="flex flex-col items-center text-center">
 
         <!-- Headline -->

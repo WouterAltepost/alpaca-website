@@ -14,7 +14,10 @@
       "name": "Webhook · Slots",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "webhookId": "alpaca-booking-slots"
     },
     {
@@ -38,7 +41,10 @@
       "name": "Supabase · Read bookings",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [240, 0],
+      "position": [
+        240,
+        0
+      ],
       "alwaysOutputData": true,
       "credentials": {
         "supabaseApi": {
@@ -55,7 +61,10 @@
       "name": "Code · Future slots",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [480, 0]
+      "position": [
+        480,
+        0
+      ]
     },
     {
       "parameters": {
@@ -64,8 +73,14 @@
         "options": {
           "responseHeaders": {
             "entries": [
-              { "name": "Content-Type", "value": "application/json" },
-              { "name": "Cache-Control", "value": "no-store" }
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
             ]
           }
         }
@@ -74,9 +89,11 @@
       "name": "Respond · Slots",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [720, 0]
+      "position": [
+        720,
+        0
+      ]
     },
-
     {
       "parameters": {
         "httpMethod": "POST",
@@ -90,29 +107,43 @@
       "name": "Webhook · Book",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [0, 300],
+      "position": [
+        0,
+        300
+      ],
       "webhookId": "alpaca-booking"
     },
     {
       "parameters": {
-        "jsCode": "// Validate and normalise the booking request.\n// Rules mirror the booking page: Mon-Fri, 09:00-17:00 Europe/Amsterdam, 30-minute slots,\n// from tomorrow up to 28 days ahead.\nconst body = $input.first().json.body || {};\nconst str = v => (typeof v === 'string' ? v.trim() : '');\n\nconst name = str(body.name).slice(0, 120);\nconst email = str(body.email).toLowerCase().slice(0, 200);\nconst company = str(body.company).slice(0, 160);\nconst notes = str(body.notes).slice(0, 2000);\nconst lang = str(body.lang) === 'nl' ? 'nl' : 'en';\nconst honeypot = str(body.website);\nconst startAt = str(body.start_at);\n\nconst fail = (error) => [{ json: { valid: false, error } }];\n\nif (honeypot) return fail('spam');\nif (name.length < 2) return fail('name');\nif (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email)) return fail('email');\n\nconst t = Date.parse(startAt);\nif (Number.isNaN(t)) return fail('start_at');\nconst start = new Date(t);\n\n// Interpret the instant in Europe/Amsterdam.\nconst fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit' });\nconst parts = Object.fromEntries(fmt.formatToParts(start).map(p => [p.type, p.value]));\nconst weekday = parts.weekday;\nconst hour = Number(parts.hour);\nconst minute = Number(parts.minute);\n\nif (['Sat', 'Sun'].includes(weekday)) return fail('weekend');\nif (minute !== 0 && minute !== 30) return fail('slot');\nif (hour < 9 || hour > 16) return fail('hours');\n\nconst now = Date.now();\nconst dayMs = 86400000;\nif (t < now + dayMs * 0.5) return fail('too_soon');\nif (t > now + dayMs * 29) return fail('too_far');\n\nconst end = new Date(t + 30 * 60000);\nconst pretty = new Intl.DateTimeFormat(lang === 'nl' ? 'nl-NL' : 'en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(start);\nconst time = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }).format(start);\nconst timeEnd = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }).format(end);\n\nreturn [{ json: {\n  valid: true,\n  name, email, company, notes, lang,\n  start_at: start.toISOString(),\n  end_at: end.toISOString(),\n  pretty_date: pretty,\n  pretty_time: `${time} - ${timeEnd}`\n} }];"
+        "jsCode": "// Validate and normalise the booking request.\n// Rules mirror the booking page: Mon-Fri, 09:00-17:00 Europe/Amsterdam, 30-minute slots,\n// from tomorrow up to 28 days ahead.\nconst body = $input.first().json.body || {};\nconst str = v => (typeof v === 'string' ? v.trim() : '');\n\nconst name = str(body.name).slice(0, 120);\nconst email = str(body.email).toLowerCase().slice(0, 200);\nconst company = str(body.company).slice(0, 160);\nconst notes = str(body.notes).slice(0, 2000);\nconst lang = str(body.lang) === 'nl' ? 'nl' : 'en';\nconst honeypot = str(body.website);\nconst startAt = str(body.start_at);\n\nconst fail = (error) => [{ json: { valid: false, error } }];\n\nif (honeypot) return fail('spam');\nif (name.length < 2) return fail('name');\nif (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/.test(email)) return fail('email');\n\nconst t = Date.parse(startAt);\nif (Number.isNaN(t)) return fail('start_at');\nconst start = new Date(t);\n\n// Interpret the instant in Europe/Amsterdam.\nconst fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit' });\nconst parts = Object.fromEntries(fmt.formatToParts(start).map(p => [p.type, p.value]));\nconst weekday = parts.weekday;\nconst hour = Number(parts.hour);\nconst minute = Number(parts.minute);\n\nif (['Sat', 'Sun'].includes(weekday)) return fail('weekend');\nif (minute !== 0 && minute !== 30) return fail('slot');\nif (hour < 9 || hour > 16) return fail('hours');\n\n// Fake \"semi busy\" pattern, mirrored from book.html (same hash, same rules; keep both in sync).\n// Slots the page shows as taken are rejected here too, so nobody can book them by calling the webhook directly.\nconst BUSY_PATTERN = true;\nconst hashStr = s => { let h = 2166136261 >>> 0; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h; };\nconst busySlotIndexes = key => {\n  const out = new Set(); if (!BUSY_PATTERN) return out;\n  const total = 16; const seed = hashStr(key);\n  if (seed % 10 === 0) { for (let i = 0; i < total; i++) out.add(i); return out; }\n  const blocks = 1 + (seed >>> 8) % 4;\n  for (let b = 0; b < blocks; b++) { const h = hashStr(key + ':' + b); const st = h % total; const len = (h >>> 8) % 2 ? 2 : 1; for (let i = st; i < Math.min(total, st + len); i++) out.add(i); }\n  return out;\n};\nconst dayKey = `${parts.year}-${parts.month}-${parts.day}`;\nconst slotIndex = (hour - 9) * 2 + (minute === 30 ? 1 : 0);\nif (busySlotIndexes(dayKey).has(slotIndex)) return fail('slot_taken');\n\nconst now = Date.now();\nconst dayMs = 86400000;\nif (t < now + dayMs * 0.5) return fail('too_soon');\nif (t > now + dayMs * 29) return fail('too_far');\n\nconst end = new Date(t + 30 * 60000);\nconst pretty = new Intl.DateTimeFormat(lang === 'nl' ? 'nl-NL' : 'en-GB', { timeZone: 'Europe/Amsterdam', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(start);\nconst time = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }).format(start);\nconst timeEnd = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Amsterdam', hour: '2-digit', minute: '2-digit', hour12: false }).format(end);\n\nreturn [{ json: {\n  valid: true,\n  name, email, company, notes, lang,\n  start_at: start.toISOString(),\n  end_at: end.toISOString(),\n  pretty_date: pretty,\n  pretty_time: `${time} - ${timeEnd}`\n} }];"
       },
       "id": "b1000000-0000-4000-8000-000000000002",
       "name": "Code · Validate",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [240, 300]
+      "position": [
+        240,
+        300
+      ]
     },
     {
       "parameters": {
         "conditions": {
-          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
           "conditions": [
             {
               "id": "c1",
               "leftValue": "={{ $json.valid }}",
               "rightValue": true,
-              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
             }
           ],
           "combinator": "and"
@@ -123,7 +154,10 @@
       "name": "IF · Valid?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [480, 300]
+      "position": [
+        480,
+        300
+      ]
     },
     {
       "parameters": {
@@ -131,14 +165,24 @@
         "responseBody": "={{ JSON.stringify({ ok: false, error: $json.error || 'invalid' }) }}",
         "options": {
           "responseCode": 400,
-          "responseHeaders": { "entries": [ { "name": "Content-Type", "value": "application/json" } ] }
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
         }
       },
       "id": "b1000000-0000-4000-8000-000000000004",
       "name": "Respond · 400 invalid",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [720, 480]
+      "position": [
+        720,
+        480
+      ]
     },
     {
       "parameters": {
@@ -146,13 +190,34 @@
         "dataToSend": "defineBelow",
         "fieldsUi": {
           "fieldValues": [
-            { "fieldId": "start_at", "fieldValue": "={{ $json.start_at }}" },
-            { "fieldId": "end_at", "fieldValue": "={{ $json.end_at }}" },
-            { "fieldId": "name", "fieldValue": "={{ $json.name }}" },
-            { "fieldId": "email", "fieldValue": "={{ $json.email }}" },
-            { "fieldId": "company", "fieldValue": "={{ $json.company }}" },
-            { "fieldId": "notes", "fieldValue": "={{ $json.notes }}" },
-            { "fieldId": "lang", "fieldValue": "={{ $json.lang }}" }
+            {
+              "fieldId": "start_at",
+              "fieldValue": "={{ $json.start_at }}"
+            },
+            {
+              "fieldId": "end_at",
+              "fieldValue": "={{ $json.end_at }}"
+            },
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $json.name }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $json.email }}"
+            },
+            {
+              "fieldId": "company",
+              "fieldValue": "={{ $json.company }}"
+            },
+            {
+              "fieldId": "notes",
+              "fieldValue": "={{ $json.notes }}"
+            },
+            {
+              "fieldId": "lang",
+              "fieldValue": "={{ $json.lang }}"
+            }
           ]
         }
       },
@@ -160,7 +225,10 @@
       "name": "Supabase · Insert booking",
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
-      "position": [720, 240],
+      "position": [
+        720,
+        240
+      ],
       "onError": "continueErrorOutput",
       "credentials": {
         "supabaseApi": {
@@ -175,14 +243,24 @@
         "responseBody": "={{ JSON.stringify({ ok: false, error: 'slot_taken' }) }}",
         "options": {
           "responseCode": 409,
-          "responseHeaders": { "entries": [ { "name": "Content-Type", "value": "application/json" } ] }
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
         }
       },
       "id": "b1000000-0000-4000-8000-000000000006",
       "name": "Respond · 409 slot taken",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [960, 400]
+      "position": [
+        960,
+        400
+      ]
     },
     {
       "parameters": {
@@ -200,7 +278,10 @@
       "name": "Gmail · Notify Wout",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [960, 160],
+      "position": [
+        960,
+        160
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "REPLACE_WITH_YOUR_GMAIL_CREDENTIAL_ID",
@@ -213,7 +294,7 @@
         "sendTo": "={{ $('Code · Validate').item.json.email }}",
         "subject": "={{ $('Code · Validate').item.json.lang === 'nl' ? 'Bevestiging: kennismakingsgesprek met Alpaca AI' : 'Confirmed: your discovery call with Alpaca AI' }}",
         "emailType": "html",
-        "message": "={{ $('Code · Validate').item.json.lang === 'nl'\n  ? `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613\">\n<p>Hoi ${$('Code · Validate').item.json.name},</p>\n<p>Je kennismakingsgesprek met Alpaca AI staat ingepland.</p>\n<p style=\"background:#FBF6EE;border:1px solid #F4DDBF;border-radius:10px;padding:14px 16px\"><strong>${$('Code · Validate').item.json.pretty_date}</strong><br>${$('Code · Validate').item.json.pretty_time} (Nederlandse tijd)<br>30 minuten, online</p>\n<p>Je ontvangt een uitnodiging met een videolink v&oacute;&oacute;r het gesprek. Wil je iets wijzigen of verzetten? Stuur een mail naar <a href=\"mailto:wout@alpacaai.nl\">wout@alpacaai.nl</a>.</p>\n<p>Tot dan,<br>Wout<br>Alpaca AI</p>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0\">\n<p style=\"color:#A39D94;font-size:12px\">Dit bericht is automatisch verzonden vanaf een no-reply adres. Antwoorden op deze mail worden niet gelezen. Stuur vragen naar <a href=\"mailto:wout@alpacaai.nl\" style=\"color:#A39D94\">wout@alpacaai.nl</a>.</p>\n</div>`\n  : `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613\">\n<p>Hi ${$('Code · Validate').item.json.name},</p>\n<p>Your discovery call with Alpaca AI is booked.</p>\n<p style=\"background:#FBF6EE;border:1px solid #F4DDBF;border-radius:10px;padding:14px 16px\"><strong>${$('Code · Validate').item.json.pretty_date}</strong><br>${$('Code · Validate').item.json.pretty_time} (Amsterdam time, CET/CEST)<br>30 minutes, online</p>\n<p>You will receive a calendar invite with a video link before the call. Need to change or reschedule? Email <a href=\"mailto:wout@alpacaai.nl\">wout@alpacaai.nl</a>.</p>\n<p>Talk soon,<br>Wout<br>Alpaca AI</p>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0\">\n<p style=\"color:#A39D94;font-size:12px\">This is an automated message from a no-reply address. Replies to this email are not read. Please send any questions to <a href=\"mailto:wout@alpacaai.nl\" style=\"color:#A39D94\">wout@alpacaai.nl</a>.</p>\n</div>` }}",
+        "message": "={{ $('Code · Validate').item.json.lang === 'nl'\n  ? `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613\">\n<img src=\"https://alpacaai.dev/brand_assets/logo-email.png\" alt=\"Alpaca AI\" width=\"132\" style=\"display:block;width:132px;height:auto;margin:0 0 22px\">\n<p>Hoi ${$('Code · Validate').item.json.name},</p>\n<p>Je kennismakingsgesprek met Alpaca AI staat ingepland.</p>\n<p style=\"background:#FBF6EE;border:1px solid #F4DDBF;border-radius:10px;padding:14px 16px\"><strong>${$('Code · Validate').item.json.pretty_date}</strong><br>${$('Code · Validate').item.json.pretty_time} (Nederlandse tijd)<br>30 minuten, online</p>\n<p>Je ontvangt een uitnodiging met een videolink v&oacute;&oacute;r het gesprek. Wil je iets wijzigen of verzetten? Stuur een mail naar <a href=\"mailto:wout@alpacaai.nl\">wout@alpacaai.nl</a>.</p>\n<p>Tot dan,<br>Wout<br>Alpaca AI</p>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0\">\n<p style=\"color:#A39D94;font-size:12px\">Dit bericht is automatisch verzonden vanaf een no-reply adres. Antwoorden op deze mail worden niet gelezen. Stuur vragen naar <a href=\"mailto:wout@alpacaai.nl\" style=\"color:#A39D94\">wout@alpacaai.nl</a>.</p>\n</div>`\n  : `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613\">\n<img src=\"https://alpacaai.dev/brand_assets/logo-email.png\" alt=\"Alpaca AI\" width=\"132\" style=\"display:block;width:132px;height:auto;margin:0 0 22px\">\n<p>Hi ${$('Code · Validate').item.json.name},</p>\n<p>Your discovery call with Alpaca AI is booked.</p>\n<p style=\"background:#FBF6EE;border:1px solid #F4DDBF;border-radius:10px;padding:14px 16px\"><strong>${$('Code · Validate').item.json.pretty_date}</strong><br>${$('Code · Validate').item.json.pretty_time} (Amsterdam time, CET/CEST)<br>30 minutes, online</p>\n<p>You will receive a calendar invite with a video link before the call. Need to change or reschedule? Email <a href=\"mailto:wout@alpacaai.nl\">wout@alpacaai.nl</a>.</p>\n<p>Talk soon,<br>Wout<br>Alpaca AI</p>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0\">\n<p style=\"color:#A39D94;font-size:12px\">This is an automated message from a no-reply address. Replies to this email are not read. Please send any questions to <a href=\"mailto:wout@alpacaai.nl\" style=\"color:#A39D94\">wout@alpacaai.nl</a>.</p>\n</div>` }}",
         "options": {
           "senderName": "Alpaca AI",
           "replyTo": "wout@alpacaai.nl",
@@ -224,7 +305,10 @@
       "name": "Gmail · Confirm client",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [1200, 160],
+      "position": [
+        1200,
+        160
+      ],
       "credentials": {
         "gmailOAuth2": {
           "id": "REPLACE_WITH_YOUR_GMAIL_CREDENTIAL_ID",
@@ -237,37 +321,140 @@
         "respondWith": "json",
         "responseBody": "={{ JSON.stringify({ ok: true, start_at: $('Code · Validate').item.json.start_at }) }}",
         "options": {
-          "responseHeaders": { "entries": [ { "name": "Content-Type", "value": "application/json" } ] }
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
         }
       },
       "id": "b1000000-0000-4000-8000-000000000009",
       "name": "Respond · 200 booked",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [1440, 160]
+      "position": [
+        1440,
+        160
+      ]
     }
   ],
   "connections": {
-    "Webhook · Slots": { "main": [[{ "node": "Supabase · Read bookings", "type": "main", "index": 0 }]] },
-    "Supabase · Read bookings": { "main": [[{ "node": "Code · Future slots", "type": "main", "index": 0 }]] },
-    "Code · Future slots": { "main": [[{ "node": "Respond · Slots", "type": "main", "index": 0 }]] },
-
-    "Webhook · Book": { "main": [[{ "node": "Code · Validate", "type": "main", "index": 0 }]] },
-    "Code · Validate": { "main": [[{ "node": "IF · Valid?", "type": "main", "index": 0 }]] },
+    "Webhook · Slots": {
+      "main": [
+        [
+          {
+            "node": "Supabase · Read bookings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase · Read bookings": {
+      "main": [
+        [
+          {
+            "node": "Code · Future slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Future slots": {
+      "main": [
+        [
+          {
+            "node": "Respond · Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook · Book": {
+      "main": [
+        [
+          {
+            "node": "Code · Validate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Validate": {
+      "main": [
+        [
+          {
+            "node": "IF · Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "IF · Valid?": {
       "main": [
-        [{ "node": "Supabase · Insert booking", "type": "main", "index": 0 }],
-        [{ "node": "Respond · 400 invalid", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Supabase · Insert booking",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond · 400 invalid",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Supabase · Insert booking": {
       "main": [
-        [{ "node": "Gmail · Notify Wout", "type": "main", "index": 0 }],
-        [{ "node": "Respond · 409 slot taken", "type": "main", "index": 0 }]
+        [
+          {
+            "node": "Gmail · Notify Wout",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond · 409 slot taken",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
-    "Gmail · Notify Wout": { "main": [[{ "node": "Gmail · Confirm client", "type": "main", "index": 0 }]] },
-    "Gmail · Confirm client": { "main": [[{ "node": "Respond · 200 booked", "type": "main", "index": 0 }]] }
+    "Gmail · Notify Wout": {
+      "main": [
+        [
+          {
+            "node": "Gmail · Confirm client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail · Confirm client": {
+      "main": [
+        [
+          {
+            "node": "Respond · 200 booked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
   "settings": {
     "executionOrder": "v1",

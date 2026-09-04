@@ -126,7 +126,7 @@
       mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
     }
     .rings circle {
-      opacity: 0.42;
+      opacity: 0.26;
       vector-effect: non-scaling-stroke;
     }
     /* One ripple per set: a single ring that expands outward and fades */
@@ -138,8 +138,8 @@
     }
     .rings-bottom .ripple { animation-delay: 4.5s; }
     @keyframes ripple {
-      0%   { transform: scale(0.6); opacity: 0.9; }
-      70%  { opacity: 0.25; }
+      0%   { transform: scale(0.6); opacity: 0.6; }
+      70%  { opacity: 0.18; }
       100% { transform: scale(9.5); opacity: 0; }
     }
 
@@ -149,6 +149,15 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .rings .ripple { animation: none; opacity: 0; }
+    }
+
+    /* Soft veil behind text blocks so the rings never cut through copy */
+    .text-veil {
+      position: absolute;
+      inset: -48px -12%;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(250,248,244,0.96) 0%, rgba(250,248,244,0.78) 42%, rgba(250,248,244,0) 74%);
     }
 
     /* Typography */
@@ -503,6 +512,7 @@
     }
     .cal-day.is-today::after { content: ''; position: absolute; bottom: 5px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.6; }
     .cal-day:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--card), 0 0 0 6px rgba(240,149,55,0.6); }
+    .cal-day.is-full { color: var(--subtle); text-decoration: line-through; text-decoration-thickness: 1.5px; opacity: 0.75; }
 
     /* Slots */
     .slots-empty { font-size: 0.875rem; color: var(--subtle); padding: 14px 16px; border: 1px dashed var(--line-strong); border-radius: 12px; }
@@ -550,6 +560,17 @@
       display: inline-flex; align-items: center; justify-content: center;
       box-shadow: 0 12px 28px -10px rgba(240,149,55,0.7);
     }
+
+    /* Pending view: shown in the card while the booking is being sent */
+    .pending { min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 16px; }
+    .spinner {
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 3px solid rgba(240,149,55,0.22); border-top-color: var(--accent);
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .pending-text { margin-top: 22px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; color: var(--ink); }
+    @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2s; } }
   </style>
 </head>
 <body>
@@ -652,7 +673,8 @@
       <div class="grid gap-12 lg:gap-16 items-start" style="grid-template-columns: 1fr;" id="booking-grid">
 
         <!-- LEFT: intro -->
-        <div class="fade-up lg:sticky" style="top: 120px;">
+        <div class="fade-up lg:sticky relative" style="top: 120px;">
+          <div class="text-veil" aria-hidden="true"></div>
           <div class="tag mb-4">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
@@ -771,6 +793,12 @@
                 <p class="status" id="status" role="status" aria-live="polite" hidden></p>
               </div>
             </form>
+
+            <!-- Pending view: shown while the booking is being sent -->
+            <div id="booking-pending" class="pending" hidden role="status" aria-live="polite">
+              <div class="spinner" aria-hidden="true"></div>
+              <p class="pending-text" id="pending-text"></p>
+            </div>
 
             <!-- Success view -->
             <div id="booking-success" hidden>
@@ -995,6 +1023,28 @@
     function isWeekend({ y, m, d }) { const wd = new Date(Date.UTC(y, m, d)).getUTCDay(); return wd === 0 || wd === 6; }
     function isBookableDay(day) { return !isWeekend(day) && cmpDay(day, state.minDay) >= 0 && cmpDay(day, state.maxDay) <= 0; }
 
+    // Fake "semi busy" pattern. Deterministic per Amsterdam date, so every visitor sees the same availability
+    // and a reload never changes it. The n8n "Code · Validate" node runs the same function and rejects these
+    // slots, so they cannot be booked by calling the webhook directly. Keep both copies in sync.
+    const BUSY_PATTERN = true;
+    function hashStr(s) { let h = 2166136261 >>> 0; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h; }
+    function busySlotIndexes(key) {
+      const out = new Set(); if (!BUSY_PATTERN) return out;
+      const total = (DAY_END_HOUR - DAY_START_HOUR) * (60 / SLOT_MINUTES);
+      const seed = hashStr(key);
+      if (seed % 10 === 0) { for (let i = 0; i < total; i++) out.add(i); return out; } // roughly one fully booked day in 10
+      const blocks = 1 + (seed >>> 8) % 4;                                                // one to four "meetings"
+      for (let b = 0; b < blocks; b++) {
+        const h = hashStr(key + ':' + b);
+        const st = h % total;
+        const len = (h >>> 8) % 2 ? 2 : 1;                                                  // 30 or 60 minutes
+        for (let i = st; i < Math.min(total, st + len); i++) out.add(i);
+      }
+      return out;
+    }
+    function busyForDay(day) { return busySlotIndexes(dayKey(day.y, day.m, day.d)); }
+    function isFullyBusy(day) { return busyForDay(day).size >= (DAY_END_HOUR - DAY_START_HOUR) * (60 / SLOT_MINUTES); }
+
     function fmtDate(day) {
       const dt = new Date(Date.UTC(day.y, day.m, day.d, 12));
       return new Intl.DateTimeFormat(currentLang === 'nl' ? 'nl-NL' : 'en-GB', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' }).format(dt);
@@ -1048,10 +1098,12 @@
       for (let i = 0; i < lead; i++) html += '<div></div>';
       for (let d = 1; d <= daysInMonth; d++) {
         const day = { y, m, d };
-        const ok = isBookableDay(day);
+        const inRange = isBookableDay(day);
+        const full = inRange && isFullyBusy(day);
+        const ok = inRange && !full;
         const sel = state.selectedDay && cmpDay(day, state.selectedDay) === 0;
         const isToday = cmpDay(day, today) === 0;
-        html += `<button type="button" class="cal-day${ok ? ' is-available' : ''}${sel ? ' is-selected' : ''}${isToday ? ' is-today' : ''}" data-day="${dayKey(y, m, d)}" ${ok ? '' : 'disabled'} aria-pressed="${sel}">${d}</button>`;
+        html += `<button type="button" class="cal-day${ok ? ' is-available' : ''}${full ? ' is-full' : ''}${sel ? ' is-selected' : ''}${isToday ? ' is-today' : ''}" data-day="${dayKey(y, m, d)}" ${ok ? '' : 'disabled'} aria-pressed="${sel}">${d}</button>`;
       }
       document.getElementById('cal-days').innerHTML = html;
 
@@ -1089,10 +1141,11 @@
       if (state.loadingSlots) { el.innerHTML = `<p class="slots-empty">${t().loading}</p>`; return; }
       const now = Date.now();
       const slots = slotsForDay(state.selectedDay);
+      const busy = busyForDay(state.selectedDay);
       let free = 0;
-      const html = slots.map(s => {
+      const html = slots.map((s, i) => {
         const ms = s.start.getTime();
-        const taken = state.taken.has(ms) || ms < now;
+        const taken = state.taken.has(ms) || ms < now || busy.has(i);
         if (!taken) free++;
         const sel = state.selectedSlot && state.selectedSlot.getTime() === ms;
         return `<button type="button" class="slot${sel ? ' is-selected' : ''}${taken ? ' is-taken' : ''}" data-ms="${ms}" ${taken ? 'disabled' : ''} aria-pressed="${sel}">${s.label}</button>`;
@@ -1143,19 +1196,35 @@
           lang: currentLang,
         };
         const btn = document.getElementById('submit-btn');
-        btn.disabled = true; setStatus(t().sending, 'info');
+        btn.disabled = true; setStatus('');
+        const startedAt = Date.now();
+        showPending(true);
         try {
           const res = await fetch(BOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
           let data = {}; try { data = await res.json(); } catch (_) {}
+          await holdPending(startedAt);
           if (res.status === 409 || data.error === 'slot_taken') {
-            setStatus(t().taken, 'error'); state.selectedSlot = null; await loadTaken(); renderSlots(); renderSummary(); return;
+            showPending(false); setStatus(t().taken, 'error'); state.selectedSlot = null; await loadTaken(); renderSlots(); renderSummary(); return;
           }
-          if (!res.ok || data.ok === false) { setStatus(t().invalid, 'error'); btn.disabled = false; return; }
-          showSuccess(email);
+          if (!res.ok || data.ok === false) { showPending(false); setStatus(t().invalid, 'error'); btn.disabled = false; return; }
+          showPending(false); showSuccess(email);
         } catch (err) {
-          setStatus(t().offline, 'error'); btn.disabled = false;
+          await holdPending(startedAt);
+          showPending(false); setStatus(t().offline, 'error'); btn.disabled = false;
         }
       });
+    }
+    // Swap the form for the loader while the request is in flight.
+    function showPending(on) {
+      document.getElementById('pending-text').textContent = t().sending;
+      document.getElementById('booking-form').hidden = on;
+      document.getElementById('booking-pending').hidden = !on;
+      if (on) document.getElementById('booking-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // Keep the loader up for at least 700ms so a fast response does not flash.
+    function holdPending(startedAt) {
+      const left = 700 - (Date.now() - startedAt);
+      return left > 0 ? new Promise(r => setTimeout(r, left)) : Promise.resolve();
     }
     function showSuccess(email) {
       document.getElementById('success-when').textContent = document.getElementById('summary-text').textContent;
