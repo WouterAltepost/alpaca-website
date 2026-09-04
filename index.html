@@ -27,7 +27,7 @@
             'accent-dim': 'rgba(240,149,55,0.12)',
             'accent-glow': 'rgba(240,149,55,0.25)',
             ink:     '#1A1613',
-            muted:   '#6B655D',
+            muted:   '#5A544D',
             subtle:  '#A39D94',
           },
           fontFamily: {
@@ -50,7 +50,7 @@
       --surface:   #F3EFE8;
       --card:      #FFFFFF;
       --ink:       #1A1613;
-      --muted:     #6B655D;
+      --muted:     #5A544D;
       --subtle:    #A39D94;
       --line:      rgba(26,22,19,0.08);
       --line-strong: rgba(26,22,19,0.16);
@@ -158,6 +158,10 @@
       z-index: -1;
       pointer-events: none;
       background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(250,248,244,0.96) 0%, rgba(250,248,244,0.78) 42%, rgba(250,248,244,0) 74%);
+    }
+    .text-veil.is-wide {
+      inset: -40px -4%;
+      background: radial-gradient(ellipse 72% 78% at 50% 50%, rgba(250,248,244,0.97) 0%, rgba(250,248,244,0.85) 50%, rgba(250,248,244,0) 80%);
     }
 
     /* Typography */
@@ -568,13 +572,13 @@
         <!-- Headline -->
         <div class="fade-up">
           <h1 class="display-xl hero-headline text-ink" style="font-size: clamp(2.75rem, 6.2vw, 5.75rem); max-width: 1100px; margin: 0 auto; text-wrap: balance;" data-i18n="hero-headline" data-i18n-html>
-            Custom AI.<br>Built, shipped, <span class="text-accent">running.</span>
+            AI built around your business.<br><span class="text-accent">Not the other way round.</span>
           </h1>
         </div>
 
         <!-- Subheadline -->
         <div class="fade-up mt-8" style="transition-delay: 80ms;">
-          <p class="body-relaxed text-lg md:text-xl" style="color: #6B655D; max-width: 560px; line-height: 1.7; margin: 0 auto; text-wrap: balance;" data-i18n="hero-sub">
+          <p class="body-relaxed text-lg md:text-xl" style="color: #5A544D; max-width: 560px; line-height: 1.7; margin: 0 auto; text-wrap: balance;" data-i18n="hero-sub">
             We design and deploy AI systems that fit your business. No off-the-shelf tools, no endless pilots.
           </p>
         </div>
@@ -614,7 +618,7 @@
         <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="services-h2">
           Full-stack AI, built to last
         </h2>
-        <p class="mt-4 body-relaxed" style="color: #6B655D; line-height: 1.7;" data-i18n="services-sub">
+        <p class="mt-4 body-relaxed" style="color: #5A544D; line-height: 1.7;" data-i18n="services-sub">
           We don't sell demos. We build systems your team actually uses: reliable, scalable, and tailored to how you work.
         </p>
       </div>
@@ -631,7 +635,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s1-title">AI Strategy & Consulting</h3>
-          <p class="body-relaxed text-base" style="color: #6B655D; line-height: 1.7;" data-i18n="s1-body">
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s1-body">
             We map your business to the right AI opportunities, cutting through the noise to find what will actually drive outcomes. Roadmaps, use-case prioritisation, build-vs-buy analysis.
           </p>
           <div class="mt-6 flex flex-wrap gap-2">
@@ -652,7 +656,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s2-title">Custom AI Development</h3>
-          <p class="body-relaxed text-base" style="color: #6B655D; line-height: 1.7;" data-i18n="s2-body">
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s2-body">
             From LLM-powered applications to fine-tuned models and agent pipelines, we build bespoke AI systems designed around your data, your processes, and your users.
           </p>
           <div class="mt-6 flex flex-wrap gap-2">
@@ -671,7 +675,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s3-title">AI Integration & APIs</h3>
-          <p class="body-relaxed text-base" style="color: #6B655D; line-height: 1.7;" data-i18n="s3-body">
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s3-body">
             Embed AI into your existing stack without rebuilding from scratch. We connect models to your CRM, ERP, or internal tools, and make sure everything stays in sync.
           </p>
           <div class="mt-6 flex flex-wrap gap-2">
@@ -690,7 +694,7 @@
             </svg>
           </div>
           <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s4-title">AI Automation</h3>
-          <p class="body-relaxed text-base" style="color: #6B655D; line-height: 1.7;" data-i18n="s4-body">
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s4-body">
             Turn manual, repetitive workflows into autonomous systems. Document processing, customer triage, reporting, research: we automate the work so your team can focus on what matters.
           </p>
           <div class="mt-6 flex flex-wrap gap-2">
@@ -709,7 +713,8 @@
        PROCESS
   ═══════════════════════════════════════ -->
   <section id="process" class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="text-veil is-wide" aria-hidden="true"></div>
 
       <div class="max-w-xl mb-16 fade-up">
         <div class="tag mb-4">
@@ -729,7 +734,7 @@
         <div class="fade-up">
           <div class="step-num">01</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step1-title">Discovery</h3>
-          <p class="text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="step1-body">
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step1-body">
             We dig into your business, data, and team to understand what's really holding you back, and what AI can actually solve.
           </p>
         </div>
@@ -737,7 +742,7 @@
         <div class="fade-up" style="transition-delay: 80ms;">
           <div class="step-num">02</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step2-title">Blueprint</h3>
-          <p class="text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="step2-body">
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step2-body">
             A clear technical plan: architecture, models, integrations, and a delivery timeline. No ambiguity, no surprises.
           </p>
         </div>
@@ -745,7 +750,7 @@
         <div class="fade-up" style="transition-delay: 160ms;">
           <div class="step-num">03</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step3-title">Build</h3>
-          <p class="text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="step3-body">
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step3-body">
             Rapid iteration in 2-week sprints. You see working software early and often, not at the end.
           </p>
         </div>
@@ -753,7 +758,7 @@
         <div class="fade-up" style="transition-delay: 240ms;">
           <div class="step-num">04</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step4-title">Launch & Scale</h3>
-          <p class="text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="step4-body">
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step4-body">
             Production deployment, monitoring, and ongoing optimisation. We stay in the loop as your system learns and grows.
           </p>
         </div>
@@ -782,7 +787,7 @@
             <span data-i18n="faq-tag">FAQ</span>
           </div>
           <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="faq-h2">Common questions</h2>
-          <p class="mt-4 body-relaxed" style="color: #6B655D; line-height: 1.7;" data-i18n="faq-sub">
+          <p class="mt-4 body-relaxed" style="color: #5A544D; line-height: 1.7;" data-i18n="faq-sub">
             Still wondering if we're the right fit? Here are the questions we hear most often.
           </p>
           <a href="#contact" class="btn-ghost mt-8 inline-flex" data-i18n="faq-cta">Ask us anything →</a>
@@ -795,11 +800,11 @@
             <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
               <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq1-q">What kinds of businesses do you work with?</span>
               <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#6B655D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </button>
             <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
-              <p class="pb-5 text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="faq1-a">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="faq1-a">
                 We work with ambitious teams across sectors, from Series A startups to mid-market enterprises. What matters most is that you have a real problem AI can help solve and the commitment to see it through properly.
               </p>
             </div>
@@ -809,12 +814,12 @@
             <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
               <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq2-q">How long does a typical project take?</span>
               <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#6B655D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </button>
             <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
-              <p class="pb-5 text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="faq2-a">
-                Most projects move from discovery to production in 2 to 8 weeks. Strategy and consulting engagements can run shorter. Ongoing retainers are structured as monthly sprints so you always know what's shipping next.
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="faq2-a">
+                Most projects move from discovery to production in 1 to 4 weeks. Strategy and consulting engagements can run shorter. Ongoing retainers are structured as monthly sprints so you always know what's shipping next.
               </p>
             </div>
           </div>
@@ -823,11 +828,11 @@
             <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
               <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq3-q">Do we need to have data ready before starting?</span>
               <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#6B655D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </button>
             <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
-              <p class="pb-5 text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="faq3-a">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="faq3-a">
                 Not at all. Part of discovery is understanding your data landscape. We'll assess what you have, identify gaps, and design the system around your real starting point. Some of our best work has started from near-zero data.
               </p>
             </div>
@@ -837,12 +842,12 @@
             <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
               <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq4-q">What does the engagement look like day-to-day?</span>
               <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#6B655D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </button>
             <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
-              <p class="pb-5 text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="faq4-a">
-                You get a dedicated Slack channel, weekly check-ins, and a shared project board. You'll always know what's being worked on, what's next, and why. No black-box development. We keep you in the loop throughout.
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="faq4-a">
+                You get weekly check-ins, a shared project board, and a direct line to the person building your system. You'll always know what's being worked on, what's next, and why. No black-box development. We keep you in the loop throughout.
               </p>
             </div>
           </div>
@@ -851,11 +856,11 @@
             <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
               <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="faq5-q">Do you offer ongoing support after launch?</span>
               <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#6B655D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
             </button>
             <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
-              <p class="pb-5 text-sm body-relaxed" style="color: #6B655D; line-height: 1.75;" data-i18n="faq5-a">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="faq5-a">
                 Yes. We offer post-launch retainers for monitoring, retraining, and continuous improvement. AI systems need to evolve with your business and your data, and we're set up to grow with you long-term.
               </p>
             </div>
@@ -883,7 +888,7 @@
           <span class="text-accent">AI advantage?</span>
         </h2>
 
-        <p class="mb-10 mx-auto body-relaxed" style="color: #6B655D; max-width: 480px; line-height: 1.7;" data-i18n="cta-body">
+        <p class="mb-10 mx-auto body-relaxed" style="color: #5A544D; max-width: 480px; line-height: 1.7;" data-i18n="cta-body">
           Tell us about your project. We typically respond within 24 hours and offer a free 30-minute discovery call.
         </p>
 
@@ -976,7 +981,7 @@
 
         // Hero
         'hero-headline':
-          'AI op maat.<br>Gebouwd, geleverd, <span class="text-accent">live.</span>',
+          'AI gebouwd rond jouw bedrijf.<br><span class="text-accent">Niet andersom.</span>',
         'hero-sub':
           'Wij ontwerpen en implementeren AI-systemen die passen bij jouw bedrijf. Geen standaardtools, geen eindeloze pilots.',
         'hero-cta1':   'Start een project',
@@ -1031,11 +1036,11 @@
         'faq1-q':  'Met wat voor soort bedrijven werken jullie?',
         'faq1-a':  'Wij werken met ambitieuze teams in verschillende sectoren, van Series A-startups tot middelgrote ondernemingen. Wat het meest telt, is dat je een echt probleem hebt dat AI kan helpen oplossen en de toewijding om het goed door te voeren.',
         'faq2-q':  'Hoe lang duurt een typisch project?',
-        'faq2-a':  'De meeste projecten gaan van verkenning naar productie in 2 tot 8 weken. Strategie- en adviestrajecten kunnen korter zijn. Doorlopende retainers zijn gestructureerd als maandelijkse sprints, zodat je altijd weet wat er als volgende wordt opgeleverd.',
+        'faq2-a':  'De meeste projecten gaan van verkenning naar productie in 1 tot 4 weken. Strategie- en adviestrajecten kunnen korter zijn. Doorlopende retainers zijn gestructureerd als maandelijkse sprints, zodat je altijd weet wat er als volgende wordt opgeleverd.',
         'faq3-q':  'Moeten we data klaar hebben voordat we beginnen?',
         'faq3-a':  "Helemaal niet. Onderdeel van de verkenningsfase is het begrijpen van jouw datalandschap. We beoordelen wat je hebt, identificeren hiaten en ontwerpen het systeem rondom jouw werkelijke startpunt. Sommige van ons beste werk begon vanuit bijna nul data.",
         'faq4-q':  'Hoe ziet de samenwerking er dagelijks uit?',
-        'faq4-a':  'Je krijgt een dedicated Slack-kanaal, wekelijkse check-ins en een gedeeld projectbord. Je weet altijd waar aan gewerkt wordt, wat er volgt en waarom. Geen black-box ontwikkeling. Wij houden je gedurende het hele proces op de hoogte.',
+        'faq4-a':  'Je krijgt wekelijkse check-ins, een gedeeld projectbord en een directe lijn met degene die je systeem bouwt. Je weet altijd waar aan gewerkt wordt, wat er volgt en waarom. Geen black-box ontwikkeling. Wij houden je gedurende het hele proces op de hoogte.',
         'faq5-q':  'Bieden jullie doorlopende ondersteuning na de lancering?',
         'faq5-a':  'Ja. Wij bieden retainers na de lancering voor monitoring, hertraining en doorlopende verbetering. AI-systemen moeten meegroeien met jouw bedrijf en data, en wij zijn ingericht om op de lange termijn met je mee te groeien.',
 
