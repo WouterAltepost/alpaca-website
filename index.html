@@ -340,19 +340,24 @@
     }
 
     /* Tag pill */
-    .tag {
+    /* Section eyebrow: short accent rule + tracked capitals */
+    .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(240,149,55,0.12);
-      border: 1px solid rgba(240,149,55,0.25);
-      color: #C4681A;
-      font-size: 0.75rem;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 100px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      border-radius: 1px;
+      background: #F09537;
+      flex-shrink: 0;
     }
 
     /* Nav link */
@@ -608,13 +613,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
       <div class="max-w-xl mb-16 fade-up">
-        <div class="tag mb-4">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
-            <circle cx="5" cy="5" r="2" fill="#F09537"/>
-          </svg>
-          <span data-i18n="services-tag">What we do</span>
-        </div>
+        <div class="eyebrow mb-4"><span data-i18n="services-tag">What we do</span></div>
         <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="services-h2">
           Full-stack AI, built to last
         </h2>
@@ -717,13 +716,7 @@
       <div class="text-veil is-wide" aria-hidden="true"></div>
 
       <div class="max-w-xl mb-16 fade-up">
-        <div class="tag mb-4">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-            <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
-            <circle cx="5" cy="5" r="2" fill="#F09537"/>
-          </svg>
-          <span data-i18n="process-tag">How we work</span>
-        </div>
+        <div class="eyebrow mb-4"><span data-i18n="process-tag">How we work</span></div>
         <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="process-h2" data-i18n-html>
           From brief to live in weeks,<br>not months
         </h2>
@@ -779,13 +772,7 @@
 
         <!-- Left: header -->
         <div class="fade-up">
-          <div class="tag mb-4">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
-              <circle cx="5" cy="5" r="2" fill="#F09537"/>
-            </svg>
-            <span data-i18n="faq-tag">FAQ</span>
-          </div>
+          <div class="eyebrow mb-4"><span data-i18n="faq-tag">FAQ</span></div>
           <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="faq-h2">Common questions</h2>
           <p class="mt-4 body-relaxed" style="color: #5A544D; line-height: 1.7;" data-i18n="faq-sub">
             Still wondering if we're the right fit? Here are the questions we hear most often.
@@ -879,7 +866,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="cta-card px-8 py-16 md:px-16 md:py-20 text-center fade-up">
 
-        <div class="tag mb-6 mx-auto" style="display: inline-flex;" data-i18n="cta-tag">
+        <div class="eyebrow mb-6 mx-auto" data-i18n="cta-tag">
           Let's talk
         </div>
 

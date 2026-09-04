@@ -336,19 +336,24 @@
     }
 
     /* Tag pill */
-    .tag {
+    /* Section eyebrow: short accent rule + tracked capitals */
+    .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(240,149,55,0.12);
-      border: 1px solid rgba(240,149,55,0.25);
-      color: #C4681A;
-      font-size: 0.75rem;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 100px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      border-radius: 1px;
+      background: #F09537;
+      flex-shrink: 0;
     }
 
     /* Nav link */
@@ -675,13 +680,7 @@
         <!-- LEFT: intro -->
         <div class="fade-up lg:sticky relative" style="top: 120px;">
           <div class="text-veil" aria-hidden="true"></div>
-          <div class="tag mb-4">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-              <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
-              <circle cx="5" cy="5" r="2" fill="#F09537"/>
-            </svg>
-            <span data-i18n="book-tag">Discovery call</span>
-          </div>
+          <div class="eyebrow mb-4"><span data-i18n="book-tag">Discovery call</span></div>
           <h1 class="display-lg text-ink" style="font-size: clamp(2.25rem, 4.5vw, 3.5rem); max-width: 12ch;" data-i18n="book-h1" data-i18n-html>
             Book a 30-minute <span class="text-accent">call.</span>
           </h1>
