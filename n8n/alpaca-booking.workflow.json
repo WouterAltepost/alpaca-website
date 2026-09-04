@@ -7,7 +7,7 @@
         "path": "alpaca-booking-slots",
         "responseMode": "responseNode",
         "options": {
-          "allowedOrigins": "*"
+          "allowedOrigins": "https://alpacaai.dev,https://www.alpacaai.dev"
         }
       },
       "id": "a1000000-0000-4000-8000-000000000001",
@@ -83,7 +83,7 @@
         "path": "alpaca-booking",
         "responseMode": "responseNode",
         "options": {
-          "allowedOrigins": "*"
+          "allowedOrigins": "https://alpacaai.dev,https://www.alpacaai.dev"
         }
       },
       "id": "b1000000-0000-4000-8000-000000000001",

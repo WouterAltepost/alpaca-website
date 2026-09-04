@@ -32,11 +32,11 @@ Both emails already set `Reply-To` and say in the body that the address is unmon
 2. Credentials:
    - Add a **Supabase** credential (host = project URL, key = service_role). Select it in both Supabase nodes.
    - Add a **Gmail OAuth2** credential for the noreply account. Select it in both Gmail nodes.
-3. In both Webhook nodes, set "Allowed Origins (CORS)" from `*` to your site origin once it is live, for example `https://alpacaai.nl`.
+3. In both Webhook nodes, "Allowed Origins (CORS)" must be `https://alpacaai.dev,https://www.alpacaai.dev` (the repo file already has this). No trailing slash, no path. While it is set, the page only books from the live site; local testing on localhost gets a CORS error unless you add `http://localhost:8080` temporarily.
 4. Activate the workflow. Note the production webhook base URL. On n8n Cloud it looks like `https://<workspace>.app.n8n.cloud`.
 5. Test with curl before touching the site:
 
-Done on 2026-09-04. Base URL: `https://wjaltepost.app.n8n.cloud`. Both credentials set, curl tests passed (200 ok, then 409 slot_taken). Still to do: tighten CORS from `*` to the live site origin (item 3 above).
+Done on 2026-09-04. Base URL: `https://wjaltepost.app.n8n.cloud`. Both credentials set, curl tests passed (200 ok, then 409 slot_taken). CORS is restricted to the live site origin (item 3 above).
 
 ```bash
 curl https://wjaltepost.app.n8n.cloud/webhook/alpaca-booking-slots
