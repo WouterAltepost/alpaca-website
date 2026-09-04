@@ -13,9 +13,9 @@ Rules baked into both the page and the workflow: Monday to Friday, 09:00 to 17:0
 
 ## 1. Supabase
 
-1. Open the Supabase project (the one connected to this session no longer resolves, so unpause it or create a new one).
-2. SQL editor: run `supabase/bookings.sql`. This creates `public.bookings` with a unique index on `start_at`. The unique index is what stops double bookings.
-3. Project settings, API: copy the **project URL** and the **service_role** key. n8n needs both. Never put the service_role key in the website.
+Done on 2026-09-04. Project **Alpaca-AI-General** (ref `rdthgakwzdcccqtoevar`, URL `https://rdthgakwzdcccqtoevar.supabase.co`). `supabase/bookings.sql` is applied as migrations and mirrors the live schema: `public.bookings` with a partial unique index on `start_at` (status = confirmed), RLS on, client roles denied. The unique index is what stops double bookings.
+
+For a fresh project: run `supabase/bookings.sql` in the SQL editor. Then, Project settings, API: copy the **project URL** and the **service_role** key. n8n needs both. Never put the service_role key in the website.
 
 ## 2. Gmail as noreply@alpacaai.nl
 
