@@ -36,10 +36,12 @@ Both emails already set `Reply-To` and say in the body that the address is unmon
 4. Activate the workflow. Note the production webhook base URL. On n8n Cloud it looks like `https://<workspace>.app.n8n.cloud`.
 5. Test with curl before touching the site:
 
-```bash
-curl https://<workspace>.app.n8n.cloud/webhook/alpaca-booking-slots
+Done on 2026-09-04. Base URL: `https://wjaltepost.app.n8n.cloud`. Both credentials set, curl tests passed (200 ok, then 409 slot_taken). Still to do: tighten CORS from `*` to the live site origin (item 3 above).
 
-curl -X POST https://<workspace>.app.n8n.cloud/webhook/alpaca-booking \
+```bash
+curl https://wjaltepost.app.n8n.cloud/webhook/alpaca-booking-slots
+
+curl -X POST https://wjaltepost.app.n8n.cloud/webhook/alpaca-booking \
   -H 'Content-Type: application/json' \
   -d '{"name":"Test Person","email":"you@example.com","company":"Test","notes":"hello","lang":"en","start_at":"2026-09-15T08:00:00.000Z"}'
 ```
@@ -48,10 +50,9 @@ The second call should return `{"ok":true,...}`, insert a row, and send two emai
 
 ## 4. Website
 
-1. In `book.html`, replace `https://REPLACE-ME.app.n8n.cloud` with the base URL from step 3.
-2. Commit and push. Vercel redeploys. `vercel.json` enables clean URLs so the page lives at `/book`.
+Done on 2026-09-04. `N8N_BASE_URL` in `book.html` is `https://wjaltepost.app.n8n.cloud`. `vercel.json` enables clean URLs so the page lives at `/book`.
 
-Until step 4 is done the page renders and works visually, but submitting shows a message pointing people to wout@alpacaai.nl instead of booking.
+If the n8n workspace ever moves, change that one constant and push. While it points at a dead URL the page still renders, but submitting shows a message pointing people to wout@alpacaai.nl instead of booking.
 
 ## Responses the page expects
 
