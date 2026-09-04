@@ -1,0 +1,67 @@
+# Discovery call booking: setup
+
+The booking page is `book.html` (served at `/book`). It is fully static. All data goes through two n8n webhooks, and n8n talks to Supabase and Gmail. The site never holds a Supabase or Gmail key.
+
+```
+/book  ──GET  /webhook/alpaca-booking-slots ──▶ n8n ──▶ Supabase (read future bookings)
+/book  ──POST /webhook/alpaca-booking       ──▶ n8n ──▶ Supabase (insert, unique per slot)
+                                                    ├──▶ Gmail: notify wout@alpacaai.nl
+                                                    └──▶ Gmail: confirmation to the client
+```
+
+Rules baked into both the page and the workflow: Monday to Friday, 09:00 to 17:00 Amsterdam time, 30-minute slots, bookable from tomorrow up to 28 days ahead. Change them in `book.html` (the constants at the top of the script) and in the "Code · Validate" node.
+
+## 1. Supabase
+
+1. Open the Supabase project (the one connected to this session no longer resolves, so unpause it or create a new one).
+2. SQL editor: run `supabase/bookings.sql`. This creates `public.bookings` with a unique index on `start_at`. The unique index is what stops double bookings.
+3. Project settings, API: copy the **project URL** and the **service_role** key. n8n needs both. Never put the service_role key in the website.
+
+## 2. Gmail as noreply@alpacaai.nl
+
+n8n's Gmail node sends from the Google account the credential belongs to. Two working setups:
+
+- **Separate mailbox (cleanest):** create the Google Workspace user `noreply@alpacaai.nl` and connect n8n's Gmail credential with that account.
+- **Alias on Wout's account:** in Gmail settings, "Send mail as", add `noreply@alpacaai.nl` and tick "Treat as an alias". Then set it as the default send-as address, because the n8n node has no per-message from-address option.
+
+Both emails already set `Reply-To` and say in the body that the address is unmonitored and questions go to wout@alpacaai.nl.
+
+## 3. n8n
+
+1. n8n Cloud, Workflows, Import from file: `n8n/alpaca-booking.workflow.json`.
+2. Credentials:
+   - Add a **Supabase** credential (host = project URL, key = service_role). Select it in both Supabase nodes.
+   - Add a **Gmail OAuth2** credential for the noreply account. Select it in both Gmail nodes.
+3. In both Webhook nodes, set "Allowed Origins (CORS)" from `*` to your site origin once it is live, for example `https://alpacaai.nl`.
+4. Activate the workflow. Note the production webhook base URL. On n8n Cloud it looks like `https://<workspace>.app.n8n.cloud`.
+5. Test with curl before touching the site:
+
+```bash
+curl https://<workspace>.app.n8n.cloud/webhook/alpaca-booking-slots
+
+curl -X POST https://<workspace>.app.n8n.cloud/webhook/alpaca-booking \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Test Person","email":"you@example.com","company":"Test","notes":"hello","lang":"en","start_at":"2026-09-15T08:00:00.000Z"}'
+```
+
+The second call should return `{"ok":true,...}`, insert a row, and send two emails. Repeat it and you should get HTTP 409 `slot_taken`.
+
+## 4. Website
+
+1. In `book.html`, replace `https://REPLACE-ME.app.n8n.cloud` with the base URL from step 3.
+2. Commit and push. Vercel redeploys. `vercel.json` enables clean URLs so the page lives at `/book`.
+
+Until step 4 is done the page renders and works visually, but submitting shows a message pointing people to wout@alpacaai.nl instead of booking.
+
+## Responses the page expects
+
+| Call | Success | Failure |
+|---|---|---|
+| GET slots | `{ "taken": ["2026-09-15T08:00:00.000Z", ...] }` | anything else: page assumes no taken slots |
+| POST book | 200 `{ "ok": true }` | 409 `{ "ok": false, "error": "slot_taken" }`, 400 `{ "ok": false, "error": "..." }` |
+
+## Possible follow-ups
+
+- Attach an `.ics` invite to the confirmation email (Code node builds it, Gmail node attaches it).
+- Create a Google Calendar event with a Meet link via the Google Calendar node and put the link in the confirmation.
+- Cancel or reschedule links.

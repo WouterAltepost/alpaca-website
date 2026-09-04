@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a discovery call | Alpaca AI</title>
+  <link rel="icon" type="image/png" href="brand_assets/alpaca-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas:  '#FAF8F4',
+            surface: '#F3EFE8',
+            card:    '#FFFFFF',
+            raised:  '#FFFFFF',
+            border:  'rgba(26,22,19,0.08)',
+            accent:  '#F09537',
+            'accent-dim': 'rgba(240,149,55,0.12)',
+            'accent-glow': 'rgba(240,149,55,0.25)',
+            ink:     '#1A1613',
+            muted:   '#6B655D',
+            subtle:  '#A39D94',
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body:    ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight3: '-0.03em',
+            tight4: '-0.04em',
+            tight5: '-0.05em',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg:        #FAF8F4;
+      --surface:   #F3EFE8;
+      --card:      #FFFFFF;
+      --ink:       #1A1613;
+      --muted:     #6B655D;
+      --subtle:    #A39D94;
+      --line:      rgba(26,22,19,0.08);
+      --line-strong: rgba(26,22,19,0.16);
+      --accent:    #F09537;
+      --accent-hover: #E8862A;
+      --shadow-color: 38 26 12;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* Site-wide background layer (fixed, behind all content) */
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .site-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(240,149,55,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 45% at 100% 100%, rgba(240,149,55,0.08) 0%, transparent 65%);
+    }
+    .rings-wrap {
+      position: absolute;
+    }
+    .rings-top {
+      left: 50%;
+      top: 44%;
+      width: max(1500px, 130vw);
+      transform: translate(-50%, -50%);
+    }
+    .rings-bottom {
+      left: 78%;
+      top: 118%;
+      width: max(1300px, 110vw);
+      transform: translate(-50%, -50%);
+    }
+    .rings {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      stroke: #F09537;
+      stroke-width: 1.25;
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
+      mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
+    }
+    .rings circle {
+      opacity: 0.42;
+      vector-effect: non-scaling-stroke;
+    }
+    /* One ripple per set: a single ring that expands outward and fades */
+    .rings .ripple {
+      stroke-width: 2;
+      transform-origin: 800px 800px;
+      transform-box: view-box;
+      animation: ripple 9s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+    }
+    .rings-bottom .ripple { animation-delay: 4.5s; }
+    @keyframes ripple {
+      0%   { transform: scale(0.6); opacity: 0.9; }
+      70%  { opacity: 0.25; }
+      100% { transform: scale(9.5); opacity: 0; }
+    }
+
+    @media (max-width: 1023px) {
+      .rings-top    { width: 1100px; top: 42%; }
+      .rings-bottom { width: 900px; left: 85%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rings .ripple { animation: none; opacity: 0; }
+    }
+
+    /* Typography */
+    .display-xl {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+    .display-lg {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+    }
+    .body-relaxed { line-height: 1.75; }
+
+    /* Accent highlight text */
+    .text-accent { color: var(--accent); }
+
+    /* Card styles */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 8px 24px -12px rgba(var(--shadow-color) / 0.10);
+      transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+    .card:hover {
+      border-color: rgba(240,149,55,0.35);
+      transform: translateY(-2px);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 24px 48px -16px rgba(var(--shadow-color) / 0.18),
+        0 0 0 4px rgba(240,149,55,0.08);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.10),
+        0 8px 20px -8px rgba(240,149,55,0.55);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.10),
+        0 12px 28px -8px rgba(240,149,55,0.6);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px rgba(240,149,55,0.6);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      padding: 13px 27px;
+      border-radius: 100px;
+      border: 1px solid var(--line-strong);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(26,22,19,0.4);
+      background: rgba(26,22,19,0.04);
+      transform: translateY(-1px);
+    }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px rgba(240,149,55,0.6);
+    }
+
+    /* Nav: translucent, blurred */
+    nav {
+      background: rgba(250,248,244,0.82);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Brand mark: the PNG is a white alpaca on transparent, so mask it with ink */
+    .brand-mark {
+      display: block;
+      background: var(--ink);
+      -webkit-mask: url('brand_assets/alpaca-icon.png') center / contain no-repeat;
+      mask: url('brand_assets/alpaca-icon.png') center / contain no-repeat;
+    }
+
+    /* Service icon container */
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(240,149,55,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(240,149,55,0.22);
+    }
+
+    /* Step number */
+    .step-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 4.5rem;
+      letter-spacing: -0.05em;
+      color: rgba(240,149,55,0.35);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* CTA card */
+    .cta-card {
+      background: linear-gradient(160deg, #FFFFFF 0%, #FBF6EE 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 32px 64px -24px rgba(var(--shadow-color) / 0.18);
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 110%, rgba(240,149,55,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Scroll fade-in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Tag pill */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(240,149,55,0.12);
+      border: 1px solid rgba(240,149,55,0.25);
+      color: #C4681A;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+
+    /* Nav link */
+    .nav-link {
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link:focus-visible { outline: 2px solid rgba(240,149,55,0.6); outline-offset: 3px; border-radius: 4px; }
+
+    /* Testimonial quote */
+    .testimonial-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 8px 24px -12px rgba(var(--shadow-color) / 0.10);
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .testimonial-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FDEBD6, #F9DDBB);
+      border: 1px solid rgba(240,149,55,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #C4681A;
+      flex-shrink: 0;
+    }
+
+    /* Section spacing */
+    .section { padding: 120px 0; }
+    @media (max-width: 768px) {
+      .section { padding: 80px 0; }
+      .display-xl { font-size: clamp(2.5rem, 8vw, 5rem); }
+    }
+
+    /* Responsive hero type */
+    .hero-headline { font-size: clamp(3rem, 7vw, 6.5rem); }
+
+    /* Horizontal rule with label */
+    .rule-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--subtle);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .rule-label::before,
+    .rule-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* ── Language toggle (floating pill, bottom-right) ── */
+    .lang-toggle {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 4px;
+      gap: 2px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.06),
+        0 12px 32px -8px rgba(var(--shadow-color) / 0.22);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 7px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+      line-height: 1;
+    }
+    .lang-btn.active {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+    .lang-btn:hover:not(.active) { color: var(--ink); background: rgba(26,22,19,0.05); }
+    .lang-btn:active { transform: scale(0.96); }
+    .lang-btn:focus-visible {
+      outline: 2px solid rgba(240,149,55,0.7);
+      outline-offset: 2px;
+      border-radius: 100px;
+    }
+  </style>
+
+  <style>
+    /* ── Booking page ─────────────────────────────────────────── */
+    @media (min-width: 1024px) {
+      #booking-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important; }
+    }
+    .step { padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .step-title {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 16px;
+    }
+    .step-badge {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(240,149,55,0.14); border: 1px solid rgba(240,149,55,0.3);
+      color: #C4681A; font-size: 0.75rem; font-weight: 800; letter-spacing: 0;
+    }
+
+    /* Calendar */
+    .cal { max-width: 420px; }
+    .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .cal-month { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; color: var(--ink); text-transform: capitalize; }
+    .cal-nav {
+      width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line-strong); background: var(--card);
+      color: var(--ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+    }
+    .cal-nav:hover:not(:disabled) { background: rgba(26,22,19,0.04); border-color: rgba(26,22,19,0.4); }
+    .cal-nav:active:not(:disabled) { transform: scale(0.95); }
+    .cal-nav:disabled { opacity: 0.3; cursor: default; }
+    .cal-nav:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--card), 0 0 0 6px rgba(240,149,55,0.6); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-dow { text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--subtle); padding: 4px 0 6px; }
+    .cal-day {
+      aspect-ratio: 1 / 1; border-radius: 10px; border: 1px solid transparent; background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--subtle);
+      display: flex; align-items: center; justify-content: center; position: relative; cursor: default;
+      transition: background 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+    .cal-day.is-available { color: var(--ink); background: rgba(240,149,55,0.10); cursor: pointer; }
+    .cal-day.is-available:hover { background: rgba(240,149,55,0.22); transform: translateY(-1px); }
+    .cal-day.is-available:active { transform: translateY(0); }
+    .cal-day.is-selected, .cal-day.is-selected:hover {
+      background: var(--accent); color: var(--ink);
+      box-shadow: 0 6px 16px -6px rgba(240,149,55,0.7);
+    }
+    .cal-day.is-today::after { content: ''; position: absolute; bottom: 5px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.6; }
+    .cal-day:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--card), 0 0 0 6px rgba(240,149,55,0.6); }
+
+    /* Slots */
+    .slots-empty { font-size: 0.875rem; color: var(--subtle); padding: 14px 16px; border: 1px dashed var(--line-strong); border-radius: 12px; }
+    .slot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    @media (min-width: 480px) { .slot-grid { grid-template-columns: repeat(4, 1fr); } }
+    .slot {
+      padding: 11px 8px; border-radius: 10px; border: 1px solid var(--line-strong); background: var(--card);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--ink); cursor: pointer;
+      font-variant-numeric: tabular-nums;
+      transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+    }
+    .slot:hover:not(:disabled) { border-color: rgba(26,22,19,0.5); transform: translateY(-1px); }
+    .slot:active:not(:disabled) { transform: translateY(0); }
+    .slot.is-selected, .slot.is-selected:hover { background: var(--ink); border-color: var(--ink); color: #fff; box-shadow: 0 8px 20px -10px rgba(26,22,19,0.6); }
+    .slot.is-taken { color: var(--subtle); text-decoration: line-through; background: rgba(26,22,19,0.03); border-color: var(--line); cursor: default; }
+    .slot:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--card), 0 0 0 6px rgba(240,149,55,0.6); }
+
+    /* Fields */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+    .field .opt { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--subtle); }
+    .field input, .field textarea {
+      width: 100%; border: 1px solid var(--line-strong); border-radius: 12px; background: #fff; color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9375rem; padding: 12px 14px; line-height: 1.4;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+    .field textarea { resize: vertical; min-height: 88px; }
+    .field input:hover, .field textarea:hover { border-color: rgba(26,22,19,0.35); }
+    .field input:focus-visible, .field textarea:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(240,149,55,0.18); }
+
+    .summary {
+      display: flex; align-items: center; gap: 10px; margin-top: 20px;
+      background: rgba(240,149,55,0.10); border: 1px solid rgba(240,149,55,0.25); border-radius: 12px;
+      padding: 12px 14px; font-size: 0.9375rem; font-weight: 600; color: var(--ink);
+    }
+    .summary[hidden] { display: none; }
+    .status { margin-top: 16px; font-size: 0.875rem; line-height: 1.5; padding: 10px 14px; border-radius: 10px; }
+    .status.is-info  { color: var(--muted); background: rgba(26,22,19,0.04); }
+    .status.is-error { color: #9B3D12; background: rgba(240,149,55,0.12); border: 1px solid rgba(240,149,55,0.3); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-primary:disabled:hover { background: var(--accent); }
+
+    .success-icon {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--accent);
+      display: inline-flex; align-items: center; justify-content: center;
+      box-shadow: 0 12px 28px -10px rgba(240,149,55,0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site-wide background: fixed behind everything, drifts with scroll -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="site-glow"></div>
+    <div class="rings-wrap rings-top" id="rings-top">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+    <div class="rings-wrap rings-bottom" id="rings-bottom">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid items-center h-20" style="grid-template-columns: 1fr auto 1fr;">
+
+        <!-- Logo: alpaca icon only -->
+        <a href="/" class="justify-self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 44px; width: 31px;"></span>
+        </a>
+
+        <!-- Links (true centre column) -->
+        <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
+          <a href="/#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="/#process"  class="nav-link" data-i18n="nav-process">Process</a>
+          <a href="/#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center justify-self-end gap-3" style="grid-column: 3;">
+          <a href="/#contact" class="hidden sm:inline-flex btn-primary text-sm px-5 py-2.5">
+            <span data-i18n="nav-cta">Get in touch</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" aria-label="Open menu" aria-expanded="false">
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
+      <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
+        <a href="/#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="/#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
+        <a href="/#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
+        <a href="/#contact" class="btn-primary mt-4 justify-center" onclick="closeMobileMenu()" data-i18n="nav-cta">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       BOOKING
+  ═══════════════════════════════════════ -->
+  <main class="relative" style="padding: 150px 0 120px;">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid gap-12 lg:gap-16 items-start" style="grid-template-columns: 1fr;" id="booking-grid">
+
+        <!-- LEFT: intro -->
+        <div class="fade-up lg:sticky" style="top: 120px;">
+          <div class="tag mb-4">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="4.5" stroke="#F09537" stroke-width="1"/>
+              <circle cx="5" cy="5" r="2" fill="#F09537"/>
+            </svg>
+            <span data-i18n="book-tag">Discovery call</span>
+          </div>
+          <h1 class="display-lg text-ink" style="font-size: clamp(2.25rem, 4.5vw, 3.5rem); max-width: 12ch;" data-i18n="book-h1" data-i18n-html>
+            Book a 30-minute <span class="text-accent">call.</span>
+          </h1>
+          <p class="mt-5 body-relaxed" style="color: #6B655D; max-width: 460px; line-height: 1.7;" data-i18n="book-intro">
+            Pick a slot that suits you. We talk through your idea, what AI can realistically do for it, and what a first version would look like. No preparation needed, no obligations.
+          </p>
+
+          <ul class="mt-8 flex flex-col gap-4" style="list-style: none; padding: 0; margin-left: 0;">
+            <li class="flex items-center gap-3">
+              <span class="service-icon" style="width: 40px; height: 40px; border-radius: 10px;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#F09537" stroke-width="1.5"/><path d="M8 5v3l2 1.5" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <span class="text-sm font-medium text-ink" data-i18n="book-fact1">30 minutes, online via Google Meet</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="service-icon" style="width: 40px; height: 40px; border-radius: 10px;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#F09537" stroke-width="1.5"/><path d="M2 8h12M8 2c2 2 2 10 0 12M8 2c-2 2-2 10 0 12" stroke="#F09537" stroke-width="1.2"/></svg>
+              </span>
+              <span class="text-sm font-medium text-ink" data-i18n="book-fact2">Times shown in Amsterdam time (CET/CEST)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="service-icon" style="width: 40px; height: 40px; border-radius: 10px;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#F09537" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="text-sm font-medium text-ink" data-i18n="book-fact3">Free, no strings attached</span>
+            </li>
+          </ul>
+
+          <p class="mt-10 text-sm" style="color: #7A746B;">
+            <span data-i18n="book-prefer">Prefer email?</span>
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #1A1613; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">wout@alpacaai.nl</a>
+          </p>
+        </div>
+
+        <!-- RIGHT: booking card -->
+        <div class="fade-up" style="transition-delay: 80ms;">
+          <div class="card p-6 md:p-8" id="booking-card">
+
+            <!-- Form view -->
+            <form id="booking-form" novalidate>
+
+              <!-- Step 1: date -->
+              <div class="step">
+                <div class="step-title"><span class="step-badge">1</span><span data-i18n="step-date">Pick a date</span></div>
+                <div class="cal" id="cal">
+                  <div class="cal-head">
+                    <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="cal-month" id="cal-month" aria-live="polite"></div>
+                    <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                  </div>
+                  <div class="cal-grid" id="cal-dow"></div>
+                  <div class="cal-grid" id="cal-days" role="grid"></div>
+                </div>
+              </div>
+
+              <!-- Step 2: time -->
+              <div class="step">
+                <div class="step-title"><span class="step-badge">2</span><span data-i18n="step-time">Pick a time</span></div>
+                <div id="slots" class="slots">
+                  <p class="slots-empty" data-i18n="slots-empty">Select a date first.</p>
+                </div>
+              </div>
+
+              <!-- Step 3: details -->
+              <div class="step" style="border-bottom: none; padding-bottom: 0;">
+                <div class="step-title"><span class="step-badge">3</span><span data-i18n="step-details">Your details</span></div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div class="field">
+                    <label for="f-name" data-i18n="f-name">Name</label>
+                    <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+                  </div>
+                  <div class="field">
+                    <label for="f-email" data-i18n="f-email">Email</label>
+                    <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="200">
+                  </div>
+                  <div class="field sm:col-span-2">
+                    <label for="f-company"><span data-i18n="f-company">Company</span> <span class="opt" data-i18n="f-optional">optional</span></label>
+                    <input id="f-company" name="company" type="text" autocomplete="organization" maxlength="160">
+                  </div>
+                  <div class="field sm:col-span-2">
+                    <label for="f-notes"><span data-i18n="f-notes">What would you like to discuss?</span> <span class="opt" data-i18n="f-optional">optional</span></label>
+                    <textarea id="f-notes" name="notes" rows="3" maxlength="2000"></textarea>
+                  </div>
+                  <!-- Honeypot: humans never see this -->
+                  <div class="field" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" aria-hidden="true">
+                    <label for="f-website">Website</label>
+                    <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                  </div>
+                </div>
+
+                <div class="summary" id="summary" hidden>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#F09537" stroke-width="1.5"/><path d="M2 7h12M5 1.5v3M11 1.5v3" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  <span id="summary-text"></span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-6">
+                  <button type="submit" class="btn-primary" id="submit-btn" style="white-space: nowrap; flex-shrink: 0;" disabled>
+                    <span data-i18n="submit">Confirm booking</span>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <p class="text-xs" style="color: #A39D94; line-height: 1.5;" data-i18n="submit-note">You get a confirmation by email. We only use your details to plan this call.</p>
+                </div>
+
+                <p class="status" id="status" role="status" aria-live="polite" hidden></p>
+              </div>
+            </form>
+
+            <!-- Success view -->
+            <div id="booking-success" hidden>
+              <div class="success-icon">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M5 13.5l5 5L21 8" stroke="#1A1613" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h2 class="display-lg text-ink mt-6" style="font-size: clamp(1.75rem, 3vw, 2.25rem);" data-i18n="success-h2">You're booked.</h2>
+              <p class="summary mt-5" style="display: inline-flex;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="11" rx="2" stroke="#F09537" stroke-width="1.5"/><path d="M2 7h12M5 1.5v3M11 1.5v3" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <span id="success-when"></span>
+              </p>
+              <p class="mt-5 body-relaxed" style="color: #6B655D; line-height: 1.7; max-width: 520px;">
+                <span data-i18n="success-p1">A confirmation is on its way to</span>
+                <strong id="success-email" style="color: #1A1613;"></strong>.
+                <span data-i18n="success-p2">If it does not arrive within a few minutes, check your spam folder. Need to change the time? Email wout@alpacaai.nl.</span>
+              </p>
+              <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                <a href="/" class="btn-ghost" data-i18n="success-home">Back to home</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <div style="border-top: 1px solid rgba(26,22,19,0.08); padding: 80px 0 40px; overflow: hidden; position: relative;">
+
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(240,149,55,0.10) 0%, transparent 70%); pointer-events: none;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+
+      <!-- Top row: links + contact -->
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
+          <div class="flex flex-col gap-3">
+            <a href="/#services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="/#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
+            <a href="/#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-contact-label">Get in touch</p>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #5C564E;">wout@alpacaai.nl</a>
+            <a href="tel:+31628283985" class="nav-link text-sm" style="color: #5C564E;">+31 6 28283985</a>
+            <p class="text-sm" style="color: #5C564E; line-height: 1.6;">Vrijheidslaan 18<br>1078 PJ Amsterdam</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-legal-label">Legal</p>
+          <p class="text-sm" style="color: #A39D94;" data-i18n="footer-copy">© 2026 Alpaca AI</p>
+          <p class="text-xs mt-1" style="color: #A39D94;" data-i18n="footer-rights">All rights reserved.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background: #F3EFE8; padding: 24px 0; border-top: 1px solid rgba(26,22,19,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 32px; width: 22px; opacity: 0.55;"></span>
+        </a>
+        <p class="text-xs" style="color: #A39D94;" data-i18n="footer-built">Built with care in 2026 · Alpaca AI</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating language toggle -->
+  <div class="lang-toggle" role="group" aria-label="Select language">
+    <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLanguage('nl')" aria-label="Nederlands">NL</button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script>
+    // ── Config ─────────────────────────────────────────────────
+    // Base URL of the n8n instance that runs n8n/alpaca-booking.workflow.json.
+    // n8n Cloud looks like: https://your-workspace.app.n8n.cloud
+    const N8N_BASE_URL = 'https://REPLACE-ME.app.n8n.cloud';
+    const SLOTS_URL = N8N_BASE_URL + '/webhook/alpaca-booking-slots';
+    const BOOK_URL  = N8N_BASE_URL + '/webhook/alpaca-booking';
+
+    const TZ = 'Europe/Amsterdam';
+    const SLOT_MINUTES = 30;
+    const DAY_START_HOUR = 9;    // first slot starts 09:00
+    const DAY_END_HOUR = 17;     // last slot ends 17:00
+    const MIN_DAYS_AHEAD = 1;    // bookable from tomorrow
+    const MAX_DAYS_AHEAD = 28;   // up to four weeks out
+
+    // ── i18n ───────────────────────────────────────────────────
+    const translations = {
+      nl: {
+        'nav-services': 'Services', 'nav-process': 'Proces', 'nav-contact': 'Contact', 'nav-cta': 'Neem contact op',
+        'footer-nav': 'Navigatie', 'footer-contact-label': 'Neem contact op', 'footer-legal-label': 'Juridisch',
+        'footer-copy': '© 2026 Alpaca AI', 'footer-rights': 'Alle rechten voorbehouden.', 'footer-built': 'Met zorg gebouwd in 2026 · Alpaca AI',
+
+        'book-tag':   'Kennismakingsgesprek',
+        'book-h1':    'Plan een gesprek van <span class="text-accent">30 minuten.</span>',
+        'book-intro': 'Kies een moment dat jou uitkomt. We bespreken je idee, wat AI er realistisch voor kan betekenen en hoe een eerste versie eruit zou zien. Geen voorbereiding nodig, geen verplichtingen.',
+        'book-fact1': '30 minuten, online via Google Meet',
+        'book-fact2': 'Tijden in Nederlandse tijd (CET/CEST)',
+        'book-fact3': 'Gratis en vrijblijvend',
+        'book-prefer': 'Liever mailen?',
+        'step-date':   'Kies een datum',
+        'step-time':   'Kies een tijd',
+        'step-details': 'Jouw gegevens',
+        'slots-empty': 'Kies eerst een datum.',
+        'f-name': 'Naam', 'f-email': 'E-mail', 'f-company': 'Bedrijf', 'f-optional': 'optioneel',
+        'f-notes': 'Waar wil je het over hebben?',
+        'submit': 'Bevestig afspraak',
+        'submit-note': 'Je ontvangt een bevestiging per e-mail. We gebruiken je gegevens alleen om dit gesprek te plannen.',
+        'success-h2': 'Ingepland.',
+        'success-p1': 'Een bevestiging is onderweg naar',
+        'success-p2': 'Niets ontvangen binnen een paar minuten? Kijk in je spamfolder. Tijd wijzigen? Mail naar wout@alpacaai.nl.',
+        'success-home': 'Terug naar home',
+      }
+    };
+    const ui = {
+      en: {
+        months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+        dows: ['Mo','Tu','We','Th','Fr','Sa','Su'],
+        noSlots: 'No free slots on this day. Try another date.',
+        loading: 'Loading availability…',
+        needName: 'Please enter your name.',
+        needEmail: 'Please enter a valid email address.',
+        needSlot: 'Pick a date and time first.',
+        sending: 'Booking your slot…',
+        taken: 'That slot was just taken. Please pick another time.',
+        invalid: 'That request could not be processed. Please try again or email wout@alpacaai.nl.',
+        offline: 'Booking is not available right now. Please email wout@alpacaai.nl and we will find a time.',
+        summary: (d, t) => `${d}, ${t}`,
+      },
+      nl: {
+        months: ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'],
+        dows: ['Ma','Di','Wo','Do','Vr','Za','Zo'],
+        noSlots: 'Geen vrije tijden op deze dag. Probeer een andere datum.',
+        loading: 'Beschikbaarheid laden…',
+        needName: 'Vul je naam in.',
+        needEmail: 'Vul een geldig e-mailadres in.',
+        needSlot: 'Kies eerst een datum en tijd.',
+        sending: 'Afspraak wordt ingepland…',
+        taken: 'Dat moment is net geboekt. Kies een andere tijd.',
+        invalid: 'De aanvraag kon niet worden verwerkt. Probeer het opnieuw of mail naar wout@alpacaai.nl.',
+        offline: 'Plannen is op dit moment niet mogelijk. Mail naar wout@alpacaai.nl, dan vinden we een moment.',
+        summary: (d, t) => `${d}, ${t}`,
+      }
+    };
+
+    let currentLang = localStorage.getItem('alpaca-lang') || 'en';
+    const t = () => ui[currentLang] || ui.en;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const isHtml = el.hasAttribute('data-i18n-html');
+        el.dataset.enContent = isHtml ? el.innerHTML : el.textContent.trim();
+      });
+      if (currentLang === 'nl') setLanguage('nl', false);
+      updateToggleUI();
+      initBooking();
+    });
+
+    function setLanguage(lang, persist = true) {
+      const tr = translations[lang] || {};
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        const isHtml = el.hasAttribute('data-i18n-html');
+        const content = (lang === 'en') ? el.dataset.enContent : (tr[key] !== undefined ? tr[key] : el.dataset.enContent);
+        if (content === undefined) return;
+        if (isHtml) el.innerHTML = content; else el.textContent = content;
+      });
+      document.documentElement.lang = lang;
+      currentLang = lang;
+      if (persist) localStorage.setItem('alpaca-lang', lang);
+      updateToggleUI();
+      if (state.ready) { renderCalendar(); renderSlots(); renderSummary(); }
+    }
+    function updateToggleUI() {
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+    }
+
+    // ── Time helpers (everything is reasoned in Europe/Amsterdam) ──
+    function tzParts(date) {
+      const f = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false, weekday: 'short' });
+      const p = Object.fromEntries(f.formatToParts(date).map(x => [x.type, x.value]));
+      return { y: +p.year, m: +p.month - 1, d: +p.day, h: +p.hour % 24, mi: +p.minute, wd: p.weekday };
+    }
+    function tzOffsetMinutes(date) {
+      const f = new Intl.DateTimeFormat('en-US', { timeZone: TZ, timeZoneName: 'longOffset' });
+      const name = f.formatToParts(date).find(x => x.type === 'timeZoneName').value; // "GMT+02:00"
+      const m = name.match(/GMT([+-])(\d{2}):?(\d{2})?/);
+      if (!m) return 0;
+      return (m[1] === '-' ? -1 : 1) * (+m[2] * 60 + (+(m[3] || 0)));
+    }
+    // Local Amsterdam wall-clock → UTC Date
+    function fromAmsterdam(y, m, d, h, mi) {
+      const guess = Date.UTC(y, m, d, h, mi);
+      let off = tzOffsetMinutes(new Date(guess));
+      let utc = guess - off * 60000;
+      const off2 = tzOffsetMinutes(new Date(utc));
+      if (off2 !== off) utc = guess - off2 * 60000;
+      return new Date(utc);
+    }
+    const dayKey = (y, m, d) => `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const pad = n => String(n).padStart(2, '0');
+
+    function amsterdamToday() { const p = tzParts(new Date()); return { y: p.y, m: p.m, d: p.d }; }
+    function addDays({ y, m, d }, n) { const x = new Date(Date.UTC(y, m, d + n)); return { y: x.getUTCFullYear(), m: x.getUTCMonth(), d: x.getUTCDate() }; }
+    function cmpDay(a, b) { return dayKey(a.y, a.m, a.d).localeCompare(dayKey(b.y, b.m, b.d)); }
+    function isWeekend({ y, m, d }) { const wd = new Date(Date.UTC(y, m, d)).getUTCDay(); return wd === 0 || wd === 6; }
+    function isBookableDay(day) { return !isWeekend(day) && cmpDay(day, state.minDay) >= 0 && cmpDay(day, state.maxDay) <= 0; }
+
+    function fmtDate(day) {
+      const dt = new Date(Date.UTC(day.y, day.m, day.d, 12));
+      return new Intl.DateTimeFormat(currentLang === 'nl' ? 'nl-NL' : 'en-GB', { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' }).format(dt);
+    }
+
+    // ── State ──────────────────────────────────────────────────
+    const state = { ready: false, view: null, selectedDay: null, selectedSlot: null, taken: new Set(), minDay: null, maxDay: null, loadingSlots: false };
+
+    async function initBooking() {
+      const today = amsterdamToday();
+      state.minDay = addDays(today, MIN_DAYS_AHEAD);
+      state.maxDay = addDays(today, MAX_DAYS_AHEAD);
+      // Skip weekend start
+      while (isWeekend(state.minDay)) state.minDay = addDays(state.minDay, 1);
+      state.view = { y: state.minDay.y, m: state.minDay.m };
+      state.ready = true;
+      renderCalendar();
+      renderSlots();
+      wireForm();
+      await loadTaken();
+      renderSlots();
+    }
+
+    async function loadTaken() {
+      if (N8N_BASE_URL.includes('REPLACE-ME')) return;
+      state.loadingSlots = true; renderSlots();
+      try {
+        const res = await fetch(SLOTS_URL, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('slots ' + res.status);
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : (data.taken || []);
+        state.taken = new Set(list.map(s => new Date(s).getTime()));
+      } catch (e) {
+        state.taken = new Set();
+      } finally {
+        state.loadingSlots = false;
+      }
+    }
+
+    // ── Calendar ───────────────────────────────────────────────
+    function renderCalendar() {
+      const { y, m } = state.view;
+      document.getElementById('cal-month').textContent = `${t().months[m]} ${y}`;
+      document.getElementById('cal-dow').innerHTML = t().dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+      const first = new Date(Date.UTC(y, m, 1));
+      const lead = (first.getUTCDay() + 6) % 7; // Monday-first
+      const daysInMonth = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+      const today = amsterdamToday();
+      let html = '';
+      for (let i = 0; i < lead; i++) html += '<div></div>';
+      for (let d = 1; d <= daysInMonth; d++) {
+        const day = { y, m, d };
+        const ok = isBookableDay(day);
+        const sel = state.selectedDay && cmpDay(day, state.selectedDay) === 0;
+        const isToday = cmpDay(day, today) === 0;
+        html += `<button type="button" class="cal-day${ok ? ' is-available' : ''}${sel ? ' is-selected' : ''}${isToday ? ' is-today' : ''}" data-day="${dayKey(y, m, d)}" ${ok ? '' : 'disabled'} aria-pressed="${sel}">${d}</button>`;
+      }
+      document.getElementById('cal-days').innerHTML = html;
+
+      const prevOk = dayKey(y, m, 1) > dayKey(state.minDay.y, state.minDay.m, 1);
+      const nextOk = dayKey(y, m, 1) < dayKey(state.maxDay.y, state.maxDay.m, 1);
+      document.getElementById('cal-prev').disabled = !prevOk;
+      document.getElementById('cal-next').disabled = !nextOk;
+    }
+
+    document.getElementById('cal-days').addEventListener('click', e => {
+      const btn = e.target.closest('.cal-day'); if (!btn || btn.disabled) return;
+      const [y, m, d] = btn.dataset.day.split('-').map(Number);
+      state.selectedDay = { y, m: m - 1, d };
+      state.selectedSlot = null;
+      renderCalendar(); renderSlots(); renderSummary();
+      if (window.innerWidth < 1024) document.getElementById('slots').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    document.getElementById('cal-prev').addEventListener('click', () => { const v = state.view; state.view = v.m === 0 ? { y: v.y - 1, m: 11 } : { y: v.y, m: v.m - 1 }; renderCalendar(); });
+    document.getElementById('cal-next').addEventListener('click', () => { const v = state.view; state.view = v.m === 11 ? { y: v.y + 1, m: 0 } : { y: v.y, m: v.m + 1 }; renderCalendar(); });
+
+    // ── Slots ──────────────────────────────────────────────────
+    function slotsForDay(day) {
+      const out = [];
+      for (let h = DAY_START_HOUR; h < DAY_END_HOUR; h++) {
+        for (let mi = 0; mi < 60; mi += SLOT_MINUTES) {
+          const start = fromAmsterdam(day.y, day.m, day.d, h, mi);
+          out.push({ start, label: `${pad(h)}:${pad(mi)}` });
+        }
+      }
+      return out;
+    }
+    function renderSlots() {
+      const el = document.getElementById('slots');
+      if (!state.selectedDay) { el.innerHTML = `<p class="slots-empty">${translations[currentLang]?.['slots-empty'] || 'Select a date first.'}</p>`; return; }
+      if (state.loadingSlots) { el.innerHTML = `<p class="slots-empty">${t().loading}</p>`; return; }
+      const now = Date.now();
+      const slots = slotsForDay(state.selectedDay);
+      let free = 0;
+      const html = slots.map(s => {
+        const ms = s.start.getTime();
+        const taken = state.taken.has(ms) || ms < now;
+        if (!taken) free++;
+        const sel = state.selectedSlot && state.selectedSlot.getTime() === ms;
+        return `<button type="button" class="slot${sel ? ' is-selected' : ''}${taken ? ' is-taken' : ''}" data-ms="${ms}" ${taken ? 'disabled' : ''} aria-pressed="${sel}">${s.label}</button>`;
+      }).join('');
+      el.innerHTML = free ? `<div class="slot-grid">${html}</div>` : `<p class="slots-empty">${t().noSlots}</p>`;
+    }
+    document.getElementById('slots').addEventListener('click', e => {
+      const btn = e.target.closest('.slot'); if (!btn || btn.disabled) return;
+      state.selectedSlot = new Date(+btn.dataset.ms);
+      renderSlots(); renderSummary();
+    });
+
+    function renderSummary() {
+      const box = document.getElementById('summary');
+      const submit = document.getElementById('submit-btn');
+      if (state.selectedDay && state.selectedSlot) {
+        const p = tzParts(state.selectedSlot);
+        const end = new Date(state.selectedSlot.getTime() + SLOT_MINUTES * 60000);
+        const pe = tzParts(end);
+        document.getElementById('summary-text').textContent = t().summary(fmtDate(state.selectedDay), `${pad(p.h)}:${pad(p.mi)} – ${pad(pe.h)}:${pad(pe.mi)}`);
+        box.hidden = false; submit.disabled = false;
+      } else { box.hidden = true; submit.disabled = true; }
+    }
+
+    // ── Submit ─────────────────────────────────────────────────
+    function setStatus(msg, kind) {
+      const el = document.getElementById('status');
+      if (!msg) { el.hidden = true; el.textContent = ''; el.className = 'status'; return; }
+      el.hidden = false; el.textContent = msg; el.className = 'status is-' + (kind || 'info');
+    }
+    function wireForm() {
+      document.getElementById('booking-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const name = document.getElementById('f-name').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        if (!state.selectedSlot) return setStatus(t().needSlot, 'error');
+        if (name.length < 2) { setStatus(t().needName, 'error'); document.getElementById('f-name').focus(); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setStatus(t().needEmail, 'error'); document.getElementById('f-email').focus(); return; }
+        if (N8N_BASE_URL.includes('REPLACE-ME')) return setStatus(t().offline, 'error');
+
+        const payload = {
+          name, email,
+          company: document.getElementById('f-company').value.trim(),
+          notes: document.getElementById('f-notes').value.trim(),
+          website: document.getElementById('f-website').value,
+          start_at: state.selectedSlot.toISOString(),
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          lang: currentLang,
+        };
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true; setStatus(t().sending, 'info');
+        try {
+          const res = await fetch(BOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) });
+          let data = {}; try { data = await res.json(); } catch (_) {}
+          if (res.status === 409 || data.error === 'slot_taken') {
+            setStatus(t().taken, 'error'); state.selectedSlot = null; await loadTaken(); renderSlots(); renderSummary(); return;
+          }
+          if (!res.ok || data.ok === false) { setStatus(t().invalid, 'error'); btn.disabled = false; return; }
+          showSuccess(email);
+        } catch (err) {
+          setStatus(t().offline, 'error'); btn.disabled = false;
+        }
+      });
+    }
+    function showSuccess(email) {
+      document.getElementById('success-when').textContent = document.getElementById('summary-text').textContent;
+      document.getElementById('success-email').textContent = email;
+      document.getElementById('booking-form').hidden = true;
+      document.getElementById('booking-success').hidden = false;
+      document.getElementById('booking-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Scroll fade-in ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); });
+
+    // ── Background parallax ────────────────────────────────────
+    (() => {
+      const top = document.getElementById('rings-top');
+      const bottom = document.getElementById('rings-bottom');
+      if (!top || !bottom || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let ticking = false;
+      const update = () => {
+        const y = window.scrollY;
+        top.style.transform    = `translate(-50%, calc(-50% - ${(y * 0.08).toFixed(1)}px))`;
+        bottom.style.transform = `translate(-50%, calc(-50% - ${(y * 0.14).toFixed(1)}px))`;
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+      update();
+    })();
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn   = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-menu');
+    const lines     = menuBtn.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+    function closeMobileMenu() {
+      menuOpen = false;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.style.maxHeight = '0';
+      mobileNav.style.borderTopColor = 'transparent';
+      lines[0].style.transform = 'none'; lines[1].style.opacity = '1'; lines[2].style.transform = 'none';
+    }
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.setAttribute('aria-expanded', String(menuOpen));
+      if (menuOpen) {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 300 + 'px';
+        mobileNav.style.borderTopColor = 'rgba(26,22,19,0.08)';
+        lines[0].style.transform = 'translateY(8px) rotate(45deg)'; lines[1].style.opacity = '0'; lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+      } else closeMobileMenu();
+    });
+    document.addEventListener('click', e => { if (menuOpen && !menuBtn.contains(e.target) && !mobileNav.contains(e.target)) closeMobileMenu(); });
+  </script>
+
+</body>
+</html>
