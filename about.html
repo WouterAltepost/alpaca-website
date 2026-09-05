@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About us | Alpaca AI</title>
+  <meta name="description" content="Alpaca AI is a small senior team of engineers in Amsterdam. We build custom AI systems that run inside your business, usually within weeks." />
+  <link rel="icon" type="image/png" href="brand_assets/alpaca-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas:  '#FAF8F4',
+            surface: '#F3EFE8',
+            card:    '#FFFFFF',
+            raised:  '#FFFFFF',
+            border:  'rgba(26,22,19,0.08)',
+            accent:  '#F09537',
+            'accent-dim': 'rgba(240,149,55,0.12)',
+            'accent-glow': 'rgba(240,149,55,0.25)',
+            ink:     '#1A1613',
+            muted:   '#5A544D',
+            subtle:  '#A39D94',
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body:    ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          letterSpacing: {
+            tight3: '-0.03em',
+            tight4: '-0.04em',
+            tight5: '-0.05em',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg:        #FAF8F4;
+      --surface:   #F3EFE8;
+      --card:      #FFFFFF;
+      --ink:       #1A1613;
+      --muted:     #5A544D;
+      --subtle:    #A39D94;
+      --line:      rgba(26,22,19,0.08);
+      --line-strong: rgba(26,22,19,0.16);
+      --accent:    #F09537;
+      --accent-hover: #E8862A;
+      --shadow-color: 38 26 12;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { background: var(--bg); overflow-x: clip; }
+
+    body {
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* Site-wide background layer (fixed, behind all content) */
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .site-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(240,149,55,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 45% at 100% 100%, rgba(240,149,55,0.08) 0%, transparent 65%);
+    }
+    .rings-wrap {
+      position: absolute;
+    }
+    .rings-top {
+      left: 50%;
+      top: 44%;
+      width: max(1500px, 130vw);
+      transform: translate(-50%, -50%);
+    }
+    .rings-bottom {
+      left: 78%;
+      top: 118%;
+      width: max(1300px, 110vw);
+      transform: translate(-50%, -50%);
+    }
+    .rings {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      stroke: #F09537;
+      stroke-width: 1.25;
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
+      mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 22%, rgba(0,0,0,1) 36%, transparent 54%);
+    }
+    .rings circle {
+      opacity: 0.26;
+      vector-effect: non-scaling-stroke;
+    }
+    /* One ripple per set: a single ring that expands outward and fades */
+    .rings .ripple {
+      stroke-width: 2;
+      transform-origin: 800px 800px;
+      transform-box: view-box;
+      animation: ripple 9s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+    }
+    .rings-bottom .ripple { animation-delay: 4.5s; }
+    @keyframes ripple {
+      0%   { transform: scale(0.6); opacity: 0.6; }
+      70%  { opacity: 0.18; }
+      100% { transform: scale(9.5); opacity: 0; }
+    }
+
+    @media (max-width: 1023px) {
+      .rings-top    { width: 1100px; top: 42%; }
+      .rings-bottom { width: 900px; left: 85%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rings .ripple { animation: none; opacity: 0; }
+    }
+
+    /* Soft veil behind text blocks so the rings never cut through copy */
+    .text-veil {
+      position: absolute;
+      inset: -48px -12%;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(250,248,244,0.96) 0%, rgba(250,248,244,0.78) 42%, rgba(250,248,244,0) 74%);
+    }
+    @media (max-width: 1023px) {
+      .text-veil, .text-veil.is-wide { left: 0; right: 0; }
+    }
+
+    /* Typography */
+    .display-xl {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+    .display-lg {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+    }
+    .body-relaxed { line-height: 1.75; }
+
+    /* Accent highlight text */
+    .text-accent { color: var(--accent); }
+
+    /* Card styles */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 8px 24px -12px rgba(var(--shadow-color) / 0.10);
+      transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+    .card:hover {
+      border-color: rgba(240,149,55,0.35);
+      transform: translateY(-2px);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 24px 48px -16px rgba(var(--shadow-color) / 0.18),
+        0 0 0 4px rgba(240,149,55,0.08);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.10),
+        0 8px 20px -8px rgba(240,149,55,0.55);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.10),
+        0 12px 28px -8px rgba(240,149,55,0.6);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px rgba(240,149,55,0.6);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      padding: 13px 27px;
+      border-radius: 100px;
+      border: 1px solid var(--line-strong);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(26,22,19,0.4);
+      background: rgba(26,22,19,0.04);
+      transform: translateY(-1px);
+    }
+    .btn-ghost:active { transform: translateY(0); }
+    .btn-ghost:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px rgba(240,149,55,0.6);
+    }
+
+    /* Nav: translucent, blurred */
+    nav {
+      background: rgba(250,248,244,0.82);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* Brand mark: the PNG is a white alpaca on transparent, so mask it with ink */
+    .brand-mark {
+      display: block;
+      background: var(--ink);
+      -webkit-mask: url('brand_assets/alpaca-icon.png') center / contain no-repeat;
+      mask: url('brand_assets/alpaca-icon.png') center / contain no-repeat;
+    }
+
+    /* Service icon container */
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(240,149,55,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(240,149,55,0.22);
+    }
+
+    /* Step number */
+    .step-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 4.5rem;
+      letter-spacing: -0.05em;
+      color: rgba(240,149,55,0.35);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* CTA card */
+    .cta-card {
+      background: linear-gradient(160deg, #FFFFFF 0%, #FBF6EE 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 32px 64px -24px rgba(var(--shadow-color) / 0.18);
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 110%, rgba(240,149,55,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Scroll fade-in */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Tag pill */
+    /* Section eyebrow: short accent rule + tracked capitals */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      border-radius: 1px;
+      background: #F09537;
+      flex-shrink: 0;
+    }
+
+    /* Nav link */
+    .nav-link {
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link:focus-visible { outline: 2px solid rgba(240,149,55,0.6); outline-offset: 3px; border-radius: 4px; }
+
+    /* Testimonial quote */
+    .testimonial-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 8px 24px -12px rgba(var(--shadow-color) / 0.10);
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .testimonial-card:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FDEBD6, #F9DDBB);
+      border: 1px solid rgba(240,149,55,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #C4681A;
+      flex-shrink: 0;
+    }
+
+    /* Section spacing */
+    .section { padding: 120px 0; }
+    @media (max-width: 768px) {
+      .section { padding: 80px 0; }
+      .display-xl { font-size: clamp(2.5rem, 8vw, 5rem); }
+    }
+
+    /* Responsive hero type */
+    .hero-headline { font-size: clamp(3rem, 7vw, 6.5rem); }
+
+    /* Horizontal rule with label */
+    .rule-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--subtle);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .rule-label::before,
+    .rule-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* ── Language toggle (floating pill, bottom-right) ── */
+    .lang-toggle {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 4px;
+      gap: 2px;
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.06),
+        0 12px 32px -8px rgba(var(--shadow-color) / 0.22);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 7px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+      line-height: 1;
+    }
+    .lang-btn.active {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+    .lang-btn:hover:not(.active) { color: var(--ink); background: rgba(26,22,19,0.05); }
+    .lang-btn:active { transform: scale(0.96); }
+    .lang-btn:focus-visible {
+      outline: 2px solid rgba(240,149,55,0.7);
+      outline-offset: 2px;
+      border-radius: 100px;
+    }
+  </style>
+
+  <style>
+    /* ── About page ───────────────────────────────────────────── */
+    .principle { display: grid; grid-template-columns: 64px 1fr; gap: 20px; padding: 32px 0; border-top: 1px solid rgba(26,22,19,0.10); }
+    .principle:last-child { border-bottom: 1px solid rgba(26,22,19,0.10); }
+    @media (min-width: 768px) { .principle { grid-template-columns: 128px 1fr; gap: 32px; padding: 44px 0; } }
+    .principle h3 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(1.375rem, 2.4vw, 1.875rem); letter-spacing: -0.02em; line-height: 1.15; color: var(--ink); text-wrap: balance; }
+    .principle p { margin-top: 12px; color: #5A544D; line-height: 1.7; max-width: 560px; }
+    .story p + p { margin-top: 1.25em; }
+    @media (max-width: 767px) { main h2 br { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Site-wide background: fixed behind everything, drifts with scroll -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="site-glow"></div>
+    <div class="rings-wrap rings-top" id="rings-top">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+    <div class="rings-wrap rings-bottom" id="rings-bottom">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid items-center h-20" style="grid-template-columns: 1fr auto 1fr;">
+
+        <!-- Logo: alpaca icon only -->
+        <a href="/" class="justify-self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 44px; width: 31px;"></span>
+        </a>
+
+        <!-- Links (true centre column) -->
+        <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
+          <a href="/#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="/#process"  class="nav-link" data-i18n="nav-process">Process</a>
+          <a href="/about" class="nav-link" data-i18n="nav-about">About</a>
+          <a href="/#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center justify-self-end gap-3" style="grid-column: 3;">
+          <a href="/#contact" class="hidden sm:inline-flex btn-primary text-sm px-5 py-2.5">
+            <span data-i18n="nav-cta">Get in touch</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" aria-label="Open menu" aria-expanded="false">
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
+      <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
+        <a href="/#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="/#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
+        <a href="/about" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-about">About</a>
+        <a href="/#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
+        <a href="/#contact" class="btn-primary mt-4 justify-center" onclick="closeMobileMenu()" data-i18n="nav-cta">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       BOOKING
+  ═══════════════════════════════════════ -->
+  <main class="relative" style="padding: 150px 0 0;">
+
+    <!-- Intro -->
+    <section class="max-w-7xl mx-auto px-6 lg:px-8" style="padding-bottom: 96px;">
+      <div class="fade-up relative" style="max-width: 800px;">
+        <div class="text-veil" aria-hidden="true"></div>
+        <div class="eyebrow mb-4"><span data-i18n="about-tag">About us</span></div>
+        <h1 class="display-lg text-ink" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem); text-wrap: balance;" data-i18n="about-h1" data-i18n-html>
+          AI does not have to be <span class="text-accent">hard.</span>
+        </h1>
+        <p class="mt-6 body-relaxed text-lg md:text-xl" style="color: #5A544D; max-width: 620px; line-height: 1.7;" data-i18n="about-sub">
+          Most companies see AI as complicated, risky and expensive. We started Alpaca AI to show it does not have to be.
+        </p>
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+          <div class="lg:col-span-5 fade-up">
+            <div class="eyebrow mb-4"><span data-i18n="story-tag">Why we exist</span></div>
+            <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="story-h2" data-i18n-html>
+              Engineers first. <br>Consultants second.
+            </h2>
+          </div>
+          <div class="lg:col-span-7 story fade-up body-relaxed" style="color: #5A544D; line-height: 1.75; font-size: 1.0625rem; max-width: 640px; transition-delay: 80ms;">
+            <p data-i18n="story-p1">We come from building software and data systems inside companies. From there we kept seeing the same thing happen with AI: a pilot gets funded, a demo impresses the board, and six months later nothing runs in production. The consultants move on. The team is left with a slide deck.</p>
+            <p data-i18n="story-p2">That is why Alpaca AI exists. We scope the problem, build the system and get it running inside your business, usually within weeks. The people who talk to you are the people who write the code.</p>
+            <p data-i18n="story-p3">We also think the whole thing is made to look harder than it is. Done properly, AI is ordinary engineering: a clear scope, a clear price and a result you can measure. It does not take a big budget to make a big difference, and for most companies it is one of the best investments they can make right now.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <div class="max-w-xl mb-12 fade-up">
+          <div class="eyebrow mb-4"><span data-i18n="principles-tag">Principles</span></div>
+          <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="principles-h2">Three things we hold to</h2>
+        </div>
+        <div class="fade-up">
+          <div class="principle">
+            <div class="step-num">01</div>
+            <div>
+              <h3 data-i18n="p1-h">Built around your business, not the model.</h3>
+              <p data-i18n="p1-b">We start from your workflow and your data, and choose the technology last. The model is a component, not the point.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="step-num">02</div>
+            <div>
+              <h3 data-i18n="p2-h">Production over demos.</h3>
+              <p data-i18n="p2-b">If it does not run in your business, it does not count. We ship working systems, not proofs of concept.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="step-num">03</div>
+            <div>
+              <h3 data-i18n="p3-h">We say no when AI is the wrong tool.</h3>
+              <p data-i18n="p3-b">Some problems need a spreadsheet, a rule or a hire. You get an honest answer, not a pitch.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+          <div class="lg:col-span-5 fade-up">
+            <div class="eyebrow mb-4"><span data-i18n="team-tag">The team</span></div>
+            <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="team-h2" data-i18n-html>
+              Small, senior, <br>hands-on.
+            </h2>
+          </div>
+          <div class="lg:col-span-7 fade-up" style="transition-delay: 80ms;">
+            <p class="body-relaxed" style="color: #5A544D; line-height: 1.75; font-size: 1.0625rem; max-width: 640px;" data-i18n="team-p">
+              A small team of senior engineers and data specialists who have shipped production systems before. No account managers, no handovers, no juniors learning on your budget. Based in Amsterdam.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="cta-card px-8 py-16 md:px-16 md:py-20 text-center fade-up">
+          <div class="eyebrow mb-6 mx-auto" data-i18n="cta-tag">Let's talk</div>
+          <h2 class="display-lg text-ink mx-auto mb-6" style="font-size: clamp(2.25rem, 5vw, 4rem); max-width: 700px;" data-i18n="cta-h2" data-i18n-html>
+            Ready to build your <br>
+            <span class="text-accent">AI advantage?</span>
+          </h2>
+          <p class="mb-10 mx-auto body-relaxed" style="color: #5A544D; max-width: 480px; line-height: 1.7;" data-i18n="cta-body">
+            Tell us about your project. We typically respond within 24 hours and offer a free 30-minute discovery call.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="mailto:wout@alpacaai.nl" class="btn-primary text-base px-8 py-4">
+              wout@alpacaai.nl
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="/book" class="btn-ghost text-base px-8 py-4" style="color: #1A1613;" data-i18n="cta-btn2">Book a discovery call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <div style="border-top: 1px solid rgba(26,22,19,0.08); padding: 80px 0 40px; overflow: hidden; position: relative;">
+
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(240,149,55,0.10) 0%, transparent 70%); pointer-events: none;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+
+      <!-- Top row: links + contact -->
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
+          <div class="flex flex-col gap-3">
+            <a href="/#services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="/#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
+            <a href="/about" class="nav-link text-sm" data-i18n="nav-about">About</a>
+            <a href="/#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-contact-label">Get in touch</p>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #5C564E;">wout@alpacaai.nl</a>
+            <a href="tel:+31628283985" class="nav-link text-sm" style="color: #5C564E;">+31 6 28283985</a>
+            <p class="text-sm" style="color: #5C564E; line-height: 1.6;">Vrijheidslaan 18<br>1078 PJ Amsterdam</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-legal-label">Legal</p>
+          <p class="text-sm" style="color: #A39D94;" data-i18n="footer-copy">© 2026 Alpaca AI</p>
+          <p class="text-xs mt-1" style="color: #A39D94;" data-i18n="footer-rights">All rights reserved.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background: #F3EFE8; padding: 24px 0; border-top: 1px solid rgba(26,22,19,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 32px; width: 22px; opacity: 0.55;"></span>
+        </a>
+        <p class="text-xs" style="color: #A39D94;" data-i18n="footer-built">Built with care in 2026 · Alpaca AI</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating language toggle -->
+  <div class="lang-toggle" role="group" aria-label="Select language">
+    <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')" aria-label="English">EN</button>
+    <button class="lang-btn" data-lang="nl" onclick="setLanguage('nl')" aria-label="Nederlands">NL</button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script>
+    // ── i18n ───────────────────────────────────────────────────
+    const translations = {
+      nl: {
+        'nav-services': 'Services', 'nav-process': 'Proces', 'nav-about': 'Over ons', 'nav-contact': 'Contact', 'nav-cta': 'Neem contact op',
+        'footer-nav': 'Navigatie', 'footer-contact-label': 'Neem contact op', 'footer-legal-label': 'Juridisch',
+        'footer-copy': '© 2026 Alpaca AI', 'footer-rights': 'Alle rechten voorbehouden.', 'footer-built': 'Met zorg gebouwd in 2026 · Alpaca AI',
+
+        'about-tag': 'Over ons',
+        'about-h1':  'AI hoeft niet <span class="text-accent">moeilijk</span> te zijn.',
+        'about-sub': 'De meeste bedrijven zien AI als ingewikkeld, riskant en duur. Wij zijn Alpaca AI gestart om te laten zien dat dat niet zo hoeft te zijn.',
+        'story-tag': 'Waarom wij bestaan',
+        'story-h2':  'Eerst engineers. <br>Dan consultants.',
+        'story-p1':  'Wij komen uit het bouwen van software en datasystemen binnen bedrijven. Van daaruit zagen we steeds hetzelfde gebeuren met AI: een pilot krijgt budget, een demo maakt indruk op de directie, en zes maanden later draait er niets in productie. De consultants zijn vertrokken. Het team blijft achter met een slide deck.',
+        'story-p2':  'Daarom bestaat Alpaca AI. Wij scopen het probleem, bouwen het systeem en zorgen dat het draait in jouw bedrijf, meestal binnen weken. De mensen met wie je praat zijn de mensen die de code schrijven.',
+        'story-p3':  'We vinden ook dat het allemaal moeilijker wordt gemaakt dan het is. Goed aangepakt is AI gewoon engineering: een duidelijke scope, een duidelijke prijs en een resultaat dat je kunt meten. Het vraagt geen groot budget om een groot verschil te maken, en voor de meeste bedrijven is het op dit moment een van de beste investeringen die ze kunnen doen.',
+        'principles-tag': 'Principes',
+        'principles-h2':  'Drie dingen waar we aan vasthouden',
+        'p1-h': 'Gebouwd rond jouw bedrijf, niet rond het model.',
+        'p1-b': 'We beginnen bij jouw werkproces en jouw data, en kiezen de technologie als laatste. Het model is een onderdeel, niet het doel.',
+        'p2-h': 'Productie boven demo\'s.',
+        'p2-b': 'Als het niet draait in jouw bedrijf, telt het niet. Wij leveren werkende systemen, geen proofs of concept.',
+        'p3-h': 'Wij zeggen nee als AI het verkeerde middel is.',
+        'p3-b': 'Sommige problemen vragen om een spreadsheet, een regel of een nieuwe collega. Je krijgt een eerlijk antwoord, geen verkooppraatje.',
+        'team-tag': 'Het team',
+        'team-h2':  'Klein, senior, <br>hands-on.',
+        'team-p':   'Een klein team van senior engineers en dataspecialisten die eerder productiesystemen hebben opgeleverd. Geen accountmanagers, geen overdrachten, geen juniors die leren op jouw budget. Gevestigd in Amsterdam.',
+        'cta-tag':  'Laten we praten',
+        'cta-h2':   'Klaar om jouw <br><span class="text-accent">AI-voordeel te bouwen?</span>',
+        'cta-body': 'Vertel ons over jouw project. We reageren doorgaans binnen 24 uur en bieden een gratis kennismakingsgesprek van 30 minuten aan.',
+        'cta-btn2': 'Plan een kennismakingsgesprek',
+      }
+    };
+    let currentLang = localStorage.getItem('alpaca-lang') || 'en';
+    const t = () => ui[currentLang] || ui.en;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const isHtml = el.hasAttribute('data-i18n-html');
+        el.dataset.enContent = isHtml ? el.innerHTML : el.textContent.trim();
+      });
+      if (currentLang === 'nl') setLanguage('nl', false);
+      updateToggleUI();
+    });
+
+    function setLanguage(lang, persist = true) {
+      const tr = translations[lang] || {};
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        const isHtml = el.hasAttribute('data-i18n-html');
+        const content = (lang === 'en') ? el.dataset.enContent : (tr[key] !== undefined ? tr[key] : el.dataset.enContent);
+        if (content === undefined) return;
+        if (isHtml) el.innerHTML = content; else el.textContent = content;
+      });
+      document.documentElement.lang = lang;
+      currentLang = lang;
+      if (persist) localStorage.setItem('alpaca-lang', lang);
+      updateToggleUI();
+    }
+    function updateToggleUI() {
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === currentLang));
+    }
+
+    // ── Scroll fade-in ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); });
+
+    // ── Background parallax ────────────────────────────────────
+    (() => {
+      const top = document.getElementById('rings-top');
+      const bottom = document.getElementById('rings-bottom');
+      if (!top || !bottom || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let ticking = false;
+      const update = () => {
+        const y = window.scrollY;
+        top.style.transform    = `translate(-50%, calc(-50% - ${(y * 0.08).toFixed(1)}px))`;
+        bottom.style.transform = `translate(-50%, calc(-50% - ${(y * 0.14).toFixed(1)}px))`;
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+      update();
+    })();
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn   = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-menu');
+    const lines     = menuBtn.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+    function closeMobileMenu() {
+      menuOpen = false;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.style.maxHeight = '0';
+      mobileNav.style.borderTopColor = 'transparent';
+      lines[0].style.transform = 'none'; lines[1].style.opacity = '1'; lines[2].style.transform = 'none';
+    }
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.setAttribute('aria-expanded', String(menuOpen));
+      if (menuOpen) {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 300 + 'px';
+        mobileNav.style.borderTopColor = 'rgba(26,22,19,0.08)';
+        lines[0].style.transform = 'translateY(8px) rotate(45deg)'; lines[1].style.opacity = '0'; lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+      } else closeMobileMenu();
+    });
+    document.addEventListener('click', e => { if (menuOpen && !menuBtn.contains(e.target) && !mobileNav.contains(e.target)) closeMobileMenu(); });
+  </script>
+
+</body>
+</html>
