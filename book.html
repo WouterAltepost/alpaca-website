@@ -61,14 +61,14 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
-    html { background: var(--bg); }
+    html { background: var(--bg); overflow-x: clip; }
 
     body {
       background: transparent;
       color: var(--ink);
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     /* Grain texture overlay */
@@ -158,6 +158,9 @@
       z-index: -1;
       pointer-events: none;
       background: radial-gradient(ellipse 58% 62% at 50% 50%, rgba(250,248,244,0.96) 0%, rgba(250,248,244,0.78) 42%, rgba(250,248,244,0) 74%);
+    }
+    @media (max-width: 1023px) {
+      .text-veil, .text-veil.is-wide { left: 0; right: 0; }
     }
 
     /* Typography */
@@ -678,7 +681,7 @@
       <div class="grid gap-12 lg:gap-16 items-start" style="grid-template-columns: 1fr;" id="booking-grid">
 
         <!-- LEFT: intro -->
-        <div class="fade-up lg:sticky relative" style="top: 120px;">
+        <div class="fade-up relative lg:sticky lg:top-[120px]">
           <div class="text-veil" aria-hidden="true"></div>
           <div class="eyebrow mb-4"><span data-i18n="book-tag">Discovery call</span></div>
           <h1 class="display-lg text-ink" style="font-size: clamp(2.25rem, 4.5vw, 3.5rem); max-width: 12ch;" data-i18n="book-h1" data-i18n-html>

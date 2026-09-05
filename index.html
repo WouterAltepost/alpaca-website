@@ -61,14 +61,14 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
-    html { background: var(--bg); }
+    html { background: var(--bg); overflow-x: clip; }
 
     body {
       background: transparent;
       color: var(--ink);
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     /* Grain texture overlay */
@@ -162,6 +162,17 @@
     .text-veil.is-wide {
       inset: -40px -4%;
       background: radial-gradient(ellipse 72% 78% at 50% 50%, rgba(250,248,244,0.97) 0%, rgba(250,248,244,0.85) 50%, rgba(250,248,244,0) 80%);
+    }
+    @media (max-width: 1023px) {
+      .text-veil, .text-veil.is-wide { left: 0; right: 0; }
+    }
+
+    /* Hero: full-height stage on desktop, tight on phones */
+    .hero { min-height: min(88vh, 860px); padding: 160px 0 112px; }
+    @media (max-width: 767px) {
+      .hero { min-height: 0; padding: 128px 0 64px; }
+      /* Headings with a designed line break: let them wrap naturally on narrow screens */
+      #process h2 br, .cta-card h2 br { display: none; }
     }
 
     /* Typography */
@@ -568,7 +579,7 @@
   <!-- ═══════════════════════════════════════
        HERO
   ═══════════════════════════════════════ -->
-  <section class="relative flex flex-col justify-center" style="min-height: min(88vh, 860px); padding: 160px 0 112px;">
+  <section class="hero relative flex flex-col justify-center">
 
     <div class="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
       <div class="text-veil" aria-hidden="true"></div>
@@ -718,7 +729,7 @@
       <div class="max-w-xl mb-16 fade-up">
         <div class="eyebrow mb-4"><span data-i18n="process-tag">How we work</span></div>
         <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="process-h2" data-i18n-html>
-          From brief to live in weeks,<br>not months
+          From brief to live in weeks, <br>not months
         </h2>
       </div>
 
@@ -871,7 +882,7 @@
         </div>
 
         <h2 class="display-lg text-ink mx-auto mb-6" style="font-size: clamp(2.25rem, 5vw, 4rem); max-width: 700px;" data-i18n="cta-h2" data-i18n-html>
-          Ready to build your<br>
+          Ready to build your <br>
           <span class="text-accent">AI advantage?</span>
         </h2>
 
@@ -1033,7 +1044,7 @@
 
         // CTA section
         'cta-tag':  'Laten we praten',
-        'cta-h2':   'Klaar om jouw<br><span class="text-accent">AI-voordeel te bouwen?</span>',
+        'cta-h2':   'Klaar om jouw <br><span class="text-accent">AI-voordeel te bouwen?</span>',
         'cta-body': 'Vertel ons over jouw project. We reageren doorgaans binnen 24 uur en bieden een gratis kennismakingsgesprek van 30 minuten aan.',
         'cta-btn2': 'Plan een kennismakingsgesprek',
 
