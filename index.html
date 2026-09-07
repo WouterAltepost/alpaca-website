@@ -184,25 +184,32 @@
       <div class="grid md:grid-cols-2 gap-4">
 
         <!-- Card 1 -->
-        <div class="card p-8 fade-up">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open>
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M11 2L20 7v8l-9 5-9-5V7l9-5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"></path>
               <path d="M11 2v14M2 7l9 5M20 7l-9 5" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"></path>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI Strategie &amp; Advies</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Wij brengen jouw bedrijf in kaart en koppelen het aan de juiste AI-kansen. We snijden door de ruis om te vinden wat écht resultaat oplevert. Roadmaps, use-case prioritering, build-vs-buy analyse.</p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI Strategie &amp; Advies</h3>
+            <p class="svc-teaser">Wij brengen jouw bedrijf in kaart en koppelen het aan de juiste AI-kansen.</p>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Wij brengen jouw bedrijf in kaart en koppelen het aan de juiste AI-kansen. We snijden door de ruis om te vinden wat écht resultaat oplevert. Roadmaps, use-case prioritering, build-vs-buy analyse.</p>
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Roadmapping</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Use-case analyse</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">ROI-modellering</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 2 -->
-        <div class="card p-8 fade-up" style="transition-delay: 60ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 60ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"></rect>
               <rect x="12" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"></rect>
@@ -210,48 +217,65 @@
               <path d="M15.5 12v7M12 15.5h7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"></path>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">Maatwerk AI-ontwikkeling</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Van LLM-aangedreven applicaties tot fijnafgestemde modellen en agentpijplijnen. Wij bouwen op maat gemaakte AI-systemen rondom jouw data, processen en gebruikers.</p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">Maatwerk AI-ontwikkeling</h3>
+            <p class="svc-teaser">Van LLM-aangedreven applicaties tot fijnafgestemde modellen en agentpijplijnen.</p>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Van LLM-aangedreven applicaties tot fijnafgestemde modellen en agentpijplijnen. Wij bouwen op maat gemaakte AI-systemen rondom jouw data, processen en gebruikers.</p>
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">LLM-apps</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Fine-tuning</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">AI-agenten</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 3 -->
-        <div class="card p-8 fade-up" style="transition-delay: 120ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 120ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M4 11h14M11 4l7 7-7 7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
               <circle cx="11" cy="11" r="9" stroke="#F09537" stroke-width="1.5"></circle>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI-integratie &amp; API's</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Integreer AI in jouw bestaande stack zonder opnieuw te beginnen. Wij koppelen modellen aan jouw CRM, ERP of interne tools, en zorgen dat alles gesynchroniseerd blijft.</p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI-integratie &amp; API's</h3>
+            <p class="svc-teaser">Integreer AI in jouw bestaande stack zonder opnieuw te beginnen.</p>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Integreer AI in jouw bestaande stack zonder opnieuw te beginnen. Wij koppelen modellen aan jouw CRM, ERP of interne tools, en zorgen dat alles gesynchroniseerd blijft.</p>
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">API-ontwerp</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Stackintegratie</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Datapijplijnen</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 4 -->
-        <div class="card p-8 fade-up" style="transition-delay: 180ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 180ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M5 17L3 19V7a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"></path>
               <path d="M8 10h6M8 13h4" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"></path>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI-automatisering</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Verander handmatige, repetitieve werkstromen in autonome systemen. Documentverwerking, klanttriage, rapportage, onderzoek: wij automatiseren het werk zodat jouw team zich kan richten op wat ertoe doet.</p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;">AI-automatisering</h3>
+            <p class="svc-teaser">Verander handmatige, repetitieve werkstromen in autonome systemen.</p>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;">Verander handmatige, repetitieve werkstromen in autonome systemen. Documentverwerking, klanttriage, rapportage, onderzoek: wij automatiseren het werk zodat jouw team zich kan richten op wat ertoe doet.</p>
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Werkstroomautomatisering</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Document AI</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);">Intelligente triage</span>
           </div>
-        </div>
+          </div>
+        </details>
 
       </div>
     </div>
@@ -270,27 +294,27 @@
         <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);">Van briefing naar live in weken, niet maanden</h2>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-8">
+      <div class="grid md:grid-cols-4 gap-8 steps">
 
-        <div class="fade-up">
+        <div class="fade-up step-item">
           <div class="step-num">01</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">Verkenning</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;">Wij duiken in jouw bedrijf, data en team om te begrijpen wat je echt tegenhoudt, en wat AI daadwerkelijk kan oplossen.</p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 80ms;">
+        <div class="fade-up step-item" style="transition-delay: 80ms;">
           <div class="step-num">02</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">Blauwdruk</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;">Een helder technisch plan: architectuur, modellen, integraties en een leveringsplanning. Geen onduidelijkheid, geen verrassingen.</p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 160ms;">
+        <div class="fade-up step-item" style="transition-delay: 160ms;">
           <div class="step-num">03</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">Bouwen</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;">Snelle iteratie in sprints van 2 weken. Je ziet werkende software vroeg en regelmatig, niet pas aan het einde.</p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 240ms;">
+        <div class="fade-up step-item" style="transition-delay: 240ms;">
           <div class="step-num">04</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;">Lanceer &amp; Groei</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;">Productie-implementatie, monitoring en doorlopende optimalisatie. Wij blijven betrokken terwijl jouw systeem leert en groeit.</p>
@@ -553,6 +577,17 @@
         }
       });
     });
+
+    // ── Collapsible cards on phones ────────────────────────────
+    // Markup ships with every card open; on phones we close them so the page scans.
+    (() => {
+      const cards = document.querySelectorAll('details.svc');
+      if (!cards.length) return;
+      const mq = window.matchMedia('(max-width: 767px)');
+      const apply = () => cards.forEach(d => { d.open = !mq.matches; d.querySelector('summary').tabIndex = mq.matches ? 0 : -1; });
+      apply();
+      mq.addEventListener('change', apply);
+    })();
 
     // ── Background parallax ────────────────────────────────────
     (() => {

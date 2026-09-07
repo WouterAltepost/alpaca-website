@@ -14,6 +14,7 @@
 - **Never edit the generated root or `nl/` HTML files directly**; they are overwritten by the build.
 - Translatable text is marked with `data-i18n="key"` (plain text) or `data-i18n="key" data-i18n-html` (inner HTML). Attributes use `data-i18n-attrs="aria-label=key"`. Adding a marked element without a matching key in `nl.json` fails the build on purpose.
 - The source HTML is English and links use the `src` paths in `site.config.mjs` (`/about`, `/book`, ...); the build rewrites every internal link to the real path per language. Old URLs (`/nl/...`, `/about`, `/book`, `/services`) redirect in `vercel.json`.
+- Service cards are `<details class="card svc" open>`: open on desktop, collapsed on phones by a small script; the build adds a one-sentence teaser from the body text. Steps use `.step-item` inside `.steps`, which becomes a compact timeline under 768px. Desktop layout is unchanged by either.
 - Page-specific styles stay in an inline `<style>` in that page's source; they load after `assets/site.css`, so restate `[hidden] { display: none }` for any class that sets `display`.
 
 ## Local Server

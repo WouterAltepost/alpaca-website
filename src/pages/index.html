@@ -174,27 +174,33 @@
       <div class="grid md:grid-cols-2 gap-4">
 
         <!-- Card 1 -->
-        <div class="card p-8 fade-up">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open>
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M11 2L20 7v8l-9 5-9-5V7l9-5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
               <path d="M11 2v14M2 7l9 5M20 7l-9 5" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s1-title">AI Strategy & Consulting</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s1-body">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s1-title">AI Strategy & Consulting</h3>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s1-body">
             We map your business to the right AI opportunities, cutting through the noise to find what will actually drive outcomes. Roadmaps, use-case prioritisation, build-vs-buy analysis.
           </p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s1-t1">Roadmapping</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s1-t2">Use-case audit</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s1-t3">ROI modelling</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 2 -->
-        <div class="card p-8 fade-up" style="transition-delay: 60ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 60ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"/>
               <rect x="12" y="3" width="7" height="7" rx="1.5" stroke="#F09537" stroke-width="1.5"/>
@@ -202,54 +208,68 @@
               <path d="M15.5 12v7M12 15.5h7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s2-title">Custom AI Development</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s2-body">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s2-title">Custom AI Development</h3>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s2-body">
             From LLM-powered applications to fine-tuned models and agent pipelines, we build bespoke AI systems designed around your data, your processes, and your users.
           </p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s2-t1">LLM apps</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s2-t2">Fine-tuning</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s2-t3">AI agents</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 3 -->
-        <div class="card p-8 fade-up" style="transition-delay: 120ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 120ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M4 11h14M11 4l7 7-7 7" stroke="#F09537" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="11" cy="11" r="9" stroke="#F09537" stroke-width="1.5"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s3-title">AI Integration & APIs</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s3-body">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s3-title">AI Integration & APIs</h3>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s3-body">
             Embed AI into your existing stack without rebuilding from scratch. We connect models to your CRM, ERP, or internal tools, and make sure everything stays in sync.
           </p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s3-t1">API design</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s3-t2">Stack integration</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s3-t3">Data pipelines</span>
           </div>
-        </div>
+          </div>
+        </details>
 
         <!-- Card 4 -->
-        <div class="card p-8 fade-up" style="transition-delay: 180ms;">
-          <div class="service-icon mb-5">
+        <details class="card p-8 fade-up svc" open style="transition-delay: 180ms;">
+          <summary class="svc-head">
+            <div class="service-icon mb-5">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
               <path d="M5 17L3 19V7a2 2 0 012-2h12a2 2 0 012 2v7a2 2 0 01-2 2H5z" stroke="#F09537" stroke-width="1.5" stroke-linejoin="round"/>
               <path d="M8 10h6M8 13h4" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s4-title">AI Automation</h3>
-          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s4-body">
+            <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="s4-title">AI Automation</h3>
+            <span class="svc-chevron" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </summary>
+          <div class="svc-body">
+            <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="s4-body">
             Turn manual, repetitive workflows into autonomous systems. Document processing, customer triage, reporting, research: we automate the work so your team can focus on what matters.
           </p>
-          <div class="mt-6 flex flex-wrap gap-2">
+            <div class="mt-6 flex flex-wrap gap-2">
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s4-t1">Workflow automation</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s4-t2">Document AI</span>
             <span class="text-xs px-3 py-1 rounded-full" style="background: rgba(26,22,19,0.04); color: #5C564E; border: 1px solid rgba(26,22,19,0.08);" data-i18n="s4-t3">Intelligent triage</span>
           </div>
-        </div>
+          </div>
+        </details>
 
       </div>
     </div>
@@ -270,9 +290,9 @@
         </h2>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-8">
+      <div class="grid md:grid-cols-4 gap-8 steps">
 
-        <div class="fade-up">
+        <div class="fade-up step-item">
           <div class="step-num">01</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step1-title">Discovery</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step1-body">
@@ -280,7 +300,7 @@
           </p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 80ms;">
+        <div class="fade-up step-item" style="transition-delay: 80ms;">
           <div class="step-num">02</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step2-title">Blueprint</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step2-body">
@@ -288,7 +308,7 @@
           </p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 160ms;">
+        <div class="fade-up step-item" style="transition-delay: 160ms;">
           <div class="step-num">03</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step3-title">Build</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step3-body">
@@ -296,7 +316,7 @@
           </p>
         </div>
 
-        <div class="fade-up" style="transition-delay: 240ms;">
+        <div class="fade-up step-item" style="transition-delay: 240ms;">
           <div class="step-num">04</div>
           <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="step4-title">Launch & Scale</h3>
           <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="step4-body">
@@ -582,6 +602,17 @@
         }
       });
     });
+
+    // ── Collapsible cards on phones ────────────────────────────
+    // Markup ships with every card open; on phones we close them so the page scans.
+    (() => {
+      const cards = document.querySelectorAll('details.svc');
+      if (!cards.length) return;
+      const mq = window.matchMedia('(max-width: 767px)');
+      const apply = () => cards.forEach(d => { d.open = !mq.matches; d.querySelector('summary').tabIndex = mq.matches ? 0 : -1; });
+      apply();
+      mq.addEventListener('change', apply);
+    })();
 
     // ── Background parallax ────────────────────────────────────
     (() => {

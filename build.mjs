@@ -123,6 +123,16 @@ function buildPage(page, lang) {
   descEl.setAttribute('content', description);
   descEl.insertAdjacentHTML('afterend', '\n' + headBlock(page, lang, title, description));
 
+  // Collapsible cards: a one-sentence teaser (first sentence of the body) shown while collapsed on phones
+  for (const d of root.querySelectorAll('details.svc')) {
+    const p = d.querySelector('.svc-body p');
+    const h3 = d.querySelector('summary h3');
+    if (!p || !h3) continue;
+    const text = p.textContent.replace(/\s+/g, ' ').trim();
+    const m = text.match(/^(.+?[.!?])(\s|$)/);
+    h3.insertAdjacentHTML('afterend', '\n            <p class="svc-teaser">' + esc(m ? m[1] : text) + '</p>');
+  }
+
   // Links between pages
   for (const a of root.querySelectorAll('a[href]')) a.setAttribute('href', localiseHref(a.getAttribute('href'), lang));
 
