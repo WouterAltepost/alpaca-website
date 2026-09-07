@@ -15,6 +15,20 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
   </url>
   <url>
+    <loc>https://alpacaai.nl/services</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/services" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/diensten" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/services" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/nl/diensten</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/services" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/diensten" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/services" />
+  </url>
+  <url>
     <loc>https://alpacaai.nl/about</loc>
     <lastmod>2026-09-07</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/about" />

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Websites and software for Dutch businesses | Alpaca AI</title>
+  <meta name="description" content="Websites from €595, maintenance from €49 a month, web applications, custom software and integrations. Fixed price, delivered in a week or two, and you speak directly to the person building it." />
+  <link rel="icon" type="image/png" href="/brand_assets/alpaca-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Marks JS as available so the fade-up reveal only hides content when it can also show it again -->
+  <script>document.documentElement.classList.add('js');</script>
+  <!-- Styles (built by build.mjs from src/site.css) -->
+  <link rel="stylesheet" href="/assets/site.css">
+
+  <style>
+    /* ── Services page ────────────────────────────────────────── */
+    .price-card { position: relative; display: flex; flex-direction: column; }
+    .price-card.is-featured {
+      border-color: rgba(240,149,55,0.55);
+      box-shadow:
+        0 1px 2px rgba(var(--shadow-color) / 0.04),
+        0 16px 40px -16px rgba(240,149,55,0.35);
+    }
+    .price-card.is-featured:hover { border-color: var(--accent); }
+    .price-label { position: absolute; top: 26px; right: 28px; color: #C4681A; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .price-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); padding-right: 110px; }
+    .price { margin-top: 14px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; color: var(--ink); }
+    .price-amount { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2.5rem; letter-spacing: -0.04em; line-height: 1; }
+    .price-prefix, .price-suffix { color: #5A544D; font-size: 0.9375rem; font-weight: 500; }
+    .price-list { list-style: none; margin: 24px 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+    .price-list li { position: relative; padding-left: 22px; color: #5A544D; font-size: 0.9375rem; line-height: 1.55; }
+    .price-list li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; border-radius: 1px; background: #F09537; }
+    @media (max-width: 767px) { main h1 br, main h2 br { display: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- Site-wide background: fixed behind everything, drifts with scroll -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="site-glow"></div>
+    <div class="rings-wrap rings-top" id="rings-top">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+    <div class="rings-wrap rings-bottom" id="rings-bottom">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid items-center h-20" style="grid-template-columns: 1fr auto 1fr;">
+
+        <!-- Logo: alpaca icon only -->
+        <a href="/" class="justify-self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 44px; width: 31px;"></span>
+        </a>
+
+        <!-- Links (true centre column) -->
+        <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
+          <a href="/#expertise" class="nav-link" data-i18n="nav-expertise">Expertise</a>
+          <a href="/services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="/#process"  class="nav-link" data-i18n="nav-process">Process</a>
+          <a href="/about" class="nav-link" data-i18n="nav-about">About</a>
+          <a href="/#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center justify-self-end gap-3" style="grid-column: 3;">
+          <a href="/#contact" class="hidden sm:inline-flex btn-primary text-sm px-5 py-2.5">
+            <span data-i18n="nav-cta">Get in touch</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" aria-label="Open menu" data-i18n-attrs="aria-label=aria-menu" aria-expanded="false">
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
+      <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
+        <a href="/#expertise" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="/services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="/#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
+        <a href="/about" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-about">About</a>
+        <a href="/#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
+        <a href="/#contact" class="btn-primary mt-4 justify-center" onclick="closeMobileMenu()" data-i18n="nav-cta">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       BOOKING
+  ═══════════════════════════════════════ -->
+  <main class="relative" style="padding: 150px 0 0;">
+
+    <!-- Hero -->
+    <section class="max-w-7xl mx-auto px-6 lg:px-8" style="padding-bottom: 96px;">
+      <div class="fade-up relative" style="max-width: 800px;">
+        <div class="text-veil" aria-hidden="true"></div>
+        <div class="eyebrow mb-4"><span data-i18n="d-tag">Services</span></div>
+        <h1 class="display-lg text-ink" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem); text-wrap: balance;" data-i18n="d-hero-h1">
+          Websites and software. Built fast, delivered properly.
+        </h1>
+        <p class="mt-6 body-relaxed text-lg md:text-xl" style="color: #5A544D; max-width: 620px; line-height: 1.7;" data-i18n="d-hero-p">
+          We build websites, web applications and custom software for Dutch businesses. Small job or a complete system, you always speak directly to the person building it.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-10">
+          <a href="/book" class="btn-primary justify-center">
+            <span data-i18n="d-hero-cta1">Book a call</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#websites" class="btn-ghost justify-center" data-i18n="d-hero-cta2">See website packages</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Block A: Websites -->
+    <section id="websites" class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <div class="max-w-xl mb-16 fade-up">
+          <div class="eyebrow mb-4"><span data-i18n="d-web-tag">Websites</span></div>
+          <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="d-web-h2">A website that works on a phone and gets found.</h2>
+          <p class="mt-4 body-relaxed" style="color: #5A544D; line-height: 1.7;" data-i18n="d-web-p">
+            Most small-business websites were built years ago and never touched again. They load slowly, work badly on mobile and are missing a valid SSL certificate. We rebuild it, in a week or two, and keep it maintained afterwards.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4">
+        <div class="card p-8 fade-up price-card">
+          <h3 class="price-name" data-i18n="d-price-1-name">Website</h3>
+          <p class="price"><span class="price-prefix" data-i18n="d-price-1-prefix">from</span> <span class="price-amount">€595</span> <span class="price-suffix" data-i18n="d-price-1-suffix">one-off</span></p>
+          <ul class="price-list">
+            <li data-i18n="d-price-1-l1">Design, build and launch</li>
+            <li data-i18n="d-price-1-l2">Works on mobile, tablet and desktop</li>
+            <li data-i18n="d-price-1-l3">Google Business Profile set up</li>
+            <li data-i18n="d-price-1-l4">Contact form and analytics</li>
+            <li data-i18n="d-price-1-l5">Domain and email migrated</li>
+          </ul>
+        </div>
+        <div class="card p-8 fade-up price-card is-featured" style="transition-delay: 60ms;">
+          <p class="price-label" data-i18n="d-price-featured">Most chosen</p>
+          <h3 class="price-name" data-i18n="d-price-2-name">Maintenance Basic</h3>
+          <p class="price"><span class="price-amount">€49</span> <span class="price-suffix" data-i18n="d-price-2-suffix">/mo</span></p>
+          <ul class="price-list">
+            <li data-i18n="d-price-2-l1">Hosting, domain and SSL</li>
+            <li data-i18n="d-price-2-l2">Updates and security patches</li>
+            <li data-i18n="d-price-2-l3">Daily backups</li>
+            <li data-i18n="d-price-2-l4">Uptime monitoring</li>
+            <li data-i18n="d-price-2-l5">Response within 2 business days</li>
+          </ul>
+        </div>
+        <div class="card p-8 fade-up price-card" style="transition-delay: 120ms;">
+          <h3 class="price-name" data-i18n="d-price-3-name">Maintenance Complete</h3>
+          <p class="price"><span class="price-amount">€99</span> <span class="price-suffix" data-i18n="d-price-3-suffix">/mo</span></p>
+          <ul class="price-list">
+            <li data-i18n="d-price-3-l1">Everything in Basic</li>
+            <li data-i18n="d-price-3-l2">Unlimited text and image changes</li>
+            <li data-i18n="d-price-3-l3">New pages on request</li>
+            <li data-i18n="d-price-3-l4">Monthly performance report</li>
+            <li data-i18n="d-price-3-l5">Response within 1 business day</li>
+          </ul>
+        </div>
+        </div>
+
+        <p class="mt-6 text-sm" style="color: #A39D94; line-height: 1.6; max-width: 760px;" data-i18n="d-price-note">
+          Prices exclude VAT. Maintenance can be cancelled monthly after the first 12 months. "Unlimited" refers to text and image changes on existing pages, not new functionality.
+        </p>
+      </div>
+    </section>
+
+    <!-- Block B: The other services -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <h2 class="eyebrow mb-12 fade-up"><span data-i18n="d-other-tag">More of what we do</span></h2>
+        <div class="grid md:grid-cols-2 gap-4">
+        <div class="card p-8 fade-up">
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="d-other1-title">Web applications</h3>
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="d-other1-body">Client portals, dashboards and internal tools. Built around how you work, not around an off-the-shelf package.</p>
+        </div>
+        <div class="card p-8 fade-up" style="transition-delay: 60ms;">
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="d-other2-title">Custom software</h3>
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="d-other2-body">For when no existing package fits. From first outline to running system, including hosting and maintenance.</p>
+        </div>
+        <div class="card p-8 fade-up" style="transition-delay: 120ms;">
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="d-other3-title">Integrations and APIs</h3>
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="d-other3-body">Getting your bookkeeping, CRM and webshop to talk to each other, so you stop entering the same data three times.</p>
+        </div>
+        <div class="card p-8 fade-up" style="transition-delay: 180ms;">
+          <h3 class="text-xl font-bold text-ink mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.025em;" data-i18n="d-other4-title">AI automation</h3>
+          <p class="body-relaxed text-base" style="color: #5A544D; line-height: 1.7;" data-i18n="d-other4-body">Automating manual, repetitive work: processing documents, triaging requests, generating reports.</p>
+          <a href="/#expertise" class="arrow-link mt-4" style="font-size: 0.875rem;">
+            <span data-i18n="d-other4-link">See our AI work</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Block C: How it works -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <h2 class="eyebrow mb-16 fade-up"><span data-i18n="d-how-tag">How it works</span></h2>
+        <div class="grid md:grid-cols-4 gap-8">
+        <div class="fade-up">
+          <div class="step-num">01</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-step1-title">Call</h3>
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="d-step1-body">Twenty minutes. We look at your current site, what does and does not work, and what your customers actually need to be able to do.</p>
+        </div>
+        <div class="fade-up" style="transition-delay: 80ms;">
+          <div class="step-num">02</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-step2-title">Proposal</h3>
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="d-step2-body">A fixed price and a delivery date, on one page. No hourly billing and no surprises afterwards.</p>
+        </div>
+        <div class="fade-up" style="transition-delay: 160ms;">
+          <div class="step-num">03</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-step3-title">Build</h3>
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="d-step3-body">You see a working version on a staging address within a week. We make changes while you watch.</p>
+        </div>
+        <div class="fade-up" style="transition-delay: 240ms;">
+          <div class="step-num">04</div>
+          <h3 class="text-lg font-bold text-ink mt-2 mb-3" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-step4-title">Launch and maintenance</h3>
+          <p class="body-relaxed" style="font-size: 0.9375rem; color: #5A544D; line-height: 1.75;" data-i18n="d-step4-body">We migrate the domain, email and certificate. After that we keep it maintained, or you do it yourself. You are not locked in.</p>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Block D: FAQ -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-16 items-start">
+          <div class="fade-up">
+            <div class="eyebrow mb-4"><span data-i18n="faq-tag">FAQ</span></div>
+            <h2 class="display-lg text-ink" style="font-size: clamp(2rem, 4vw, 3rem);" data-i18n="faq-h2">Common questions</h2>
+            <p class="mt-4 body-relaxed" style="color: #5A544D; line-height: 1.7;" data-i18n="faq-sub">
+              Still wondering if we're the right fit? Here are the questions we hear most often.
+            </p>
+            <a href="#contact" class="btn-ghost mt-8 inline-flex" data-i18n="faq-cta">Ask us anything →</a>
+          </div>
+          <div class="fade-up" style="transition-delay: 80ms;" id="faq-list">
+          <div class="faq-item" style="border-bottom: 1px solid rgba(26,22,19,0.08);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-faq1-q">How long does it take?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="d-faq1-a">For a five to ten page website, count on one to two weeks from the moment we have your copy and images. That last part is usually what takes longest.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(26,22,19,0.08);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-faq2-q">I do not have copy or photos.</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="d-faq2-a">That is normal. We write a first version based on the call and you adjust it. For photos we can clean up existing material or advise on what you can shoot yourself.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(26,22,19,0.08);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-faq3-q">What happens to my current website and email?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="d-faq3-a">Nothing, until the new one is ready. We only switch over once you approve, and your email keeps working throughout.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" style="border-bottom: 1px solid rgba(26,22,19,0.08);">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-faq4-q">Am I locked into anything?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="d-faq4-a">No. The domain is registered in your name and the website is yours. If you stop the maintenance, you get all the files.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn w-full flex items-center justify-between py-5 text-left group" aria-expanded="false">
+              <span class="text-base font-semibold text-ink pr-4" style="font-family: 'Outfit', sans-serif; letter-spacing: -0.02em;" data-i18n="d-faq5-q">Can I change things myself?</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center" style="background: rgba(26,22,19,0.04); border: 1px solid rgba(26,22,19,0.12); transition: transform 200ms ease, background 200ms ease;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="#5A544D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" style="overflow: hidden; max-height: 0; transition: max-height 300ms ease;">
+              <p class="pb-5 text-sm body-relaxed" style="color: #5A544D; line-height: 1.75;" data-i18n="d-faq5-a">Yes. You get access to change text, photos and opening hours. Anything beyond that is covered by the maintenance plan.</p>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact band (shared with the homepage) -->
+    <section id="contact" class="section" style="border-top: 1px solid rgba(26,22,19,0.08);">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="cta-card px-8 py-16 md:px-16 md:py-20 text-center fade-up">
+          <div class="eyebrow mb-6 mx-auto" data-i18n="cta-tag">Let's talk</div>
+          <h2 class="display-lg text-ink mx-auto mb-6" style="font-size: clamp(2.25rem, 5vw, 4rem); max-width: 700px;" data-i18n="cta-h2" data-i18n-html>
+            Ready to build your <br>
+            <span class="text-accent">AI advantage?</span>
+          </h2>
+          <p class="mb-10 mx-auto body-relaxed" style="color: #5A544D; max-width: 480px; line-height: 1.7;" data-i18n="cta-body">
+            Tell us about your project. We typically respond within 24 hours and offer a free 30-minute discovery call.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="mailto:wout@alpacaai.nl" class="btn-primary text-base px-8 py-4">
+              wout@alpacaai.nl
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="/book" class="btn-ghost text-base px-8 py-4" style="color: #1A1613;" data-i18n="cta-btn2">Book a discovery call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <div style="border-top: 1px solid rgba(26,22,19,0.08); padding: 80px 0 40px; overflow: hidden; position: relative;">
+
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(240,149,55,0.10) 0%, transparent 70%); pointer-events: none;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+
+      <!-- Top row: links + contact -->
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
+          <div class="flex flex-col gap-3">
+            <a href="/#expertise" class="nav-link text-sm" data-i18n="nav-expertise">Expertise</a>
+            <a href="/services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="/#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
+            <a href="/about" class="nav-link text-sm" data-i18n="nav-about">About</a>
+            <a href="/#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-contact-label">Get in touch</p>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #5C564E;">wout@alpacaai.nl</a>
+            <a href="tel:+31628283985" class="nav-link text-sm" style="color: #5C564E;">+31 6 28283985</a>
+            <p class="text-sm" style="color: #5C564E; line-height: 1.6;">Vrijheidslaan 18<br>1078 PJ Amsterdam</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-legal-label">Legal</p>
+          <div class="flex flex-col gap-3">
+            <a href="/privacy" class="nav-link text-sm" data-i18n="nav-privacy">Privacy</a>
+          </div>
+          <p class="text-sm mt-4" style="color: #A39D94; line-height: 1.6;"><span data-i18n="footer-kvk">KVK 42024441</span><br><span data-i18n="footer-vat">VAT NL005436235B79</span></p>
+          <p class="text-sm mt-4" style="color: #A39D94;" data-i18n="footer-copy">© 2026 Alpaca AI</p>
+          <p class="text-xs mt-1" style="color: #A39D94;" data-i18n="footer-rights">All rights reserved.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background: #F3EFE8; padding: 24px 0; border-top: 1px solid rgba(26,22,19,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 32px; width: 22px; opacity: 0.55;"></span>
+        </a>
+        <p class="text-xs" style="color: #A39D94;" data-i18n="footer-built">Built with care in 2026 · Alpaca AI</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating language toggle -->
+  <div class="lang-toggle" role="group" aria-label="Language" data-i18n-attrs="aria-label=aria-lang">
+    <a class="lang-btn" data-lang="en" hreflang="en" href="/">EN</a>
+    <a class="lang-btn" data-lang="nl" hreflang="nl" href="/nl/">NL</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script>
+    // ── Scroll fade-in ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); });
+
+    // ── FAQ accordion ──────────────────────────────────────────
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item   = btn.closest('.faq-item');
+        const body   = item.querySelector('.faq-body');
+        const icon   = btn.querySelector('.faq-icon');
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all others
+        document.querySelectorAll('.faq-btn').forEach(b => {
+          if (b !== btn) {
+            b.setAttribute('aria-expanded', 'false');
+            b.closest('.faq-item').querySelector('.faq-body').style.maxHeight = '0';
+            b.closest('.faq-item').querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+            b.closest('.faq-item').querySelector('.faq-icon').style.background = 'rgba(26,22,19,0.05)';
+          }
+        });
+
+        // Toggle current
+        if (isOpen) {
+          btn.setAttribute('aria-expanded', 'false');
+          body.style.maxHeight = '0';
+          icon.style.transform = 'rotate(0deg)';
+          icon.style.background = 'rgba(26,22,19,0.05)';
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          body.style.maxHeight = body.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+          icon.style.background = 'rgba(240,149,55,0.1)';
+        }
+      });
+    });
+
+    // ── Background parallax ────────────────────────────────────
+    (() => {
+      const top = document.getElementById('rings-top');
+      const bottom = document.getElementById('rings-bottom');
+      if (!top || !bottom || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let ticking = false;
+      const update = () => {
+        const y = window.scrollY;
+        top.style.transform    = `translate(-50%, calc(-50% - ${(y * 0.08).toFixed(1)}px))`;
+        bottom.style.transform = `translate(-50%, calc(-50% - ${(y * 0.14).toFixed(1)}px))`;
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+      update();
+    })();
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn   = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-menu');
+    const lines     = menuBtn.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+    function closeMobileMenu() {
+      menuOpen = false;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.style.maxHeight = '0';
+      mobileNav.style.borderTopColor = 'transparent';
+      lines[0].style.transform = 'none'; lines[1].style.opacity = '1'; lines[2].style.transform = 'none';
+    }
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.setAttribute('aria-expanded', String(menuOpen));
+      if (menuOpen) {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 300 + 'px';
+        mobileNav.style.borderTopColor = 'rgba(26,22,19,0.08)';
+        lines[0].style.transform = 'translateY(8px) rotate(45deg)'; lines[1].style.opacity = '0'; lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+      } else closeMobileMenu();
+    });
+    document.addEventListener('click', e => { if (menuOpen && !menuBtn.contains(e.target) && !mobileNav.contains(e.target)) closeMobileMenu(); });
+  </script>
+
+</body>
+</html>

@@ -15,9 +15,14 @@
   <meta property="og:title" content="Plan een kennismakingsgesprek | Alpaca AI" >
   <meta property="og:description" content="Plan een gratis kennismakingsgesprek van 30 minuten met Alpaca AI. Kies een moment, vertel over je idee en hoor wat AI realistisch voor jouw bedrijf kan doen." >
   <meta property="og:url" content="https://alpacaai.nl/nl/afspraak" >
+  <meta property="og:image" content="https://alpacaai.nl/brand_assets/og-image.png" >
+  <meta property="og:image:width" content="1200" >
+  <meta property="og:image:height" content="630" >
+  <meta property="og:image:alt" content="Alpaca AI" >
+  <meta name="twitter:card" content="summary_large_image" >
   <meta property="og:locale" content="nl_NL" >
   <meta property="og:locale:alternate" content="en_GB" >
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://alpacaai.nl/#organization","name":"Alpaca AI","url":"https://alpacaai.nl/nl","vatID":"NL005436235B79","identifier":{"@type":"PropertyValue","propertyID":"KVK","value":"42024441"},"logo":"https://alpacaai.nl/brand_assets/logo-email.png","image":"https://alpacaai.nl/brand_assets/logo-email.png","description":"Alpaca AI is een klein team van engineers in Amsterdam dat AI-systemen op maat ontwerpt en bouwt voor Nederlandse bedrijven: strategie, ontwikkeling, integratie en automatisering, van briefing naar productie in weken.","email":"wout@alpacaai.nl","telephone":"+31628283985","address":{"@type":"PostalAddress","streetAddress":"Vrijheidslaan 18","postalCode":"1078 PJ","addressLocality":"Amsterdam","addressCountry":"NL"},"areaServed":{"@type":"Country","name":"Nederland"},"knowsLanguage":["nl","en"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Diensten","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI Strategie & Advies","description":"Roadmaps, use-case prioritering en build-vs-buy analyse."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Maatwerk AI-ontwikkeling","description":"LLM-applicaties, fijnafgestemde modellen en agentpijplijnen rondom jouw data en processen."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-integratie & API's","description":"AI-modellen koppelen aan jouw CRM, ERP en interne tools."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-automatisering","description":"Documentverwerking, klanttriage, rapportage en onderzoek van begin tot eind geautomatiseerd."}}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://alpacaai.nl/#organization","name":"Alpaca AI","url":"https://alpacaai.nl/nl","vatID":"NL005436235B79","identifier":{"@type":"PropertyValue","propertyID":"KVK","value":"42024441"},"logo":"https://alpacaai.nl/brand_assets/logo-email.png","image":"https://alpacaai.nl/brand_assets/logo-email.png","description":"Alpaca AI is een klein team van engineers in Amsterdam dat AI-systemen op maat ontwerpt en bouwt voor Nederlandse bedrijven: strategie, ontwikkeling, integratie en automatisering, van briefing naar productie in weken.","email":"wout@alpacaai.nl","telephone":"+31628283985","address":{"@type":"PostalAddress","streetAddress":"Vrijheidslaan 18","postalCode":"1078 PJ","addressLocality":"Amsterdam","addressCountry":"NL"},"areaServed":{"@type":"Country","name":"Nederland"},"knowsLanguage":["nl","en"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Diensten","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Websites","description":"Ontwerp, opbouw en livegang van websites die werken op mobiel en gevonden worden, met optioneel onderhoud."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Webapplicaties","description":"Klantportalen, dashboards en interne tools, gebouwd rond hoe jij werkt."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Maatwerksoftware","description":"Van eerste opzet tot draaiend systeem, inclusief hosting en onderhoud."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Koppelingen en integraties","description":"Boekhouding, CRM, webshop en andere systemen koppelen zodat gegevens één keer worden ingevoerd."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI-automatisering","description":"Handmatig, terugkerend werk automatiseren: documenten verwerken, aanvragen sorteren, rapportages genereren."}}]}}</script>
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="icon" type="image/png" href="/brand_assets/alpaca-icon.png" >
@@ -27,6 +32,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Marks JS as available so the fade-up reveal only hides content when it can also show it again -->
+  <script>document.documentElement.classList.add('js');</script>
   <!-- Styles (built by build.mjs from src/site.css) -->
   <link rel="stylesheet" href="/assets/site.css">
 
@@ -198,7 +205,8 @@
 
         <!-- Links (true centre column) -->
         <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
-          <a href="/nl#services" class="nav-link">Services</a>
+          <a href="/nl#expertise" class="nav-link">Expertise</a>
+          <a href="/nl/diensten" class="nav-link">Diensten</a>
           <a href="/nl#process" class="nav-link">Proces</a>
           <a href="/nl/over-ons" class="nav-link">Over ons</a>
           <a href="/nl#contact" class="nav-link">Contact</a>
@@ -225,7 +233,8 @@
     <!-- Mobile nav drawer -->
     <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
       <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
-        <a href="/nl#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Services</a>
+        <a href="/nl#expertise" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Expertise</a>
+        <a href="/nl/diensten" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Diensten</a>
         <a href="/nl#process" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Proces</a>
         <a href="/nl/over-ons" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Over ons</a>
         <a href="/nl#contact" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Contact</a>
@@ -347,7 +356,7 @@
                     <span>Bevestig afspraak</span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                   </button>
-                  <p class="text-xs" style="color: #A39D94; line-height: 1.5;">Je ontvangt een bevestiging per e-mail. We gebruiken je gegevens alleen om dit gesprek te plannen.</p>
+                  <p class="text-xs" style="color: #A39D94; line-height: 1.5;">Je ontvangt een bevestiging per e-mail. We gebruiken je gegevens alleen om dit gesprek te plannen. <a href="/nl/privacy" class="nav-link text-xs" style="text-decoration: underline; text-underline-offset: 2px;">Privacyverklaring</a>.</p>
                 </div>
 
                 <p class="status" id="status" role="status" aria-live="polite" hidden></p>
@@ -402,7 +411,8 @@
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;">Navigatie</p>
           <div class="flex flex-col gap-3">
-            <a href="/nl#services" class="nav-link text-sm">Services</a>
+            <a href="/nl#expertise" class="nav-link text-sm">Expertise</a>
+            <a href="/nl/diensten" class="nav-link text-sm">Diensten</a>
             <a href="/nl#process" class="nav-link text-sm">Proces</a>
             <a href="/nl/over-ons" class="nav-link text-sm">Over ons</a>
             <a href="/nl#contact" class="nav-link text-sm">Contact</a>

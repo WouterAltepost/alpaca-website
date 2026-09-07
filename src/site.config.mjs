@@ -9,6 +9,7 @@ export const SITE = {
   phone: '+31628283985',
   address: { street: 'Vrijheidslaan 18', postalCode: '1078 PJ', city: 'Amsterdam', country: 'NL' },
   logo: '/brand_assets/logo-email.png',
+  ogImage: '/brand_assets/og-image.png',
   kvk: '42024441',
   vat: 'NL005436235B79',
   // Vercel Web Analytics: cookieless, so no consent banner is needed. It only
@@ -20,6 +21,7 @@ export const SITE = {
 // follows Vercel's cleanUrls convention (/about -> about.html); index pages set `out` explicitly.
 export const PAGES = [
   { id: 'index',   en: { path: '/', out: 'index.html' }, nl: { path: '/nl', out: 'nl/index.html' } },
+  { id: 'services', en: { path: '/services' }, nl: { path: '/nl/diensten' } },
   { id: 'about',   en: { path: '/about' },   nl: { path: '/nl/over-ons' } },
   { id: 'book',    en: { path: '/book' },    nl: { path: '/nl/afspraak' } },
   { id: 'privacy', en: { path: '/privacy' }, nl: { path: '/nl/privacy' } },
@@ -35,16 +37,18 @@ export const ORG = {
   },
   services: {
     en: [
-      { name: 'AI Strategy & Consulting',  description: 'Roadmaps, use-case prioritisation and build-vs-buy analysis.' },
-      { name: 'Custom AI Development',     description: 'LLM applications, fine-tuned models and agent pipelines built around your data and processes.' },
-      { name: 'AI Integration & APIs',     description: 'Connecting AI models to your CRM, ERP and internal tools.' },
-      { name: 'AI Automation',             description: 'Document processing, customer triage, reporting and research automated end to end.' },
+      { name: 'Websites',              description: 'Design, build and launch of websites that work on mobile and get found, with optional maintenance.' },
+      { name: 'Web applications',      description: 'Client portals, dashboards and internal tools built around how you work.' },
+      { name: 'Custom software',       description: 'From first outline to running system, including hosting and maintenance.' },
+      { name: 'Integrations and APIs', description: 'Connecting bookkeeping, CRM, webshop and other systems so data is entered once.' },
+      { name: 'AI automation',         description: 'Automating manual, repetitive work: processing documents, triaging requests, generating reports.' },
     ],
     nl: [
-      { name: 'AI Strategie & Advies',     description: 'Roadmaps, use-case prioritering en build-vs-buy analyse.' },
-      { name: 'Maatwerk AI-ontwikkeling',  description: 'LLM-applicaties, fijnafgestemde modellen en agentpijplijnen rondom jouw data en processen.' },
-      { name: "AI-integratie & API's",     description: 'AI-modellen koppelen aan jouw CRM, ERP en interne tools.' },
-      { name: 'AI-automatisering',         description: 'Documentverwerking, klanttriage, rapportage en onderzoek van begin tot eind geautomatiseerd.' },
+      { name: 'Websites',                   description: 'Ontwerp, opbouw en livegang van websites die werken op mobiel en gevonden worden, met optioneel onderhoud.' },
+      { name: 'Webapplicaties',             description: 'Klantportalen, dashboards en interne tools, gebouwd rond hoe jij werkt.' },
+      { name: 'Maatwerksoftware',           description: 'Van eerste opzet tot draaiend systeem, inclusief hosting en onderhoud.' },
+      { name: 'Koppelingen en integraties', description: 'Boekhouding, CRM, webshop en andere systemen koppelen zodat gegevens één keer worden ingevoerd.' },
+      { name: 'AI-automatisering',          description: 'Handmatig, terugkerend werk automatiseren: documenten verwerken, aanvragen sorteren, rapportages genereren.' },
     ],
   },
   // Booking hours, also the hours shown on the booking page.

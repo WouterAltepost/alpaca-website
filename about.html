@@ -15,9 +15,14 @@
   <meta property="og:title" content="About us | Alpaca AI" >
   <meta property="og:description" content="Alpaca AI is a small team of engineers in Amsterdam. We build custom AI systems that run inside your business, usually within weeks." >
   <meta property="og:url" content="https://alpacaai.nl/about" >
+  <meta property="og:image" content="https://alpacaai.nl/brand_assets/og-image.png" >
+  <meta property="og:image:width" content="1200" >
+  <meta property="og:image:height" content="630" >
+  <meta property="og:image:alt" content="Alpaca AI" >
+  <meta name="twitter:card" content="summary_large_image" >
   <meta property="og:locale" content="en_GB" >
   <meta property="og:locale:alternate" content="nl_NL" >
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://alpacaai.nl/#organization","name":"Alpaca AI","url":"https://alpacaai.nl/","vatID":"NL005436235B79","identifier":{"@type":"PropertyValue","propertyID":"KVK","value":"42024441"},"logo":"https://alpacaai.nl/brand_assets/logo-email.png","image":"https://alpacaai.nl/brand_assets/logo-email.png","description":"Alpaca AI is a small team of engineers in Amsterdam that designs and builds custom AI systems for businesses in the Netherlands: strategy, development, integration and automation, from brief to production in weeks.","email":"wout@alpacaai.nl","telephone":"+31628283985","address":{"@type":"PostalAddress","streetAddress":"Vrijheidslaan 18","postalCode":"1078 PJ","addressLocality":"Amsterdam","addressCountry":"NL"},"areaServed":{"@type":"Country","name":"Netherlands"},"knowsLanguage":["nl","en"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI Strategy & Consulting","description":"Roadmaps, use-case prioritisation and build-vs-buy analysis."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Custom AI Development","description":"LLM applications, fine-tuned models and agent pipelines built around your data and processes."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI Integration & APIs","description":"Connecting AI models to your CRM, ERP and internal tools."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI Automation","description":"Document processing, customer triage, reporting and research automated end to end."}}]}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","@id":"https://alpacaai.nl/#organization","name":"Alpaca AI","url":"https://alpacaai.nl/","vatID":"NL005436235B79","identifier":{"@type":"PropertyValue","propertyID":"KVK","value":"42024441"},"logo":"https://alpacaai.nl/brand_assets/logo-email.png","image":"https://alpacaai.nl/brand_assets/logo-email.png","description":"Alpaca AI is a small team of engineers in Amsterdam that designs and builds custom AI systems for businesses in the Netherlands: strategy, development, integration and automation, from brief to production in weeks.","email":"wout@alpacaai.nl","telephone":"+31628283985","address":{"@type":"PostalAddress","streetAddress":"Vrijheidslaan 18","postalCode":"1078 PJ","addressLocality":"Amsterdam","addressCountry":"NL"},"areaServed":{"@type":"Country","name":"Netherlands"},"knowsLanguage":["nl","en"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"17:00"}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Websites","description":"Design, build and launch of websites that work on mobile and get found, with optional maintenance."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Web applications","description":"Client portals, dashboards and internal tools built around how you work."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Custom software","description":"From first outline to running system, including hosting and maintenance."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Integrations and APIs","description":"Connecting bookkeeping, CRM, webshop and other systems so data is entered once."}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"AI automation","description":"Automating manual, repetitive work: processing documents, triaging requests, generating reports."}}]}}</script>
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <link rel="icon" type="image/png" href="/brand_assets/alpaca-icon.png" >
@@ -27,6 +32,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Marks JS as available so the fade-up reveal only hides content when it can also show it again -->
+  <script>document.documentElement.classList.add('js');</script>
   <!-- Styles (built by build.mjs from src/site.css) -->
   <link rel="stylesheet" href="/assets/site.css">
 
@@ -98,7 +105,8 @@
 
         <!-- Links (true centre column) -->
         <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
-          <a href="/#services" class="nav-link">Services</a>
+          <a href="/#expertise" class="nav-link">Expertise</a>
+          <a href="/services" class="nav-link">Services</a>
           <a href="/#process" class="nav-link">Process</a>
           <a href="/about" class="nav-link">About</a>
           <a href="/#contact" class="nav-link">Contact</a>
@@ -125,7 +133,8 @@
     <!-- Mobile nav drawer -->
     <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
       <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
-        <a href="/#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Services</a>
+        <a href="/#expertise" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Expertise</a>
+        <a href="/services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Services</a>
         <a href="/#process" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Process</a>
         <a href="/about" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">About</a>
         <a href="/#contact" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()">Contact</a>
@@ -268,7 +277,8 @@
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;">Navigate</p>
           <div class="flex flex-col gap-3">
-            <a href="/#services" class="nav-link text-sm">Services</a>
+            <a href="/#expertise" class="nav-link text-sm">Expertise</a>
+            <a href="/services" class="nav-link text-sm">Services</a>
             <a href="/#process" class="nav-link text-sm">Process</a>
             <a href="/about" class="nav-link text-sm">About</a>
             <a href="/#contact" class="nav-link text-sm">Contact</a>

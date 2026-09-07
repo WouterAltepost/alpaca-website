@@ -1,6 +1,6 @@
 {
   "shared": {
-    "nav-services": "Services",
+    "nav-services": "Diensten",
     "nav-process": "Proces",
     "nav-about": "Over ons",
     "nav-contact": "Contact",
@@ -19,7 +19,8 @@
     "aria-menu": "Menu openen",
     "aria-lang": "Taal",
     "footer-kvk": "KVK 42024441",
-    "footer-vat": "Btw-id NL005436235B79"
+    "footer-vat": "Btw-id NL005436235B79",
+    "nav-expertise": "Expertise"
   },
   "meta": {
     "index": {
@@ -37,6 +38,10 @@
     "privacy": {
       "title": "Privacyverklaring | Alpaca AI",
       "description": "Hoe Alpaca AI met je persoonsgegevens omgaat: wat we verzamelen als je een gesprek plant of ons mailt, waarom, hoe lang we het bewaren en welke rechten je hebt."
+    },
+    "services": {
+      "title": "Websites en software voor Nederlandse bedrijven | Alpaca AI",
+      "description": "Websites vanaf €595, onderhoud vanaf €49 per maand, webapplicaties, maatwerksoftware en koppelingen. Vaste prijs, in een week of twee opgeleverd, en je praat rechtstreeks met de bouwer."
     }
   },
   "pages": {
@@ -91,7 +96,15 @@
       "faq4-q": "Hoe ziet de samenwerking er dagelijks uit?",
       "faq4-a": "Je krijgt wekelijkse check-ins, een gedeeld projectbord en een directe lijn met degene die je systeem bouwt. Je weet altijd waar aan gewerkt wordt, wat er volgt en waarom. Geen black-box ontwikkeling. Wij houden je gedurende het hele proces op de hoogte.",
       "faq5-q": "Bieden jullie doorlopende ondersteuning na de lancering?",
-      "faq5-a": "Ja. Wij bieden retainers na de lancering voor monitoring, hertraining en doorlopende verbetering. AI-systemen moeten meegroeien met jouw bedrijf en data, en wij zijn ingericht om op de lange termijn met je mee te groeien."
+      "faq5-a": "Ja. Wij bieden retainers na de lancering voor monitoring, hertraining en doorlopende verbetering. AI-systemen moeten meegroeien met jouw bedrijf en data, en wij zijn ingericht om op de lange termijn met je mee te groeien.",
+      "more-tag": "Meer dat we doen",
+      "more-h3": "Websites en software. Snel gebouwd, netjes opgeleverd.",
+      "more-1": "Websites",
+      "more-2": "Webapplicaties",
+      "more-3": "Maatwerksoftware",
+      "more-4": "Koppelingen en integraties",
+      "more-5": "AI-automatisering",
+      "more-link": "Bekijk alle diensten"
     },
     "about": {
       "about-tag": "Over ons",
@@ -132,7 +145,7 @@
       "f-optional": "optioneel",
       "f-notes": "Waar wil je het over hebben?",
       "submit": "Bevestig afspraak",
-      "submit-note": "Je ontvangt een bevestiging per e-mail. We gebruiken je gegevens alleen om dit gesprek te plannen.",
+      "submit-note": "Je ontvangt een bevestiging per e-mail. We gebruiken je gegevens alleen om dit gesprek te plannen. <a href=\"/privacy\" class=\"nav-link text-xs\" style=\"text-decoration: underline; text-underline-offset: 2px;\">Privacyverklaring</a>.",
       "success-h2": "Ingepland.",
       "success-p1": "Een bevestiging is onderweg naar",
       "success-p2": "Niets ontvangen binnen een paar minuten? Kijk in je spamfolder. Tijd wijzigen? Mail naar wout@alpacaai.nl.",
@@ -167,6 +180,73 @@
       "pv-rights-p": "Je kunt ons vragen de gegevens die we over je hebben in te zien, te corrigeren, te verwijderen of over te dragen, en het gebruik ervan te beperken of daartegen bezwaar te maken. Mail naar <a href=\"mailto:wout@alpacaai.nl\">wout@alpacaai.nl</a>, dan reageren we binnen een maand. Je kunt ook een klacht indienen bij de <a href=\"https://www.autoriteitpersoonsgegevens.nl/\" rel=\"noopener\">Autoriteit Persoonsgegevens</a>.",
       "pv-changes-h": "Wijzigingen",
       "pv-changes-p": "We passen deze verklaring aan als de site of onze manier van werken verandert. De datum bovenaan laat zien wanneer dat voor het laatst is gebeurd."
+    },
+    "services": {
+      "d-tag": "Diensten",
+      "d-hero-h1": "Websites en software. Snel gebouwd, netjes opgeleverd.",
+      "d-hero-p": "Wij bouwen websites, webapplicaties en maatwerksoftware voor Nederlandse bedrijven. Kleine opdracht of een compleet systeem, je praat altijd rechtstreeks met de bouwer.",
+      "d-hero-cta1": "Plan een gesprek",
+      "d-hero-cta2": "Bekijk de website-pakketten",
+      "d-web-tag": "Websites",
+      "d-web-h2": "Een website die werkt op een telefoon en gevonden wordt.",
+      "d-web-p": "De meeste websites van kleine bedrijven zijn jaren geleden gemaakt en sindsdien niet meer aangeraakt. Ze laden traag, werken slecht op mobiel en missen een geldig SSL-certificaat. Wij bouwen hem opnieuw op, in een week of twee, en houden hem daarna bij.",
+      "d-price-featured": "Meest gekozen",
+      "d-price-1-name": "Website",
+      "d-price-1-prefix": "vanaf",
+      "d-price-1-suffix": "eenmalig",
+      "d-price-1-l1": "Ontwerp, opbouw en livegang",
+      "d-price-1-l2": "Werkt op mobiel, tablet en desktop",
+      "d-price-1-l3": "Google Bedrijfsprofiel ingericht",
+      "d-price-1-l4": "Contactformulier en analytics",
+      "d-price-1-l5": "Domein en e-mail overgezet",
+      "d-price-2-name": "Onderhoud Basis",
+      "d-price-2-suffix": "/mnd",
+      "d-price-2-l1": "Hosting, domein en SSL",
+      "d-price-2-l2": "Updates en beveiligingspatches",
+      "d-price-2-l3": "Dagelijkse back-ups",
+      "d-price-2-l4": "Uptime-monitoring",
+      "d-price-2-l5": "Reactie binnen 2 werkdagen",
+      "d-price-3-name": "Onderhoud Compleet",
+      "d-price-3-suffix": "/mnd",
+      "d-price-3-l1": "Alles uit Basis",
+      "d-price-3-l2": "Onbeperkt tekst- en beeldwijzigingen",
+      "d-price-3-l3": "Nieuwe pagina's op verzoek",
+      "d-price-3-l4": "Maandelijkse prestatierapportage",
+      "d-price-3-l5": "Reactie binnen 1 werkdag",
+      "d-price-note": "Prijzen exclusief btw. Onderhoud is maandelijks opzegbaar na de eerste 12 maanden. \"Onbeperkt\" slaat op tekst- en beeldwijzigingen aan bestaande pagina's, niet op nieuwe functionaliteit.",
+      "d-other-tag": "Meer dat we doen",
+      "d-other1-title": "Webapplicaties",
+      "d-other1-body": "Klantportalen, dashboards en interne tools. Gebouwd rond hoe jij werkt, niet rond een standaardpakket.",
+      "d-other2-title": "Maatwerksoftware",
+      "d-other2-body": "Als geen enkel bestaand pakket past. Van eerste opzet tot draaiend systeem, inclusief hosting en onderhoud.",
+      "d-other3-title": "Koppelingen en integraties",
+      "d-other3-body": "Je boekhouding, CRM en webshop met elkaar laten praten, zodat je dezelfde gegevens niet drie keer invoert.",
+      "d-other4-title": "AI-automatisering",
+      "d-other4-body": "Handmatig, terugkerend werk automatiseren: documenten verwerken, aanvragen sorteren, rapportages genereren.",
+      "d-other4-link": "Bekijk ons AI-werk",
+      "d-how-tag": "Hoe het werkt",
+      "d-step1-title": "Gesprek",
+      "d-step1-body": "Twintig minuten. We kijken naar je huidige site, wat er wel en niet werkt, en wat je klanten er eigenlijk moeten kunnen doen.",
+      "d-step2-title": "Voorstel",
+      "d-step2-body": "Een vaste prijs en een opleverdatum, op één pagina. Geen uurtje-factuurtje en geen verrassingen achteraf.",
+      "d-step3-title": "Bouwen",
+      "d-step3-body": "Je krijgt binnen een week een werkende versie te zien op een testadres. Aanpassen doen we terwijl je meekijkt.",
+      "d-step4-title": "Live en onderhoud",
+      "d-step4-body": "Wij zetten domein, e-mail en certificaat over. Daarna houden wij hem bij, of je doet het zelf. Je bent nergens aan vast.",
+      "faq-tag": "FAQ",
+      "faq-h2": "Veelgestelde vragen",
+      "faq-sub": "Nog twijfels of we de juiste match zijn? Dit zijn de vragen die we het meest horen.",
+      "faq-cta": "Stel ons een vraag →",
+      "d-faq1-q": "Hoe lang duurt het?",
+      "d-faq1-a": "Voor een website van vijf tot tien pagina's rekenen we op één tot twee weken vanaf het moment dat we je teksten en beeldmateriaal hebben. Dat laatste is meestal wat het langst duurt.",
+      "d-faq2-q": "Ik heb geen teksten of foto's.",
+      "d-faq2-a": "Dat is normaal. Wij schrijven een eerste versie op basis van het gesprek en jij past aan. Voor foto's kunnen we bestaand materiaal opschonen of adviseren wat je zelf kunt maken.",
+      "d-faq3-q": "Wat gebeurt er met mijn huidige website en e-mail?",
+      "d-faq3-a": "Niets, tot de nieuwe klaar staat. We zetten pas over als jij akkoord bent, en je e-mail blijft gewoon werken tijdens de overgang.",
+      "d-faq4-q": "Ben ik ergens aan vastgezeten?",
+      "d-faq4-a": "Nee. Het domein staat op jouw naam en de website is van jou. Stop je het onderhoud, dan krijg je alle bestanden mee.",
+      "d-faq5-q": "Kan ik zelf dingen aanpassen?",
+      "d-faq5-a": "Ja. Je krijgt toegang om teksten, foto's en openingstijden aan te passen. Voor alles daarboven zit het in het onderhoudspakket."
     }
   }
 }

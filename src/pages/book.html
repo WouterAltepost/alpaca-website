@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Marks JS as available so the fade-up reveal only hides content when it can also show it again -->
+  <script>document.documentElement.classList.add('js');</script>
   <!-- Styles (built by build.mjs from src/site.css) -->
   <link rel="stylesheet" href="/assets/site.css">
 
@@ -183,7 +185,8 @@
 
         <!-- Links (true centre column) -->
         <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
-          <a href="/#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="/#expertise" class="nav-link" data-i18n="nav-expertise">Expertise</a>
+          <a href="/services" class="nav-link" data-i18n="nav-services">Services</a>
           <a href="/#process"  class="nav-link" data-i18n="nav-process">Process</a>
           <a href="/about" class="nav-link" data-i18n="nav-about">About</a>
           <a href="/#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
@@ -210,7 +213,8 @@
     <!-- Mobile nav drawer -->
     <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
       <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
-        <a href="/#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="/#expertise" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-expertise">Expertise</a>
+        <a href="/services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
         <a href="/#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
         <a href="/about" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-about">About</a>
         <a href="/#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
@@ -336,7 +340,7 @@
                     <span data-i18n="submit">Confirm booking</span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
-                  <p class="text-xs" style="color: #A39D94; line-height: 1.5;" data-i18n="submit-note">You get a confirmation by email. We only use your details to plan this call.</p>
+                  <p class="text-xs" style="color: #A39D94; line-height: 1.5;" data-i18n="submit-note" data-i18n-html>You get a confirmation by email. We only use your details to plan this call. <a href="/privacy" class="nav-link text-xs" style="text-decoration: underline; text-underline-offset: 2px;">Privacy statement</a>.</p>
                 </div>
 
                 <p class="status" id="status" role="status" aria-live="polite" hidden></p>
@@ -391,7 +395,8 @@
         <div>
           <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
           <div class="flex flex-col gap-3">
-            <a href="/#services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="/#expertise" class="nav-link text-sm" data-i18n="nav-expertise">Expertise</a>
+            <a href="/services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
             <a href="/#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
             <a href="/about" class="nav-link text-sm" data-i18n="nav-about">About</a>
             <a href="/#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>

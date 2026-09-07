@@ -293,15 +293,37 @@ nav {
 }
 
 /* Scroll fade-in */
+/* Content is visible at rest. The html.js class (set inline in <head>) enables the
+   reveal, so nothing stays hidden when JavaScript does not run. */
 .fade-up {
-  opacity: 0;
-  transform: translateY(24px);
   transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.fade-up.visible {
+.js .fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.js .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Text link with arrow */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+.arrow-link svg { transition: transform 150ms ease; }
+.arrow-link:hover { color: var(--accent-hover); }
+.arrow-link:hover svg { transform: translateX(3px); }
+.arrow-link:active svg { transform: translateX(1px); }
+.arrow-link:focus-visible { outline: 2px solid rgba(240,149,55,0.6); outline-offset: 3px; border-radius: 4px; }
 
 /* Section eyebrow: short accent rule + tracked capitals */
 .eyebrow {
