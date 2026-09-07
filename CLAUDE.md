@@ -10,15 +10,15 @@
 
 ## Project Layout & Build
 - **Sources live in `src/`.** `src/pages/*.html` are the English pages (the only place to edit markup), `src/i18n/nl.json` holds every Dutch string keyed by `data-i18n`, `src/site.css` is the shared stylesheet (Tailwind directives + custom rules), `src/site.config.mjs` holds the site origin, routes and organisation data.
-- **Run `npm run build` after every change.** It compiles Tailwind to `assets/site.css` and writes the deployable pages: `index.html`, `services.html`, `about.html`, `book.html`, `privacy.html` and the Dutch `nl/index.html` (served at `/nl`), `nl/diensten.html`, `nl/over-ons.html`, `nl/afspraak.html`, `nl/privacy.html`, plus `sitemap.xml` and `robots.txt`. Outputs are committed; Vercel serves the repo root as static files with `.vercelignore` keeping `src/` and tooling out of the deploy.
+- **Run `npm run build` after every change.** It compiles Tailwind to `assets/site.css` and writes the deployable pages: Dutch is the default language at the root (`index.html`, `diensten.html`, `over-ons.html`, `afspraak.html`, `privacy.html`) and English lives under `en/` (`en/index.html` served at `/en`, `en/services.html`, `en/about.html`, `en/book.html`, `en/privacy.html`), plus `sitemap.xml` and `robots.txt`. Outputs are committed; Vercel serves the repo root as static files with `.vercelignore` keeping `src/` and tooling out of the deploy.
 - **Never edit the generated root or `nl/` HTML files directly**; they are overwritten by the build.
 - Translatable text is marked with `data-i18n="key"` (plain text) or `data-i18n="key" data-i18n-html` (inner HTML). Attributes use `data-i18n-attrs="aria-label=key"`. Adding a marked element without a matching key in `nl.json` fails the build on purpose.
-- `/diensten` is a permanent redirect to `/nl/diensten` (vercel.json) so outreach links can use the short Dutch URL.
+- The source HTML is English and links use the `src` paths in `site.config.mjs` (`/about`, `/book`, ...); the build rewrites every internal link to the real path per language. Old URLs (`/nl/...`, `/about`, `/book`, `/services`) redirect in `vercel.json`.
 - Page-specific styles stay in an inline `<style>` in that page's source; they load after `assets/site.css`, so restate `[hidden] { display: none }` for any class that sets `display`.
 
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
-- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:8080`, mirroring Vercel's clean URLs: `/about`, `/nl`, `/nl/over-ons`)
+- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:8080`, mirroring Vercel's clean URLs: `/over-ons`, `/en`, `/en/about`)
 - `serve.mjs` lives in the project root. Start it in the background before taking any screenshots.
 - If the server is already running, do not start a second instance.
 

@@ -17,15 +17,18 @@ export const SITE = {
   analytics: 'vercel',
 };
 
-// Each source page is emitted twice. `path` is the public URL; the output file
-// follows Vercel's cleanUrls convention (/about -> about.html); index pages set `out` explicitly.
+// Each source page is emitted twice. `src` is the href written in the source HTML
+// (English pages link to each other with these); the build rewrites every internal
+// link to the language's real `path`. Dutch is the default language and lives at the
+// root; English lives under /en. Output files follow Vercel's cleanUrls convention.
 export const PAGES = [
-  { id: 'index',   en: { path: '/', out: 'index.html' }, nl: { path: '/nl', out: 'nl/index.html' } },
-  { id: 'services', en: { path: '/services' }, nl: { path: '/nl/diensten' } },
-  { id: 'about',   en: { path: '/about' },   nl: { path: '/nl/over-ons' } },
-  { id: 'book',    en: { path: '/book' },    nl: { path: '/nl/afspraak' } },
-  { id: 'privacy', en: { path: '/privacy' }, nl: { path: '/nl/privacy' } },
+  { id: 'index',    src: '/',         nl: { path: '/',          out: 'index.html' }, en: { path: '/en', out: 'en/index.html' } },
+  { id: 'services', src: '/services', nl: { path: '/diensten' },                    en: { path: '/en/services' } },
+  { id: 'about',    src: '/about',    nl: { path: '/over-ons' },                    en: { path: '/en/about' } },
+  { id: 'book',     src: '/book',     nl: { path: '/afspraak' },                    en: { path: '/en/book' } },
+  { id: 'privacy',  src: '/privacy',  nl: { path: '/privacy' },                     en: { path: '/en/privacy' } },
 ];
+export const DEFAULT_LANG = 'nl';
 
 export const LOCALE = { en: 'en_GB', nl: 'nl_NL' };
 

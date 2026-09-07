@@ -3,8 +3,43 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/diensten",
-      "destination": "/nl/diensten",
+      "source": "/nl",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/nl/diensten",
+      "destination": "/diensten",
+      "permanent": true
+    },
+    {
+      "source": "/nl/over-ons",
+      "destination": "/over-ons",
+      "permanent": true
+    },
+    {
+      "source": "/nl/afspraak",
+      "destination": "/afspraak",
+      "permanent": true
+    },
+    {
+      "source": "/nl/privacy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/en/services",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/en/about",
+      "permanent": true
+    },
+    {
+      "source": "/book",
+      "destination": "/en/book",
       "permanent": true
     }
   ]

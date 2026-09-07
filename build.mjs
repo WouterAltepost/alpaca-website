@@ -1,6 +1,6 @@
 // Build: src/pages/*.html + src/i18n/nl.json + src/site.css
-//   -> index.html, about.html, book.html, privacy.html   (English)
-//   -> nl/index.html, nl/over-ons.html, nl/afspraak.html, nl/privacy.html   (Dutch)
+//   -> index.html, diensten.html, over-ons.html, afspraak.html, privacy.html   (Dutch, the default)
+//   -> en/index.html, en/services.html, en/about.html, en/book.html, en/privacy.html   (English)
 //   -> assets/site.css, sitemap.xml, robots.txt
 // Outputs are committed: Vercel serves the repo root as static files.
 import fs from 'node:fs';
@@ -8,7 +8,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'node-html-parser';
-import { SITE, PAGES, LOCALE, ORG } from './src/site.config.mjs';
+import { SITE, PAGES, LOCALE, ORG, DEFAULT_LANG } from './src/site.config.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -18,7 +18,8 @@ const abs = (p) => SITE.origin + p;
 const outFile = (page, lang) => page[lang].out ?? page[lang].path.replace(/^\//, '') + '.html';
 
 const i18n = JSON.parse(read('src/i18n/nl.json'));
-const routeMap = Object.fromEntries(PAGES.map((p) => [p.en.path, p.nl.path]));
+const routeMap = { en: Object.fromEntries(PAGES.map((p) => [p.src, p.en.path])), nl: Object.fromEntries(PAGES.map((p) => [p.src, p.nl.path])) };
+const home = (lang) => PAGES[0][lang].path;
 
 // ── 1. CSS ──────────────────────────────────────────────────────────────
 execFileSync(path.join(ROOT, 'node_modules/.bin/tailwindcss'), ['-c', 'tailwind.config.js', '-i', 'src/site.css', '-o', 'assets/site.css', '--minify'], { cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit'] });
@@ -32,7 +33,7 @@ function jsonLd(lang) {
     '@type': 'ProfessionalService',
     '@id': abs('/#organization'),
     name: SITE.name,
-    url: abs(lang === 'nl' ? '/nl' : '/'),
+    url: abs(home(lang)),
     vatID: SITE.vat,
     identifier: { '@type': 'PropertyValue', propertyID: 'KVK', value: SITE.kvk },
     logo: abs(SITE.logo),
@@ -59,7 +60,7 @@ function headBlock(page, lang, title, description) {
     `<link rel="canonical" href="${abs(self)}" />`,
     `<link rel="alternate" hreflang="en" href="${abs(page.en.path)}" />`,
     `<link rel="alternate" hreflang="nl" href="${abs(page.nl.path)}" />`,
-    `<link rel="alternate" hreflang="x-default" href="${abs(page.en.path)}" />`,
+    `<link rel="alternate" hreflang="x-default" href="${abs(page[DEFAULT_LANG].path)}" />`,
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="${esc(SITE.name)}" />`,
     `<meta property="og:title" content="${esc(title)}" />`,
@@ -78,11 +79,11 @@ function headBlock(page, lang, title, description) {
   ].map((l) => '  ' + l).join('\n');
 }
 
-function localiseHref(href) {
-  // Internal page links only: "/", "/about", "/#services", "/book" ... never assets or external URLs.
+function localiseHref(href, lang) {
+  // Internal page links only: "/", "/about", "/#expertise", "/book" ... never assets or external URLs.
   const m = href.match(/^(\/[a-z-]*)(#.*)?$/);
   if (!m) return href;
-  return (routeMap[m[1]] ?? m[1]) + (m[2] ?? '');
+  return (routeMap[lang][m[1]] ?? m[1]) + (m[2] ?? '');
 }
 
 function buildPage(page, lang) {
@@ -123,7 +124,7 @@ function buildPage(page, lang) {
   descEl.insertAdjacentHTML('afterend', '\n' + headBlock(page, lang, title, description));
 
   // Links between pages
-  if (lang === 'nl') for (const a of root.querySelectorAll('a[href]')) a.setAttribute('href', localiseHref(a.getAttribute('href')));
+  for (const a of root.querySelectorAll('a[href]')) a.setAttribute('href', localiseHref(a.getAttribute('href'), lang));
 
   // Language toggle: one link per language, pointing at this page's counterpart
   for (const a of root.querySelectorAll('.lang-toggle a[data-lang]')) {
@@ -140,7 +141,7 @@ function buildPage(page, lang) {
 }
 
 const written = [];
-for (const page of PAGES) for (const lang of ['en', 'nl']) written.push(buildPage(page, lang));
+for (const page of PAGES) for (const lang of ['nl', 'en']) written.push(buildPage(page, lang));
 
 // ── 3. sitemap.xml + robots.txt ─────────────────────────────────────────
 const today = new Date().toISOString().slice(0, 10);
@@ -149,7 +150,7 @@ const urlEntry = (page, lang) => `  <url>
     <lastmod>${today}</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="${abs(page.en.path)}" />
     <xhtml:link rel="alternate" hreflang="nl" href="${abs(page.nl.path)}" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(page.en.path)}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${abs(page[DEFAULT_LANG].path)}" />
   </url>`;
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">

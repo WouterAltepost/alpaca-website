@@ -1,6 +1,6 @@
 # Discovery call booking: setup
 
-The booking page is `src/pages/book.html`, built to `book.html` (served at `/book`) and `nl/afspraak.html` (served at `/nl/afspraak`) by `npm run build`. It is fully static. All data goes through two n8n webhooks, and n8n talks to Supabase and Gmail. The site never holds a Supabase or Gmail key.
+The booking page is `src/pages/book.html`, built to `afspraak.html` (served at `/afspraak`, Dutch, the default) and `en/book.html` (served at `/en/book`) by `npm run build`. It is fully static. All data goes through two n8n webhooks, and n8n talks to Supabase and Gmail. The site never holds a Supabase or Gmail key.
 
 ```
 /book  ──GET  /webhook/alpaca-booking-slots ──▶ n8n ──▶ Supabase (read future bookings)

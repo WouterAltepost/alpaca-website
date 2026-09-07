@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://alpacaai.nl/en</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
+  </url>
+  <url>
     <loc>https://alpacaai.nl/</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/nl</loc>
+    <loc>https://alpacaai.nl/en/services</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/services" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/diensten" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/diensten" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/services</loc>
+    <loc>https://alpacaai.nl/diensten</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/services" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/diensten" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/services" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/diensten" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/diensten" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/nl/diensten</loc>
+    <loc>https://alpacaai.nl/en/about</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/services" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/diensten" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/services" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/about" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/over-ons" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/over-ons" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/about</loc>
+    <loc>https://alpacaai.nl/over-ons</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/about" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/over-ons" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/about" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/over-ons" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/over-ons" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/nl/over-ons</loc>
+    <loc>https://alpacaai.nl/en/book</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/about" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/over-ons" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/book" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/afspraak" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/afspraak" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/book</loc>
+    <loc>https://alpacaai.nl/afspraak</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/book" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/afspraak" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/book" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/book" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/afspraak" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/afspraak" />
   </url>
   <url>
-    <loc>https://alpacaai.nl/nl/afspraak</loc>
+    <loc>https://alpacaai.nl/en/privacy</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/book" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/afspraak" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/book" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/privacy" />
   </url>
   <url>
     <loc>https://alpacaai.nl/privacy</loc>
     <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/privacy" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/privacy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/privacy" />
-  </url>
-  <url>
-    <loc>https://alpacaai.nl/nl/privacy</loc>
-    <lastmod>2026-09-07</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/privacy" />
-    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/privacy" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/privacy" />
   </url>
 </urlset>
