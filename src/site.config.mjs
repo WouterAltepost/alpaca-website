@@ -41,14 +41,14 @@ export const ORG = {
       { name: 'Web applications',      description: 'Client portals, dashboards and internal tools built around how you work.' },
       { name: 'Custom software',       description: 'From first outline to running system, including hosting and maintenance.' },
       { name: 'Integrations and APIs', description: 'Connecting bookkeeping, CRM, webshop and other systems so data is entered once.' },
-      { name: 'AI automation',         description: 'Automating manual, repetitive work: processing documents, triaging requests, generating reports.' },
+      { name: 'AI Solutions',          description: 'Automating manual, repetitive work: processing documents, triaging requests, generating reports.' },
     ],
     nl: [
       { name: 'Websites',                   description: 'Ontwerp, opbouw en livegang van websites die werken op mobiel en gevonden worden, met optioneel onderhoud.' },
       { name: 'Webapplicaties',             description: 'Klantportalen, dashboards en interne tools, gebouwd rond hoe jij werkt.' },
       { name: 'Maatwerksoftware',           description: 'Van eerste opzet tot draaiend systeem, inclusief hosting en onderhoud.' },
       { name: 'Koppelingen en integraties', description: 'Boekhouding, CRM, webshop en andere systemen koppelen zodat gegevens één keer worden ingevoerd.' },
-      { name: 'AI-automatisering',          description: 'Handmatig, terugkerend werk automatiseren: documenten verwerken, aanvragen sorteren, rapportages genereren.' },
+      { name: 'AI-oplossingen',             description: 'Handmatig, terugkerend werk automatiseren: documenten verwerken, aanvragen sorteren, rapportages genereren.' },
     ],
   },
   // Booking hours, also the hours shown on the booking page.
