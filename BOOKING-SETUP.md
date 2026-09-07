@@ -1,6 +1,6 @@
 # Discovery call booking: setup
 
-The booking page is `book.html` (served at `/book`). It is fully static. All data goes through two n8n webhooks, and n8n talks to Supabase and Gmail. The site never holds a Supabase or Gmail key.
+The booking page is `src/pages/book.html`, built to `book.html` (served at `/book`) and `nl/afspraak.html` (served at `/nl/afspraak`) by `npm run build`. It is fully static. All data goes through two n8n webhooks, and n8n talks to Supabase and Gmail. The site never holds a Supabase or Gmail key.
 
 ```
 /book  ──GET  /webhook/alpaca-booking-slots ──▶ n8n ──▶ Supabase (read future bookings)
@@ -9,7 +9,7 @@ The booking page is `book.html` (served at `/book`). It is fully static. All dat
                                                     └──▶ Gmail: confirmation to the client
 ```
 
-Rules baked into both the page and the workflow: Monday to Friday, 09:00 to 17:00 Amsterdam time, 30-minute slots, bookable from tomorrow up to 28 days ahead. Change them in `book.html` (the constants at the top of the script) and in the "Code · Validate" node.
+Rules baked into both the page and the workflow: Monday to Friday, 09:00 to 17:00 Amsterdam time, 30-minute slots, bookable from tomorrow up to 28 days ahead. Change them in `src/pages/book.html` (the constants at the top of the script), then run `npm run build`, and in the "Code · Validate" node.
 
 ## 1. Supabase
 
@@ -32,7 +32,7 @@ Both emails already set `Reply-To` and say in the body that the address is unmon
 2. Credentials:
    - Add a **Supabase** credential (host = project URL, key = service_role). Select it in both Supabase nodes.
    - Add a **Gmail OAuth2** credential for the noreply account. Select it in both Gmail nodes.
-3. In both Webhook nodes, "Allowed Origins (CORS)" must be `https://alpacaai.dev,https://www.alpacaai.dev` (the repo file already has this). No trailing slash, no path. While it is set, the page only books from the live site; local testing on localhost gets a CORS error unless you add `http://localhost:8080` temporarily.
+3. In both Webhook nodes, "Allowed Origins (CORS)" must be `https://alpacaai.nl,https://www.alpacaai.nl,https://alpacaai.dev,https://www.alpacaai.dev` (the repo file already has this; the .nl origins were added on 2026-09-07 so the booking page keeps working once alpacaai.nl is the primary domain). No trailing slash, no path. While it is set, the page only books from the live site; local testing on localhost gets a CORS error unless you add `http://localhost:8080` temporarily.
 4. Activate the workflow. Note the production webhook base URL. On n8n Cloud it looks like `https://<workspace>.app.n8n.cloud`.
 5. Test with curl before touching the site:
 
@@ -50,7 +50,7 @@ The second call should return `{"ok":true,...}`, insert a row, and send two emai
 
 ## 4. Website
 
-Done on 2026-09-04. `N8N_BASE_URL` in `book.html` is `https://wjaltepost.app.n8n.cloud`. `vercel.json` enables clean URLs so the page lives at `/book`.
+Done on 2026-09-04. `N8N_BASE_URL` in `src/pages/book.html` is `https://wjaltepost.app.n8n.cloud`. `vercel.json` enables clean URLs so the page lives at `/book`.
 
 If the n8n workspace ever moves, change that one constant and push. While it points at a dead URL the page still renders, but submitting shows a message pointing people to wout@alpacaai.nl instead of booking.
 
@@ -63,7 +63,7 @@ If the n8n workspace ever moves, change that one constant and push. While it poi
 
 ## Updating the live n8n workflow after editing the JSON
 
-The workflow in n8n Cloud is a copy. When `n8n/alpaca-booking.workflow.json` changes (last: 2026-09-04, logo in the client email and the busy pattern in "Code · Validate"), bring the live one in line:
+The workflow in n8n Cloud is a copy. When `n8n/alpaca-booking.workflow.json` changes (last: 2026-09-07, `.nl` origins added to CORS on both Webhook nodes; before that 2026-09-04, logo in the client email and the busy pattern in "Code · Validate"), bring the live one in line:
 
 1. n8n, Workflows, open the existing "Alpaca booking" workflow and deactivate it.
 2. Workflows, Import from file, pick the JSON. Select the Supabase credential in both Supabase nodes and the Gmail credential in both Gmail nodes. CORS is already set in the file.

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://alpacaai.nl/</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/nl</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/about</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/about" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/over-ons" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/about" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/nl/over-ons</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/about" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/over-ons" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/about" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/book</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/book" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/afspraak" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/book" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/nl/afspraak</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/book" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/afspraak" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/book" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/privacy</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/privacy" />
+  </url>
+  <url>
+    <loc>https://alpacaai.nl/nl/privacy</loc>
+    <lastmod>2026-09-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://alpacaai.nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="nl" href="https://alpacaai.nl/nl/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://alpacaai.nl/privacy" />
+  </url>
+</urlset>

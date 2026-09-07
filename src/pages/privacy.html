@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy statement | Alpaca AI</title>
+  <meta name="description" content="How Alpaca AI handles your personal data: what we collect when you book a call or email us, why, how long we keep it, and your rights." />
+  <link rel="icon" type="image/png" href="/brand_assets/alpaca-icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles (built by build.mjs from src/site.css) -->
+  <link rel="stylesheet" href="/assets/site.css">
+
+  <style>
+    /* ── Privacy page ─────────────────────────────────────────── */
+    .legal { max-width: 680px; color: #5A544D; line-height: 1.75; font-size: 1.0625rem; }
+    .legal h2 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: clamp(1.375rem, 2.4vw, 1.75rem); letter-spacing: -0.02em; line-height: 1.15; color: var(--ink); margin: 56px 0 16px; text-wrap: balance; }
+    .legal h2:first-child { margin-top: 0; }
+    .legal p + p { margin-top: 1em; }
+    .legal ul { list-style: none; margin: 1em 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .legal li { position: relative; padding-left: 24px; }
+    .legal li::before { content: ''; position: absolute; left: 0; top: 0.78em; width: 12px; height: 2px; border-radius: 1px; background: #F09537; }
+    .legal ul + p { margin-top: 1em; }
+    .legal a { color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    .legal a:hover { color: var(--accent-hover); }
+    .legal a:focus-visible { outline: 2px solid rgba(240,149,55,0.6); outline-offset: 3px; border-radius: 4px; }
+    .legal strong { color: var(--ink); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <!-- Site-wide background: fixed behind everything, drifts with scroll -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="site-glow"></div>
+    <div class="rings-wrap rings-top" id="rings-top">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+    <div class="rings-wrap rings-bottom" id="rings-bottom">
+      <svg class="rings " viewBox="0 0 1600 1600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="800" cy="800" r="140"/>
+        <circle cx="800" cy="800" r="220"/>
+        <circle cx="800" cy="800" r="300"/>
+        <circle cx="800" cy="800" r="380"/>
+        <circle cx="800" cy="800" r="460"/>
+        <circle cx="800" cy="800" r="540"/>
+        <circle cx="800" cy="800" r="620"/>
+        <circle cx="800" cy="800" r="700"/>
+        <circle cx="800" cy="800" r="780"/>
+        <circle cx="800" cy="800" r="860"/>
+        <circle cx="800" cy="800" r="940"/>
+        <circle cx="800" cy="800" r="1020"/>
+        <circle cx="800" cy="800" r="1100"/>
+        <circle class="ripple" cx="800" cy="800" r="120"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid items-center h-20" style="grid-template-columns: 1fr auto 1fr;">
+
+        <!-- Logo: alpaca icon only -->
+        <a href="/" class="justify-self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 44px; width: 31px;"></span>
+        </a>
+
+        <!-- Links (true centre column) -->
+        <div class="hidden md:flex items-center gap-8" style="grid-column: 2;">
+          <a href="/#services" class="nav-link" data-i18n="nav-services">Services</a>
+          <a href="/#process"  class="nav-link" data-i18n="nav-process">Process</a>
+          <a href="/about" class="nav-link" data-i18n="nav-about">About</a>
+          <a href="/#contact"  class="nav-link" data-i18n="nav-contact">Contact</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center justify-self-end gap-3" style="grid-column: 3;">
+          <a href="/#contact" class="hidden sm:inline-flex btn-primary text-sm px-5 py-2.5">
+            <span data-i18n="nav-cta">Get in touch</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Mobile hamburger -->
+          <button id="mobile-menu-btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent" aria-label="Open menu" data-i18n-attrs="aria-label=aria-menu" aria-expanded="false">
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+            <span class="hamburger-line block w-5 h-0.5 rounded-full" style="background:#1A1613; transition: transform 250ms ease, opacity 250ms ease;"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <div id="mobile-menu" style="max-height: 0; overflow: hidden; transition: max-height 300ms ease; border-top: 1px solid transparent;">
+      <div class="max-w-7xl mx-auto px-6 pb-6 pt-2 flex flex-col gap-1">
+        <a href="/#services" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-services">Services</a>
+        <a href="/#process"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-process">Process</a>
+        <a href="/about" class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-about">About</a>
+        <a href="/#contact"  class="nav-link py-3 text-base border-b" style="border-color: rgba(26,22,19,0.08);" onclick="closeMobileMenu()" data-i18n="nav-contact">Contact</a>
+        <a href="/#contact" class="btn-primary mt-4 justify-center" onclick="closeMobileMenu()" data-i18n="nav-cta">Get in touch</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════
+       BOOKING
+  ═══════════════════════════════════════ -->
+  <main class="relative" style="padding: 150px 0 0;">
+
+    <!-- Intro -->
+    <section class="max-w-7xl mx-auto px-6 lg:px-8" style="padding-bottom: 72px;">
+      <div class="fade-up relative" style="max-width: 800px;">
+        <div class="text-veil" aria-hidden="true"></div>
+        <div class="eyebrow mb-4"><span data-i18n="pv-tag">Privacy</span></div>
+        <h1 class="display-lg text-ink" style="font-size: clamp(2.5rem, 5.5vw, 4.5rem); text-wrap: balance;" data-i18n="pv-h1">
+          Privacy statement
+        </h1>
+        <p class="mt-6 body-relaxed text-lg md:text-xl" style="color: #5A544D; max-width: 620px; line-height: 1.7;" data-i18n="pv-sub">
+          The short version: we only collect what we need to talk to you, we never sell it, and you can ask us to delete it at any time.
+        </p>
+        <p class="mt-4 text-sm" style="color: #A39D94;" data-i18n="pv-updated">Last updated 7 September 2026.</p>
+      </div>
+    </section>
+
+    <!-- Statement -->
+    <section class="section" style="border-top: 1px solid rgba(26,22,19,0.08); padding-top: 80px;">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div class="text-veil is-wide" aria-hidden="true"></div>
+        <div class="legal fade-up">
+
+          <h2 data-i18n="pv-who-h">Who we are</h2>
+          <p data-i18n="pv-who-p" data-i18n-html>Alpaca AI, Vrijheidslaan 18, 1078 PJ Amsterdam, the Netherlands. KVK 42024441, VAT id NL005436235B79. We are the controller for the personal data described here. Questions about your data go to <a href="mailto:wout@alpacaai.nl">wout@alpacaai.nl</a>.</p>
+
+          <h2 data-i18n="pv-what-h">What we collect, and why</h2>
+          <ul>
+            <li data-i18n="pv-what-1" data-i18n-html><strong>When you book a discovery call:</strong> your name, email address and the time you pick, plus your company name and what you want to discuss if you fill those in. We use this to plan and hold the call and to send you the confirmation. Legal basis: taking steps at your request before entering into a contract.</li>
+            <li data-i18n="pv-what-2" data-i18n-html><strong>When you email or call us:</strong> whatever you share with us, which we use to answer you and to keep track of the conversation. Legal basis: the same, or our legitimate interest in keeping a record of what was discussed.</li>
+            <li data-i18n="pv-what-3" data-i18n-html><strong>When you visit the site:</strong> our hosting provider records technical data such as your IP address, browser type and the pages you request, for security and to keep the site running. Legal basis: our legitimate interest in a secure, working website.</li>
+            <li data-i18n="pv-what-4" data-i18n-html><strong>Statistics:</strong> we use Vercel Web Analytics, which counts visits without cookies and without storing personal data. It records the page, the referrer, the country and the device type, all in aggregate. We cannot see who you are.</li>
+          </ul>
+
+          <h2 data-i18n="pv-cookies-h">Cookies</h2>
+          <p data-i18n="pv-cookies-p">This site sets no cookies and uses no tracking pixels. Fonts are loaded from Google Fonts, which means Google receives your IP address when the font file is requested.</p>
+
+          <h2 data-i18n="pv-proc-h">Who else sees your data</h2>
+          <p data-i18n="pv-proc-p">A few service providers help us run the site and the booking flow. They process data on our behalf and are not allowed to use it for anything else:</p>
+          <ul>
+            <li data-i18n="pv-proc-1" data-i18n-html><strong>Vercel</strong>, hosting of the website and visitor statistics.</li>
+            <li data-i18n="pv-proc-2" data-i18n-html><strong>Supabase</strong>, the database that stores bookings.</li>
+            <li data-i18n="pv-proc-3" data-i18n-html><strong>n8n</strong>, the automation that handles a booking and sends the emails.</li>
+            <li data-i18n="pv-proc-4" data-i18n-html><strong>Google Workspace</strong>, email.</li>
+          </ul>
+          <p data-i18n="pv-proc-p2">Where a provider processes data outside the European Economic Area, it does so under the European Commission's standard contractual clauses. We never sell your data and never use it for advertising.</p>
+
+          <h2 data-i18n="pv-keep-h">How long we keep it</h2>
+          <ul>
+            <li data-i18n="pv-keep-1" data-i18n-html><strong>Booking details:</strong> 12 months after the call, unless we start working together, in which case they become part of our client records.</li>
+            <li data-i18n="pv-keep-2" data-i18n-html><strong>Email:</strong> as long as needed to handle the conversation, and afterwards for as long as the law requires us to keep it.</li>
+            <li data-i18n="pv-keep-3" data-i18n-html><strong>Server logs:</strong> kept by the hosting provider for a short period. Statistics contain no personal data.</li>
+          </ul>
+
+          <h2 data-i18n="pv-rights-h">Your rights</h2>
+          <p data-i18n="pv-rights-p" data-i18n-html>You can ask us to show, correct, delete or hand over the data we hold about you, and to limit or object to how we use it. Email <a href="mailto:wout@alpacaai.nl">wout@alpacaai.nl</a> and we respond within a month. You can also file a complaint with the Dutch data protection authority, the <a href="https://www.autoriteitpersoonsgegevens.nl/" rel="noopener">Autoriteit Persoonsgegevens</a>.</p>
+
+          <h2 data-i18n="pv-changes-h">Changes</h2>
+          <p data-i18n="pv-changes-p">We update this statement when the site or the way we work changes. The date at the top tells you when it was last revised.</p>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <div style="border-top: 1px solid rgba(26,22,19,0.08); padding: 80px 0 40px; overflow: hidden; position: relative;">
+
+    <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(240,149,55,0.10) 0%, transparent 70%); pointer-events: none;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+
+      <!-- Top row: links + contact -->
+      <div class="flex flex-col md:flex-row items-start justify-between gap-8 mb-16">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-nav">Navigate</p>
+          <div class="flex flex-col gap-3">
+            <a href="/#services" class="nav-link text-sm" data-i18n="nav-services">Services</a>
+            <a href="/#process"  class="nav-link text-sm" data-i18n="nav-process">Process</a>
+            <a href="/about" class="nav-link text-sm" data-i18n="nav-about">About</a>
+            <a href="/#contact"  class="nav-link text-sm" data-i18n="nav-contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-contact-label">Get in touch</p>
+          <div class="flex flex-col gap-2">
+            <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #5C564E;">wout@alpacaai.nl</a>
+            <a href="tel:+31628283985" class="nav-link text-sm" style="color: #5C564E;">+31 6 28283985</a>
+            <p class="text-sm" style="color: #5C564E; line-height: 1.6;">Vrijheidslaan 18<br>1078 PJ Amsterdam</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: #A39D94; letter-spacing: 0.1em;" data-i18n="footer-legal-label">Legal</p>
+          <div class="flex flex-col gap-3">
+            <a href="/privacy" class="nav-link text-sm" data-i18n="nav-privacy">Privacy</a>
+          </div>
+          <p class="text-sm mt-4" style="color: #A39D94; line-height: 1.6;"><span data-i18n="footer-kvk">KVK 42024441</span><br><span data-i18n="footer-vat">VAT NL005436235B79</span></p>
+          <p class="text-sm mt-4" style="color: #A39D94;" data-i18n="footer-copy">© 2026 Alpaca AI</p>
+          <p class="text-xs mt-1" style="color: #A39D94;" data-i18n="footer-rights">All rights reserved.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="background: #F3EFE8; padding: 24px 0; border-top: 1px solid rgba(26,22,19,0.06);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a href="/" class="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-sm" aria-label="Alpaca AI home" style="display: block; line-height: 0;">
+          <span class="brand-mark" role="img" aria-label="Alpaca AI" style="height: 32px; width: 22px; opacity: 0.55;"></span>
+        </a>
+        <p class="text-xs" style="color: #A39D94;" data-i18n="footer-built">Built with care in 2026 · Alpaca AI</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating language toggle -->
+  <div class="lang-toggle" role="group" aria-label="Language" data-i18n-attrs="aria-label=aria-lang">
+    <a class="lang-btn" data-lang="en" hreflang="en" href="/">EN</a>
+    <a class="lang-btn" data-lang="nl" hreflang="nl" href="/nl/">NL</a>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
+  <script>
+    // ── Scroll fade-in ─────────────────────────────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible'); });
+
+    // ── Background parallax ────────────────────────────────────
+    (() => {
+      const top = document.getElementById('rings-top');
+      const bottom = document.getElementById('rings-bottom');
+      if (!top || !bottom || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let ticking = false;
+      const update = () => {
+        const y = window.scrollY;
+        top.style.transform    = `translate(-50%, calc(-50% - ${(y * 0.08).toFixed(1)}px))`;
+        bottom.style.transform = `translate(-50%, calc(-50% - ${(y * 0.14).toFixed(1)}px))`;
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+      update();
+    })();
+
+    // ── Mobile menu ───────────────────────────────────────────
+    const menuBtn   = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-menu');
+    const lines     = menuBtn.querySelectorAll('.hamburger-line');
+    let menuOpen = false;
+    function closeMobileMenu() {
+      menuOpen = false;
+      menuBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.style.maxHeight = '0';
+      mobileNav.style.borderTopColor = 'transparent';
+      lines[0].style.transform = 'none'; lines[1].style.opacity = '1'; lines[2].style.transform = 'none';
+    }
+    menuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      menuBtn.setAttribute('aria-expanded', String(menuOpen));
+      if (menuOpen) {
+        mobileNav.style.maxHeight = mobileNav.scrollHeight + 300 + 'px';
+        mobileNav.style.borderTopColor = 'rgba(26,22,19,0.08)';
+        lines[0].style.transform = 'translateY(8px) rotate(45deg)'; lines[1].style.opacity = '0'; lines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+      } else closeMobileMenu();
+    });
+    document.addEventListener('click', e => { if (menuOpen && !menuBtn.contains(e.target) && !mobileNav.contains(e.target)) closeMobileMenu(); });
+  </script>
+
+</body>
+</html>

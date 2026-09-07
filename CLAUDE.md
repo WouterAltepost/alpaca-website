@@ -8,25 +8,32 @@
 - If no reference image: design from scratch with high craft (see guardrails below).
 - Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do at least 2 comparison rounds. Stop only when no visible differences remain or user says so.
 
+## Project Layout & Build
+- **Sources live in `src/`.** `src/pages/*.html` are the English pages (the only place to edit markup), `src/i18n/nl.json` holds every Dutch string keyed by `data-i18n`, `src/site.css` is the shared stylesheet (Tailwind directives + custom rules), `src/site.config.mjs` holds the site origin, routes and organisation data.
+- **Run `npm run build` after every change.** It compiles Tailwind to `assets/site.css` and writes the deployable pages: `index.html`, `about.html`, `book.html`, `privacy.html` and the Dutch `nl/index.html` (served at `/nl`), `nl/over-ons.html`, `nl/afspraak.html`, `nl/privacy.html`, plus `sitemap.xml` and `robots.txt`. Outputs are committed; Vercel serves the repo root as static files with `.vercelignore` keeping `src/` and tooling out of the deploy.
+- **Never edit the generated root or `nl/` HTML files directly**; they are overwritten by the build.
+- Translatable text is marked with `data-i18n="key"` (plain text) or `data-i18n="key" data-i18n-html` (inner HTML). Attributes use `data-i18n-attrs="aria-label=key"`. Adding a marked element without a matching key in `nl.json` fails the build on purpose.
+- Page-specific styles stay in an inline `<style>` in that page's source; they load after `assets/site.css`, so restate `[hidden] { display: none }` for any class that sets `display`.
+
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
-- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:3000`)
+- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:8080`, mirroring Vercel's clean URLs: `/about`, `/nl`, `/nl/over-ons`)
 - `serve.mjs` lives in the project root. Start it in the background before taking any screenshots.
 - If the server is already running, do not start a second instance.
 
 ## Screenshot Workflow
-- Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`. Chrome cache is at `C:/Users/nateh/.cache/puppeteer/`.
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
+- Puppeteer is a devDependency in this project's `node_modules`; run scripts from the project root.
+- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:8080`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
+- Optional label suffix: `node screenshot.mjs http://localhost:8080 label` → saves as `screenshot-N-label.png`
 - `screenshot.mjs` lives in the project root. Use it as-is.
 - After screenshotting, read the PNG from `temporary screenshots/` with the Read tool — Claude can see and analyze the image directly.
 - When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
 - Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
 
 ## Output Defaults
-- Single `index.html` file, all styles inline, unless user says otherwise
-- Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
+- One source file per page in `src/pages/`, shared styles in `src/site.css`, built by `npm run build`
+- Tailwind CSS is compiled at build time (`tailwind.config.js`); never load the play CDN
 - Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
 - Mobile-first responsive
 

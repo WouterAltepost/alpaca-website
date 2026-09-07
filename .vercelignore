@@ -1,0 +1,14 @@
+# Only the built site is deployed. Sources and tooling stay out of the public bucket.
+node_modules
+src
+n8n
+supabase
+temporary screenshots
+.claude
+.vercel
+*.mjs
+*.md
+*.js
+package.json
+package-lock.json
+.DS_Store
