@@ -37,12 +37,18 @@
     .price-list li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; border-radius: 1px; background: #F09537; }
     @media (max-width: 767px) { main h1 br, main h2 br { display: none; } }
 
-    /* Phones: pricing cards as a swipeable strip with the next card peeking in */
+    /* Phones: pricing cards as a looping carousel, centred card with both neighbours peeking in */
     .carousel-dots { display: none; }
     @media (max-width: 767px) {
-      .price-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 24px; margin: 0 -24px; padding: 6px 24px 14px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+      .price-grid {
+        --peek: 34px; --gap: 12px;
+        position: relative; display: flex; gap: var(--gap);
+        overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+        margin: 0 -24px; padding: 6px calc(var(--peek) + var(--gap)) 14px;
+        scrollbar-width: none; -webkit-overflow-scrolling: touch;
+      }
       .price-grid::-webkit-scrollbar { display: none; }
-      .price-grid > .price-card { flex: 0 0 calc(100% - 30px); scroll-snap-align: start; }
+      .price-grid > .price-card { flex: 0 0 100%; scroll-snap-align: center; }
       .price-card:hover { transform: none; }
       .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
       .carousel-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(26,22,19,0.15); transition: background 150ms ease, transform 150ms ease; }
@@ -517,23 +523,46 @@
       });
     });
 
-    // ── Pricing carousel dots (phones) ──────────────────────────
+    // ── Pricing carousel (phones): loops, centred card, dots ───
+    // A copy of the last card sits before the first and a copy of the first after the last.
+    // When a swipe comes to rest on a copy we jump, without animation, to the real card.
     (() => {
       const track = document.querySelector('.price-grid');
-      const dots = document.querySelectorAll('.carousel-dots span');
-      if (!track || !dots.length) return;
-      const cards = [...track.querySelectorAll('.price-card')];
+      const dots = [...document.querySelectorAll('.carousel-dots span')];
+      if (!track) return;
+      const mq = window.matchMedia('(max-width: 767px)');
+      const real = [...track.querySelectorAll('.price-card')];
+      const n = real.length;
+      let clones = [];
+      const items = () => [...track.querySelectorAll('.price-card')];
+      const centerOf = (el) => el.offsetLeft + el.offsetWidth / 2 - track.clientWidth / 2;
+      const goTo = (i, smooth) => track.scrollTo({ left: centerOf(items()[i]), behavior: smooth ? 'smooth' : 'auto' });
+      const setup = () => {
+        if (clones.length) return;
+        const before = real[n - 1].cloneNode(true), after = real[0].cloneNode(true);
+        for (const c of [before, after]) { c.classList.remove('fade-up', 'visible'); c.classList.add('is-clone'); c.setAttribute('aria-hidden', 'true'); c.style.opacity = '1'; c.style.transform = 'none'; c.style.transitionDelay = '0ms'; }
+        track.prepend(before); track.append(after);
+        clones = [before, after];
+        goTo(1, false);
+      };
+      const teardown = () => { clones.forEach(c => c.remove()); clones = []; track.scrollTo({ left: 0 }); };
       let t;
       track.addEventListener('scroll', () => {
+        if (!clones.length) return;
         clearTimeout(t);
         t = setTimeout(() => {
-          const base = track.getBoundingClientRect().left;
-          const mid = track.clientWidth / 2;
-          let idx = 0;
-          cards.forEach((c, i) => { if (c.getBoundingClientRect().left - base <= mid) idx = i; });
-          dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
-        }, 60);
+          const all = items();
+          const mid = track.scrollLeft + track.clientWidth / 2;
+          let idx = 0, best = Infinity;
+          all.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < best) { best = d; idx = i; } });
+          if (idx === 0) { goTo(n, false); idx = n; }
+          else if (idx === n + 1) { goTo(1, false); idx = 1; }
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === idx - 1));
+        }, 80);
       }, { passive: true });
+      const apply = () => (mq.matches ? setup() : teardown());
+      apply();
+      mq.addEventListener('change', apply);
     })();
 
     // ── Collapsible blocks on phones ───────────────────────────
