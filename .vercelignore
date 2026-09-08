@@ -12,3 +12,4 @@ temporary screenshots
 package.json
 package-lock.json
 .DS_Store
+*.hash

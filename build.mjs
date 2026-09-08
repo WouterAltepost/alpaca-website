@@ -8,7 +8,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'node-html-parser';
-import { SITE, PAGES, LOCALE, ORG, DEFAULT_LANG } from './src/site.config.mjs';
+import { SITE, PAGES, LOCALE, ORG, DEFAULT_LANG, FILES } from './src/site.config.mjs';
+import { buildPrivacyPdfs } from './build-pdf.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
@@ -135,6 +136,12 @@ function buildPage(page, lang) {
 
   // Links between pages
   for (const a of root.querySelectorAll('a[href]')) a.setAttribute('href', localiseHref(a.getAttribute('href'), lang));
+  for (const a of root.querySelectorAll('a[data-file]')) {
+    const f = FILES[a.getAttribute('data-file')];
+    if (!f) throw new Error(`unknown data-file "${a.getAttribute('data-file')}" in ${page.id}`);
+    a.setAttribute('href', f[lang]);
+    a.removeAttribute('data-file');
+  }
 
   // Language toggle: one link per language, pointing at this page's counterpart
   for (const a of root.querySelectorAll('.lang-toggle a[data-lang]')) {
@@ -173,6 +180,10 @@ Allow: /
 Sitemap: ${abs('/sitemap.xml')}
 `);
 
+// ── 4. Privacy statement as PDF (one per language) ──────────────────────
+const pdfs = await buildPrivacyPdfs({ root: ROOT, pages: PAGES, files: FILES, site: SITE });
+
 console.log(`assets/site.css  ${(cssBytes / 1024).toFixed(1)} kB`);
 for (const f of written) console.log(`${f}`);
+for (const f of pdfs) console.log(f);
 console.log('sitemap.xml\nrobots.txt');

@@ -30,6 +30,11 @@ export const PAGES = [
 ];
 export const DEFAULT_LANG = 'nl';
 
+// Downloadable files referenced with data-file="key" in the sources; the build sets the href per language.
+export const FILES = {
+  'privacy-pdf': { nl: '/privacyverklaring-alpaca-ai.pdf', en: '/en/privacy-statement-alpaca-ai.pdf' },
+};
+
 export const LOCALE = { en: 'en_GB', nl: 'nl_NL' };
 
 // Organisation description and service list for the ProfessionalService JSON-LD.

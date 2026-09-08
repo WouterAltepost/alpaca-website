@@ -14,6 +14,7 @@ const MIME = {
   '.json': 'application/json',
   '.xml':  'application/xml',
   '.txt':  'text/plain',
+  '.pdf':  'application/pdf',
   '.png':  'image/png',
   '.jpg':  'image/jpeg',
   '.jpeg': 'image/jpeg',
