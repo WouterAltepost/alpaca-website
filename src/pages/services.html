@@ -36,6 +36,18 @@
     .price-list li { position: relative; padding-left: 22px; color: #5A544D; font-size: 0.9375rem; line-height: 1.55; }
     .price-list li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; border-radius: 1px; background: #F09537; }
     @media (max-width: 767px) { main h1 br, main h2 br { display: none; } }
+
+    /* Phones: pricing cards as a swipeable strip with the next card peeking in */
+    .carousel-dots { display: none; }
+    @media (max-width: 767px) {
+      .price-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 24px; margin: 0 -24px; padding: 6px 24px 14px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+      .price-grid::-webkit-scrollbar { display: none; }
+      .price-grid > .price-card { flex: 0 0 calc(100% - 30px); scroll-snap-align: start; }
+      .price-card:hover { transform: none; }
+      .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
+      .carousel-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(26,22,19,0.15); transition: background 150ms ease, transform 150ms ease; }
+      .carousel-dots span.is-active { background: var(--accent); transform: scale(1.15); }
+    }
   </style>
 </head>
 <body>
@@ -172,7 +184,7 @@
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid md:grid-cols-3 gap-4 price-grid">
         <div class="card p-8 fade-up price-card">
           <h3 class="price-name" data-i18n="d-price-1-name">Website</h3>
           <p class="price"><span class="price-prefix" data-i18n="d-price-1-prefix">from</span> <span class="price-amount">€595</span> <span class="price-suffix" data-i18n="d-price-1-suffix">one-off</span></p>
@@ -208,6 +220,8 @@
           </ul>
         </div>
         </div>
+
+        <div class="carousel-dots" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
 
         <p class="mt-6 text-sm" style="color: #A39D94; line-height: 1.6; max-width: 760px;" data-i18n="d-price-note">
           Prices exclude VAT. Maintenance can be cancelled monthly after the first 12 months. "Unlimited" refers to text and image changes on existing pages, not new functionality.
@@ -503,8 +517,27 @@
       });
     });
 
-    // ── Collapsible cards on phones ────────────────────────────
-    // Markup ships with every card open; on phones we close them so the page scans.
+    // ── Pricing carousel dots (phones) ──────────────────────────
+    (() => {
+      const track = document.querySelector('.price-grid');
+      const dots = document.querySelectorAll('.carousel-dots span');
+      if (!track || !dots.length) return;
+      const cards = [...track.querySelectorAll('.price-card')];
+      let t;
+      track.addEventListener('scroll', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          const base = track.getBoundingClientRect().left;
+          const mid = track.clientWidth / 2;
+          let idx = 0;
+          cards.forEach((c, i) => { if (c.getBoundingClientRect().left - base <= mid) idx = i; });
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        }, 60);
+      }, { passive: true });
+    })();
+
+    // ── Collapsible blocks on phones ───────────────────────────
+    // Markup ships open; on phones we close them so the page scans.
     (() => {
       const cards = document.querySelectorAll('details.svc');
       if (!cards.length) return;

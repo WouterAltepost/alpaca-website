@@ -22,6 +22,15 @@
     @media (min-width: 1024px) {
       #booking-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important; }
     }
+    /* Phones and tablets (single column): calendar card right under the headline, facts below it */
+    @media (max-width: 1023px) {
+      #booking-grid.gap-12 { gap: 0; }
+      .booking-intro { display: contents; }
+      .booking-intro .text-veil { display: none; }
+      .booking-card-wrap { order: 5; margin-top: 28px; }
+      .booking-facts { order: 6; margin-top: 28px; }
+      .booking-prefer { order: 7; margin-top: 20px; }
+    }
     .step { padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
     .step-title {
       display: flex; align-items: center; gap: 10px;
@@ -232,7 +241,7 @@
       <div class="grid gap-12 lg:gap-16 items-start" style="grid-template-columns: 1fr;" id="booking-grid">
 
         <!-- LEFT: intro -->
-        <div class="fade-up relative lg:sticky lg:top-[120px]">
+        <div class="fade-up relative lg:sticky lg:top-[120px] booking-intro">
           <div class="text-veil" aria-hidden="true"></div>
           <div class="eyebrow mb-4"><span data-i18n="book-tag">Discovery call</span></div>
           <h1 class="display-lg text-ink" style="font-size: clamp(2.25rem, 4.5vw, 3.5rem); max-width: 12ch;" data-i18n="book-h1" data-i18n-html>
@@ -242,7 +251,7 @@
             Pick a slot that suits you. We talk through your idea, what AI can realistically do for it, and what a first version would look like. No preparation needed, no obligations.
           </p>
 
-          <ul class="mt-8 flex flex-col gap-4" style="list-style: none; padding: 0; margin-left: 0;">
+          <ul class="mt-8 flex flex-col gap-4 booking-facts" style="list-style: none; padding: 0; margin-left: 0;">
             <li class="flex items-center gap-3">
               <span class="service-icon" style="width: 40px; height: 40px; border-radius: 10px;">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#F09537" stroke-width="1.5"/><path d="M8 5v3l2 1.5" stroke="#F09537" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -263,14 +272,14 @@
             </li>
           </ul>
 
-          <p class="mt-10 text-sm" style="color: #7A746B;">
+          <p class="mt-10 text-sm booking-prefer" style="color: #7A746B;">
             <span data-i18n="book-prefer">Prefer email?</span>
             <a href="mailto:wout@alpacaai.nl" class="nav-link text-sm" style="color: #1A1613; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">wout@alpacaai.nl</a>
           </p>
         </div>
 
         <!-- RIGHT: booking card -->
-        <div class="fade-up" style="transition-delay: 80ms;">
+        <div class="fade-up booking-card-wrap" style="transition-delay: 80ms;">
           <div class="card p-6 md:p-8" id="booking-card">
 
             <!-- Form view -->
