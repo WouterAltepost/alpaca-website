@@ -1,0 +1,730 @@
+{
+  "name": "Alpaca AI · Lead outreach (website leads)",
+  "nodes": [
+    {
+      "parameters": {
+        "width": 560,
+        "height": 620,
+        "color": 5,
+        "content": "## Alpaca AI · Lead outreach\n\n**Two modes, one workflow**\n- **Enrich** (manual trigger): finds the owner's first name for every highlighted row and writes it to the `Voornaam` + `Naam bron` columns. Sends nothing. Review the names in the sheet before activating.\n- **Send** (schedule): every 5 min, Mon–Fri 09:00–15:55 Amsterdam time, sends ONE email to the next highlighted row that is not yet marked `Verzonden`/`Fout`. Unfinished rows carry over to the next day automatically.\n\n**Before first use**\n1. `Config` → set `spreadsheetId` to the ID of the *native* Google Sheet (not the .xlsx) and `sheetName` to the tab name.\n2. Select credentials on the 3 `HTTP Request` nodes (Google Sheets OAuth2, Anthropic) and the Gmail node.\n3. Test: set `testMode` = true in `Config`, run **Manual · Send one** → the email lands in `testEmail`. Nothing is written to the sheet in test mode.\n4. Set `testMode` = false, then **Activate** the workflow.\n\n**Sheet columns** `Status`, `Verzonden op`, `Voornaam`, `Naam bron`, `Fout` are created automatically after the last header. Clear a row's `Status` to resend it; clear `Naam bron` to search its name again."
+      },
+      "id": "47383114-21a5-4be5-80a9-04a3701f9e77",
+      "name": "Setup notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/5 9-15 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "6bf625f4-3570-4d9d-888b-5d2e0f310d07",
+      "name": "Schedule · Send window",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1180,
+        120
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "aa1c41db-98bc-4f9e-b70d-af50a1f6a6f9",
+      "name": "Manual · Send one",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "eda22626-ebfa-48f8-af27-15677bb01179",
+      "name": "Manual · Enrich names",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "997a4117-38ad-4a89-b4e7-df3344827897",
+              "name": "mode",
+              "value": "send",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8ed29345-1fa1-4ffd-8f18-5be583dcd700",
+      "name": "Mode · send",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -960,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b357bb42-cc69-40bc-a798-c4e780bee9eb",
+              "name": "mode",
+              "value": "send",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5344d962-2692-4387-a55f-6d1ab06fdd38",
+      "name": "Mode · send (manual)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -960,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1bbf0e31-44a0-4d1a-99bc-60c053c1d58a",
+              "name": "mode",
+              "value": "enrich",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "42d14500-7b07-48c2-85b0-302934fc15ca",
+      "name": "Mode · enrich",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -960,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "includeOtherFields": true,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e387f0d9-3136-4756-934a-8fa3310b01d4",
+              "name": "spreadsheetId",
+              "value": "PASTE_GOOGLE_SHEET_ID_HERE",
+              "type": "string"
+            },
+            {
+              "id": "922585cd-c7d2-4148-89a2-ad78ced0be85",
+              "name": "sheetName",
+              "value": "Netherlands",
+              "type": "string"
+            },
+            {
+              "id": "bf400e03-f9ba-4ebf-860e-dd484adc35f0",
+              "name": "highlightHex",
+              "value": "#eae287",
+              "type": "string"
+            },
+            {
+              "id": "7aa0d928-856e-4f6d-bdf4-94ea3c639085",
+              "name": "colorTolerance",
+              "value": 0.03,
+              "type": "number"
+            },
+            {
+              "id": "b0b648b8-65cb-4cbe-94bb-c1f5694dff9d",
+              "name": "testMode",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "c243dac5-93e8-464c-9d22-c6d7b64f0011",
+              "name": "testEmail",
+              "value": "wout@alpacaai.nl",
+              "type": "string"
+            },
+            {
+              "id": "081e34b0-3412-4a3e-a191-d4ef551b10d3",
+              "name": "senderName",
+              "value": "Wouter Altepost | Alpaca AI",
+              "type": "string"
+            },
+            {
+              "id": "74f630f4-358a-4481-bfe1-825de70170be",
+              "name": "logoUrl",
+              "value": "https://alpacaai.nl/brand_assets/logo-email.png",
+              "type": "string"
+            },
+            {
+              "id": "f50ec259-0d01-4dc4-bf8f-b24c7fea8aa3",
+              "name": "anthropicModel",
+              "value": "claude-opus-5",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6e146ac8-a4d2-4a2f-a45b-0d323d27923f",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -740,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/{{ $json.spreadsheetId }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "includeGridData",
+              "value": "true"
+            },
+            {
+              "name": "ranges",
+              "value": "={{ $json.sheetName }}"
+            },
+            {
+              "name": "fields",
+              "value": "sheets(properties(title,sheetId),data(startRow,startColumn,rowData(values(formattedValue,effectiveFormat(backgroundColor)))))"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "7ab6d988-26f6-4628-b31c-eabf6475c82f",
+      "name": "Sheets · Read grid + colours",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -520,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Turns the Sheets API grid (values + background colours) into one item per highlighted row.\nconst cfg = $('Config').first().json;\nconst resp = $input.first().json;\nif (!resp || !resp.sheets || !resp.sheets.length) {\n  throw new Error(`Tab \"${cfg.sheetName}\" not found in spreadsheet ${cfg.spreadsheetId}. Check Config → sheetName.`);\n}\nconst sheet = resp.sheets[0];\nconst data = (sheet.data && sheet.data[0]) || {};\nconst startRow = data.startRow || 0;\nconst rowData = data.rowData || [];\n\n// --- target colour (#eae287) → 0..1 floats, compared per channel ---\nconst hex = String(cfg.highlightHex || '#eae287').replace('#', '');\nconst target = [0, 2, 4].map(i => parseInt(hex.substr(i, 2), 16) / 255);\nconst tol = Number(cfg.colorTolerance || 0.03);\nconst isTargetColor = (bg) => {\n  if (!bg) return false;\n  const c = [bg.red || 0, bg.green || 0, bg.blue || 0];\n  return c.every((v, i) => Math.abs(v - target[i]) <= tol);\n};\nconst cellBg = (cell) => cell && cell.effectiveFormat && cell.effectiveFormat.backgroundColor;\nconst cellVal = (cell) => (cell && cell.formattedValue !== undefined && cell.formattedValue !== null) ? String(cell.formattedValue).trim() : '';\nconst colLetter = (idx) => { let s = ''; idx += 1; while (idx > 0) { const m = (idx - 1) % 26; s = String.fromCharCode(65 + m) + s; idx = Math.floor((idx - 1) / 26); } return s; };\n\n// --- header row ---\nconst headerCells = (rowData[0] && rowData[0].values) || [];\nconst headers = headerCells.map(cellVal);\nconst norm = (s) => String(s || '').toLowerCase().trim();\nconst findCol = (...cands) => {\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h) === c);\n    if (i >= 0) return i;\n  }\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h).startsWith(c));\n    if (i >= 0) return i;\n  }\n  return -1;\n};\nconst src = {\n  company: findCol('company / person name', 'company', 'bedrijf', 'naam'),\n  phone: findCol('phone', 'telefoon'),\n  email: findCol('email', 'e-mail'),\n  sector: findCol('sector', 'branche', 'industry'),\n  street: findCol('street address', 'adres', 'street'),\n  postcode: findCol('postcode', 'zip'),\n  city: findCol('city', 'plaats', 'stad'),\n  facebook: findCol('facebook'),\n  instagram: findCol('instagram'),\n};\nif (src.company < 0 || src.email < 0) {\n  throw new Error(`Could not find the company/email columns. Headers seen: ${headers.join(' | ')}`);\n}\n\n// --- status columns (created after the last header when missing) ---\nconst wanted = [\n  ['status', 'Status'],\n  ['sentAt', 'Verzonden op'],\n  ['firstName', 'Voornaam'],\n  ['nameSource', 'Naam bron'],\n  ['error', 'Fout'],\n];\nlet nextFree = headers.length;\nwhile (nextFree > 0 && !headers[nextFree - 1]) nextFree--;\nconst cols = {};\nfor (const [key, label] of wanted) {\n  let idx = headers.findIndex(h => norm(h) === norm(label));\n  const missing = idx < 0;\n  if (missing) { idx = nextFree++; }\n  cols[key] = { idx, col: colLetter(idx), header: label, missing };\n}\n\n// --- rows ---\nconst emailRe = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\nconst out = [];\nfor (let r = 1; r < rowData.length; r++) {\n  const cells = (rowData[r] && rowData[r].values) || [];\n  const get = (i) => (i >= 0 ? cellVal(cells[i]) : '');\n  const company = get(src.company);\n  if (!company) continue;\n  const highlighted = isTargetColor(cellBg(cells[src.company])) || isTargetColor(cellBg(cells[src.email]));\n  const emailRaw = get(src.email);\n  const email = emailRaw.toLowerCase().replace(/^mailto:/, '').split(/[;,\\s]/)[0] || '';\n  out.push({\n    json: {\n      row: startRow + r + 1,          // 1-based sheet row number\n      highlighted,\n      company,\n      email,\n      emailValid: emailRe.test(email),\n      phone: get(src.phone),\n      sector: get(src.sector),\n      street: get(src.street),\n      postcode: get(src.postcode),\n      city: get(src.city),\n      facebook: get(src.facebook),\n      instagram: get(src.instagram),\n      status: get(cols.status.idx),\n      sentAt: get(cols.sentAt.idx),\n      firstName: get(cols.firstName.idx),\n      nameSource: get(cols.nameSource.idx),\n      _cols: cols,\n      _sheetName: sheet.properties.title,\n    },\n  });\n}\nconst nHi = out.filter(i => i.json.highlighted).length;\nif (!out.length) throw new Error('No data rows found under the header row.');\n// Attach a small summary to every item so it is visible in the execution log.\nfor (const i of out) i.json._summary = `${out.length} rows read, ${nHi} highlighted (${cfg.highlightHex})`;\nreturn out;\n"
+      },
+      "id": "4280ac6a-830d-4fce-8f06-25bd0aca68bd",
+      "name": "Code · Parse rows",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "83753bcd-6793-44f6-9cc8-73bd30906fd8",
+              "leftValue": "={{ $('Config').first().json.mode }}",
+              "rightValue": "send",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ebd5fcbf-2c4f-4f13-83d4-d3f552ccc7e1",
+      "name": "IF · Send mode?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Send mode: choose exactly ONE row per run (the schedule fires every 5 minutes).\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map(i => i.json);\nconst isDone = (r) => /^verzonden/i.test(r.status || '') || /^fout/i.test(r.status || '');\nconst candidates = rows.filter(r => r.highlighted && r.emailValid && !isDone(r));\nconst skippedBadEmail = rows.filter(r => r.highlighted && !r.emailValid && !isDone(r)).length;\nif (!candidates.length) {\n  // Nothing left to send: end this run quietly.\n  return [];\n}\nconst next = candidates[0];\nnext._remainingAfterThis = candidates.length - 1;\nnext._skippedInvalidEmail = skippedBadEmail;\nnext.testMode = !!cfg.testMode;\nnext.to = cfg.testMode ? cfg.testEmail : next.email;\nreturn [{ json: next }];\n"
+      },
+      "id": "b602c0a4-e797-4ce0-8590-84d7b17f4bc6",
+      "name": "Code · Pick next row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Builds subject + HTML body for one lead. Text is kept verbatim from the approved template.\nconst cfg = $('Config').first().json;\nconst r = $input.first().json;\nconst esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');\n\nconst company = esc(r.company);\nconst firstName = esc((r.firstName || '').trim());\nconst greeting = firstName ? `Beste ${firstName},` : `Beste ${company},`;\nconst subject = (r.testMode ? '[TEST] ' : '') + `Gratis website-ontwerp voor ${r.company}`;\n\nconst p = (t) => `<p style=\"margin:0 0 16px\">${t}</p>`;\nconst html = `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613;max-width:640px\">\n${p(greeting)}\n${p(`Mijn naam is Wouter Altepost, oprichter van Alpaca AI hier uit Amsterdam. Ik zag dat ${company} nog geen eigen website heeft, en dat leek me zonde voor een zaak met zo'n herkenbare uitstraling.`)}\n${p(`Ik kan binnen een dag een gratis ontwerp voor je klaarzetten, in de stijl van jullie zaak: logo, kleuren en sfeer overgenomen van wat ik nu al van jullie zie staan. Geen verplichting en geen kosten. Daarna plannen we, wanneer het jou uitkomt, een kort en vrijblijvend telefoontje om het samen door te nemen en eventuele wijzigingen te bespreken, ook dat helemaal gratis.`)}\n${p(`Mocht je enthousiast zijn: ik kan het ontwerp binnen een week omzetten in een live website. Dat is eenmalig 595 euro, verder geen abonnement verplicht, en ik koppel hem aan je Google Bedrijfsprofiel en Facebook-pagina, zodat je reviews, openingstijden en berichten automatisch op de site komen te staan.`)}\n${p(`Laat het weten als je interesse hebt, dan zet ik een voorbeeld voor je klaar.`)}\n<p style=\"margin:24px 0 12px\">Met vriendelijke groet,</p>\n<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n<tr>\n<td style=\"vertical-align:top;padding:0 18px 0 0;border-right:1px solid #E8E2D8\"><img src=\"${cfg.logoUrl}\" alt=\"Alpaca AI\" width=\"110\" style=\"display:block;width:110px;height:auto\"></td>\n<td style=\"vertical-align:top;padding:0 0 0 18px;font-size:14px;line-height:1.5\">\n<strong style=\"color:#1A1613\">Wouter Altepost</strong><br>\n<span style=\"color:#6B655D\">Alpaca AI</span><br>\n<a href=\"mailto:wout@alpacaai.nl\" style=\"color:#1A1613;text-decoration:none\">wout@alpacaai.nl</a><br>\n<a href=\"https://alpacaai.nl/diensten\" style=\"color:#F09537;text-decoration:none\">alpacaai.nl/diensten</a><br>\n<a href=\"tel:+31628283985\" style=\"color:#1A1613;text-decoration:none\">06 28 28 39 85</a>\n</td>\n</tr>\n</table>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0 12px\">\n<p style=\"color:#A39D94;font-size:12px;line-height:1.5;margin:0\">Privacyverklaring: <a href=\"https://alpacaai.nl/privacy\" style=\"color:#A39D94\">alpacaai.nl/privacy</a>. Wil je dit soort berichten niet ontvangen? Laat het gewoon weten, dan verwijder ik je gegevens meteen en stuur ik niets meer.</p>\n</div>`;\n\nreturn [{ json: { ...r, subject, html, greeting } }];\n"
+      },
+      "id": "1f3ae647-5c47-4e4b-aca4-b4102e251f54",
+      "name": "Code · Build email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {
+          "senderName": "={{ $('Config').first().json.senderName }}",
+          "appendAttribution": false
+        }
+      },
+      "id": "767a4c42-eaf4-4056-89ec-2046b8f486cf",
+      "name": "Gmail · Send",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        600,
+        160
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst r = $('Code · Build email').first().json;  // Gmail outputs its API response, so take the lead from the previous node\nif (r.testMode) { return []; }  // test sends are never recorded in the sheet\nconst sheetName = r._sheetName; const cols = r._cols;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\nconst now = new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', hour12: false });\ndata.push({ range: cellRange(cols.status.col, r.row), values: [['Verzonden']] });\ndata.push({ range: cellRange(cols.sentAt.col, r.row), values: [[now]] });\ndata.push({ range: cellRange(cols.error.col, r.row), values: [['']] });\nreturn [{ json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } }];\n"
+      },
+      "id": "052fc7bf-781d-437f-ac98-b2f9b5d38160",
+      "name": "Code · Prepare write (sent)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        60
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst src = $('Code · Build email').first().json;\nconst errItem = $input.first().json;\nconst msg = (errItem.error && (errItem.error.message || errItem.error)) || 'Onbekende fout';\nif (src.testMode) { throw new Error('Test send failed: ' + msg); }\nconst sheetName = src._sheetName; const cols = src._cols;\nconst r = src;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\nconst now = new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', hour12: false });\ndata.push({ range: cellRange(cols.status.col, r.row), values: [['Fout']] });\ndata.push({ range: cellRange(cols.error.col, r.row), values: [[`${now}: ${String(msg).slice(0, 400)}`]] });\nreturn [{ json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } }];\n"
+      },
+      "id": "48675340-5bf5-484e-9bb0-287a9c897f21",
+      "name": "Code · Prepare write (error)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// Enrich mode: every highlighted row that has no first name yet and has not been searched before.\nconst rows = $input.all().map(i => i.json);\nconst todo = rows.filter(r => r.highlighted && r.emailValid && !r.firstName && !r.nameSource && !/^verzonden/i.test(r.status || ''));\nreturn todo.map(r => ({ json: r }));\n"
+      },
+      "id": "bb7e536f-9d0d-4f72-8adb-0a48232fd389",
+      "name": "Code · Rows to enrich",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "anthropic-beta",
+              "value": "server-side-fallback-2026-07-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  model: $('Config').first().json.anthropicModel,\n  max_tokens: 2000,\n  fallbacks: 'default',\n  system: \"Je bent een onderzoeksassistent voor Alpaca AI, een klein webbureau in Amsterdam. Je taak: de VOORNAAM vinden van de eigenaar of drijvende kracht achter een specifiek klein Nederlands bedrijf, zodat een e-mail persoonlijk geadresseerd kan worden.\\n\\nWerkwijze:\\n1. Kijk eerst naar het e-mailadres. Als het lokale deel duidelijk een persoonsnaam bevat (bijv. judithvanginkel@hotmail.com, j.bakker@..., info@ zegt niets), is dat een sterk signaal.\\n2. Zoek daarna op het web (bedrijfsnaam + plaats, eventueel + 'eigenaar'), bijvoorbeeld het Google Bedrijfsprofiel, de Facebook- of Instagram-pagina, KVK-registersites (kvk.nl, drimble, openkvk, bedrijvenpagina), lokale nieuwsberichten, reacties van de eigenaar op reviews.\\n3. Bevestig dat de naam bij DIT bedrijf op DEZE locatie hoort. Bij naamgenoten of twijfel: niet raden.\\n\\nRegels:\\n- Geef alleen een voornaam zoals de persoon die zelf gebruikt (bijv. 'Judith', 'Jan-Willem'); geen initialen, geen achternaam in first_name.\\n- Confidence is 0-100. Onder 70 hoort first_name null te zijn.\\n- Als het bedrijf duidelijk een keten, franchise of grote organisatie is, of als er geen betrouwbare naam is: first_name null.\\n- Antwoord UITSLUITEND met één JSON-object, zonder tekst eromheen en zonder markdown, met exact deze velden:\\n{\\\"first_name\\\": string|null, \\\"full_name\\\": string|null, \\\"role\\\": string|null, \\\"confidence\\\": number, \\\"source_url\\\": string|null, \\\"reasoning\\\": string}\\n- reasoning: maximaal 25 woorden, in het Nederlands.\",\n  tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 4,\n            user_location: { type: 'approximate', country: 'NL', timezone: 'Europe/Amsterdam' } }],\n  messages: [{ role: 'user', content: `Bedrijf: {{ $json.company }}\nSector: {{ $json.sector }}\nE-mail: {{ $json.email }}\nTelefoon: {{ $json.phone }}\nAdres: {{ [$json.street, $json.postcode, $json.city].filter(Boolean).join(', ') }}\nFacebook: {{ $json.facebook || '-' }}\nInstagram: {{ $json.instagram || '-' }}\n\nVind de voornaam van de eigenaar en antwoord met het JSON-object.` }]\n}) }}",
+        "options": {
+          "timeout": 180000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 1500
+            }
+          }
+        }
+      },
+      "id": "03da3012-6d65-4581-b3c4-c485e3c89a85",
+      "name": "Anthropic · Find owner name",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        500
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\n// Reads the JSON object out of Claude's reply; falls back to \"not found\" on any problem.\nconst lead = $('Code · Rows to enrich').item.json;\nconst resp = $input.item.json;\nlet result = { first_name: null, full_name: null, role: null, confidence: 0, source_url: null, reasoning: '' };\nlet note = '';\ntry {\n  if (resp.error) {\n    note = 'API-fout: ' + (resp.error.message || resp.error.error?.message || JSON.stringify(resp.error)).slice(0, 200);\n  } else if (resp.stop_reason === 'refusal') {\n    note = 'Geweigerd door model';\n  } else {\n    const texts = (resp.content || []).filter(b => b.type === 'text').map(b => b.text);\n    const last = texts.length ? texts[texts.length - 1] : '';\n    const m = last.match(/\\{[\\s\\S]*\\}/);\n    if (m) {\n      const parsed = JSON.parse(m[0]);\n      result = { ...result, ...parsed };\n    } else {\n      note = 'Geen JSON in antwoord';\n    }\n    if (resp.stop_reason === 'pause_turn' || resp.stop_reason === 'max_tokens') note = note || `stop_reason=${resp.stop_reason}`;\n  }\n} catch (e) {\n  note = 'Parsefout: ' + String(e.message).slice(0, 120);\n}\nconst conf = Number(result.confidence) || 0;\nconst clean = (s) => String(s || '').trim();\nlet firstName = clean(result.first_name);\n// Safety net: only accept plausible name tokens with confidence >= 70.\nif (conf < 70 || !/^[A-Za-zÀ-ÿ' -]{2,30}$/.test(firstName) || /^(null|none|onbekend|unknown)$/i.test(firstName)) firstName = '';\nconst parts = [];\nparts.push(firstName ? `${conf}%` : `niet gevonden (${conf}%)`);\nif (clean(result.full_name)) parts.push(clean(result.full_name) + (clean(result.role) ? ` · ${clean(result.role)}` : ''));\nif (clean(result.source_url)) parts.push(clean(result.source_url));\nif (clean(result.reasoning)) parts.push(clean(result.reasoning));\nif (note) parts.push(note);\nreturn { json: { ...lead, firstName, nameSource: parts.join(' | ').slice(0, 480) } };\n"
+      },
+      "id": "d708136c-4299-4e73-a4ef-7a254e8ca542",
+      "name": "Code · Parse name",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "\nconst r = $input.item.json;\nconst sheetName = r._sheetName; const cols = r._cols;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\ndata.push({ range: cellRange(cols.firstName.col, r.row), values: [[r.firstName || '']] });\ndata.push({ range: cellRange(cols.nameSource.col, r.row), values: [[r.nameSource || '']] });\nreturn { json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } };\n"
+      },
+      "id": "4414c284-2896-4116-975b-069c945182c8",
+      "name": "Code · Prepare write (name)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        500
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://sheets.googleapis.com/v4/spreadsheets/{{ $('Config').first().json.spreadsheetId }}/values:batchUpdate",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleSheetsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {
+          "timeout": 60000,
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 300
+            }
+          }
+        }
+      },
+      "id": "7e6cb5a6-2b68-4681-aaca-f02a92ce44f4",
+      "name": "Sheets · Write back",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule · Send window": {
+      "main": [
+        [
+          {
+            "node": "Mode · send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual · Send one": {
+      "main": [
+        [
+          {
+            "node": "Mode · send (manual)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual · Enrich names": {
+      "main": [
+        [
+          {
+            "node": "Mode · enrich",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mode · send": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mode · send (manual)": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mode · enrich": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Read grid + colours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sheets · Read grid + colours": {
+      "main": [
+        [
+          {
+            "node": "Code · Parse rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Parse rows": {
+      "main": [
+        [
+          {
+            "node": "IF · Send mode?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF · Send mode?": {
+      "main": [
+        [
+          {
+            "node": "Code · Pick next row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code · Rows to enrich",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Pick next row": {
+      "main": [
+        [
+          {
+            "node": "Code · Build email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Build email": {
+      "main": [
+        [
+          {
+            "node": "Gmail · Send",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail · Send": {
+      "main": [
+        [
+          {
+            "node": "Code · Prepare write (sent)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code · Prepare write (error)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Prepare write (sent)": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Write back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Prepare write (error)": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Write back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Rows to enrich": {
+      "main": [
+        [
+          {
+            "node": "Anthropic · Find owner name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic · Find owner name": {
+      "main": [
+        [
+          {
+            "node": "Code · Parse name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Parse name": {
+      "main": [
+        [
+          {
+            "node": "Code · Prepare write (name)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code · Prepare write (name)": {
+      "main": [
+        [
+          {
+            "node": "Sheets · Write back",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Amsterdam",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "active": false,
+  "versionId": "028e4b9f-27fc-4600-8118-0adbf6601b55",
+  "meta": {
+    "instanceId": "alpaca-leadlist-outreach"
+  },
+  "tags": []
+}

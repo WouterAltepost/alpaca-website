@@ -38,24 +38,44 @@
   <link rel="stylesheet" href="/assets/site.css">
 
   <style>
-    /* ── Services page ────────────────────────────────────────── */
-    .price-card { position: relative; display: flex; flex-direction: column; }
-    .price-card.is-featured {
-      border-color: rgba(240,149,55,0.55);
-      box-shadow:
-        0 1px 2px rgba(var(--shadow-color) / 0.04),
-        0 16px 40px -16px rgba(240,149,55,0.35);
+    /* ── Services page: pricing ───────────────────────────────── */
+    .price-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; }
+    .price-label { position: absolute; top: 30px; right: 32px; color: #C4681A; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .price-name { align-self: stretch; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); padding: 0 110px 18px 0; border-bottom: 1px solid var(--line); }
+    .price { margin-top: 32px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; color: var(--ink); }
+    .price-amount { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: 3.25rem; letter-spacing: -0.03em; line-height: 1; }
+    .price-prefix, .price-suffix { color: var(--muted); font-size: 1.125rem; font-weight: 400; }
+    .price-desc { margin-top: 18px; color: var(--muted); font-size: 1.0625rem; line-height: 1.6; }
+    .price-cta { margin-top: 26px; }
+    .price-list { list-style: none; margin: 40px 0 0; padding: 0; align-self: stretch; }
+    .price-list li { display: flex; align-items: flex-start; gap: 14px; padding: 15px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 0.9375rem; line-height: 1.5; }
+    .price-list li:last-child { border-bottom: 0; }
+    .price-list li::before { content: ''; flex-shrink: 0; width: 26px; height: 26px; margin-top: -2px; border-radius: 50%; background: rgba(26,22,19,0.06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5' stroke='%235A544D' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat; }
+    .is-featured .price-list li::before { background-color: rgba(240,149,55,0.16); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5' stroke='%23C4681A' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+
+    /* Desktop: one framed table, the middle tier lifted out of it */
+    @media (min-width: 768px) {
+      .price-grid.gap-4 { gap: 0; }
+      .price-grid { align-items: stretch; background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 1px 2px rgba(var(--shadow-color) / 0.04), 0 24px 56px -32px rgba(var(--shadow-color) / 0.16); }
+      .price-grid > .price-card, .price-grid > .price-card:hover { border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+      .price-grid > .price-card.p-8 { padding: 44px 36px 40px; }
+      .price-grid > .price-card.is-featured, .price-grid > .price-card.is-featured:hover {
+        margin: -28px 0; padding-top: 72px; padding-bottom: 68px;
+        background: var(--card); border: 1px solid rgba(240,149,55,0.5); border-radius: 22px;
+        box-shadow: 0 1px 2px rgba(var(--shadow-color) / 0.05), 0 28px 64px -28px rgba(240,149,55,0.35);
+      }
+      .price-grid > .price-card.is-featured .price-label { top: 44px; }
+      .price-desc { min-height: 3.2em; }
     }
-    .price-card.is-featured:hover { border-color: var(--accent); }
-    .price-label { position: absolute; top: 26px; right: 28px; color: #C4681A; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-    .price-name { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); padding-right: 110px; }
-    .price { margin-top: 14px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; color: var(--ink); }
-    .price-amount { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 2.5rem; letter-spacing: -0.04em; line-height: 1; }
-    .price-prefix, .price-suffix { color: #5A544D; font-size: 0.9375rem; font-weight: 500; }
-    .price-list { list-style: none; margin: 24px 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
-    .price-list li { position: relative; padding-left: 22px; color: #5A544D; font-size: 0.9375rem; line-height: 1.55; }
-    .price-list li::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 10px; height: 2px; border-radius: 1px; background: #F09537; }
-    @media (max-width: 767px) { main h1 br, main h2 br { display: none; } }
+    @media (min-width: 1024px) { .price-grid > .price-card.p-8 { padding: 48px 44px 44px; } .price-grid > .price-card.is-featured { padding-top: 76px; padding-bottom: 72px; } }
+    @media (max-width: 767px) {
+      main h1 br, main h2 br { display: none; }
+      .price { gap: 8px; }
+      .price-amount { font-size: 2.5rem; }
+      .price-prefix, .price-suffix { font-size: 1rem; }
+      .price-list { margin-top: 28px; }
+      .price-list li { padding: 12px 0; }
+    }
 
     /* Phones: pricing cards as a looping carousel, centred card with both neighbours peeking in */
     .carousel-dots { display: none; }
@@ -214,6 +234,8 @@
         <div class="card p-8 fade-up price-card">
           <h3 class="price-name">Website</h3>
           <p class="price"><span class="price-prefix">from</span> <span class="price-amount">€595</span> <span class="price-suffix">one-off</span></p>
+          <p class="price-desc">A new site, live in a week or two.</p>
+          <a href="/en/book" class="btn-ghost price-cta"><span>Book a call</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
           <ul class="price-list">
             <li>Design, build and launch</li>
             <li>Works on mobile, tablet and desktop</li>
@@ -226,6 +248,8 @@
           <p class="price-label">Most chosen</p>
           <h3 class="price-name">Maintenance Basic</h3>
           <p class="price"><span class="price-amount">€49</span> <span class="price-suffix">/mo</span></p>
+          <p class="price-desc">Everything that keeps the site safe and online.</p>
+          <a href="/en/book" class="btn-primary price-cta"><span>Book a call</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
           <ul class="price-list">
             <li>Hosting, domain and SSL</li>
             <li>Updates and security patches</li>
@@ -237,6 +261,8 @@
         <div class="card p-8 fade-up price-card" style="transition-delay: 120ms;">
           <h3 class="price-name">Maintenance Complete</h3>
           <p class="price"><span class="price-amount">€99</span> <span class="price-suffix">/mo</span></p>
+          <p class="price-desc">For a site that keeps changing with your business.</p>
+          <a href="/en/book" class="btn-ghost price-cta"><span>Book a call</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
           <ul class="price-list">
             <li>Everything in Basic</li>
             <li>Unlimited text and image changes</li>
