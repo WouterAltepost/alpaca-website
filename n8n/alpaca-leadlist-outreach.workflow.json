@@ -6,9 +6,9 @@
         "width": 560,
         "height": 620,
         "color": 5,
-        "content": "## Alpaca AI · Lead outreach\n\n**Two modes, one workflow**\n- **Enrich** (manual trigger): finds the owner's first name for every highlighted row and writes it to the `Voornaam` + `Naam bron` columns. Sends nothing. Review the names in the sheet before activating.\n- **Send** (schedule): every 5 min, Mon–Fri 09:00–15:55 Amsterdam time, sends ONE email to the next highlighted row that is not yet marked `Verzonden`/`Fout`. Unfinished rows carry over to the next day automatically.\n\n**Before first use**\n1. `Config` → set `spreadsheetId` to the ID of the *native* Google Sheet (not the .xlsx) and `sheetName` to the tab name.\n2. Select credentials on the 3 `HTTP Request` nodes (Google Sheets OAuth2, Anthropic) and the Gmail node.\n3. Test: set `testMode` = true in `Config`, run **Manual · Send one** → the email lands in `testEmail`. Nothing is written to the sheet in test mode.\n4. Set `testMode` = false, then **Activate** the workflow.\n\n**Sheet columns** `Status`, `Verzonden op`, `Voornaam`, `Naam bron`, `Fout` are created automatically after the last header. Clear a row's `Status` to resend it; clear `Naam bron` to search its name again."
+        "content": "## Alpaca AI · Lead outreach\n\n**Two modes, one workflow**\n- **Enrich** (manual trigger): finds the owner's first name for every highlighted row and writes it to the `Voornaam` + `Naam bron` columns. Sends nothing. Review the names in the sheet before activating.\n- **Send** (schedule): every 5 min, Mon–Fri 09:00–15:55 Amsterdam time, takes the next highlighted row that is not yet marked `Verzonden`/`Fout`. If that row has no `Voornaam`/`Naam bron` yet it first looks up the owner's name, writes it to the sheet, then sends ONE email in the same run. Unfinished rows carry over to the next day automatically.\n\n**Before first use**\n1. `Config` → `spreadsheetId` is prefilled with the native Google Sheet `leadlist`; `sheetName` is the tab name.\n2. Select credentials on the 3 `HTTP Request` nodes (Google Sheets OAuth2, Anthropic) and the Gmail node.\n3. Test: set `testMode` = true in `Config`, run **Manual · Send one** → the email lands in `testEmail`. Nothing is written to the sheet in test mode.\n4. Set `testMode` = false, then **Activate** the workflow.\n\n**Sheet columns** `Status`, `Verzonden op`, `Voornaam`, `Naam bron`, `Fout` are created automatically after the last header. Clear a row's `Status` to resend it; clear `Naam bron` to search its name again."
       },
-      "id": "aca2cafb-8dc2-475b-ae63-351cd2c1238b",
+      "id": "d121d1ce-bf21-419f-b54f-51a571e058bd",
       "name": "Setup notes",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
@@ -28,7 +28,7 @@
           ]
         }
       },
-      "id": "40ba6dc2-9da6-4e04-a46c-214ede4a7ecc",
+      "id": "a2a8d1eb-99a2-42d4-8d4b-fcc4ec4dad8d",
       "name": "Schedule · Send window",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
@@ -39,7 +39,7 @@
     },
     {
       "parameters": {},
-      "id": "f213316a-294b-4462-94c5-df0331248865",
+      "id": "e2b41061-1d4d-46d9-9918-6e7b41d88916",
       "name": "Manual · Send one",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -50,7 +50,7 @@
     },
     {
       "parameters": {},
-      "id": "17b09373-d0fd-48ff-bf2b-ee3c72561c7b",
+      "id": "978c1df6-7564-4f8e-a853-2579f86d0053",
       "name": "Manual · Enrich names",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -64,7 +64,7 @@
         "assignments": {
           "assignments": [
             {
-              "id": "4843d665-e2ba-4836-85b2-4de3baf4d38c",
+              "id": "715f0a8d-5768-40ab-87ca-40ff622098ab",
               "name": "mode",
               "value": "send",
               "type": "string"
@@ -73,7 +73,7 @@
         },
         "options": {}
       },
-      "id": "1630fd95-3595-4a20-93b3-8fd7dde04970",
+      "id": "1c7611e5-461e-435b-86db-06aec888da36",
       "name": "Mode · send",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -87,7 +87,7 @@
         "assignments": {
           "assignments": [
             {
-              "id": "97d81a64-751b-49a6-b010-a7bf3494409e",
+              "id": "6c59f890-df8c-4a87-9ea1-24477a1529da",
               "name": "mode",
               "value": "send",
               "type": "string"
@@ -96,7 +96,7 @@
         },
         "options": {}
       },
-      "id": "f4f8c515-51cb-4776-b854-d41f43562ecc",
+      "id": "e9b4e358-0009-4a7a-bd8d-ee744e682951",
       "name": "Mode · send (manual)",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -110,7 +110,7 @@
         "assignments": {
           "assignments": [
             {
-              "id": "e0bcb43f-5a29-467c-baee-f1057f044ba6",
+              "id": "cfab82fd-f803-416e-a3b4-4ef0bbbf3b18",
               "name": "mode",
               "value": "enrich",
               "type": "string"
@@ -119,7 +119,7 @@
         },
         "options": {}
       },
-      "id": "c55ec401-5311-4ca2-a9fa-0f972bac8b1f",
+      "id": "5a859f23-a898-4d4d-9107-98882ae96973",
       "name": "Mode · enrich",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -134,55 +134,55 @@
         "assignments": {
           "assignments": [
             {
-              "id": "bafb44f9-46e3-46d3-92d9-4a7105fa8ecd",
+              "id": "03079a84-3928-414c-9689-3743db6753f1",
               "name": "spreadsheetId",
-              "value": "PASTE_GOOGLE_SHEET_ID_HERE",
+              "value": "10zbWQk3jd4GC535DhW7wNiQVAluifXLvYj-dqfGHqGM",
               "type": "string"
             },
             {
-              "id": "a90bd898-b4b7-4884-a88e-03e241820968",
+              "id": "ce21d62d-feff-40c9-9a86-541a6b3eff04",
               "name": "sheetName",
               "value": "Netherlands",
               "type": "string"
             },
             {
-              "id": "5dcaf728-3095-4d70-8857-2202f47a43c2",
+              "id": "bd527c95-2925-4bb0-9e59-01a51a771cfb",
               "name": "highlightHex",
               "value": "#eae287",
               "type": "string"
             },
             {
-              "id": "eb86a615-8e76-4d52-94b5-9be2a367fcf5",
+              "id": "ad9b89f1-4dbe-4736-8a93-96a42046ef05",
               "name": "colorTolerance",
               "value": 0.03,
               "type": "number"
             },
             {
-              "id": "c8025e56-4ba6-4d0f-a9b1-9567f588c861",
+              "id": "03fc0921-f871-42ca-aeff-a2120f0a4dca",
               "name": "testMode",
               "value": true,
               "type": "boolean"
             },
             {
-              "id": "391d0d01-a165-4bfb-8afe-2c4a8696e83a",
+              "id": "2310530e-223b-4476-b4f5-fad79f90bc46",
               "name": "testEmail",
               "value": "wout@alpacaai.nl",
               "type": "string"
             },
             {
-              "id": "262e6566-960b-4d55-bcc9-31317ebd6a5f",
+              "id": "759f5dda-3a05-4db0-921b-aa2036eee0f9",
               "name": "senderName",
               "value": "Wouter Altepost | Alpaca AI",
               "type": "string"
             },
             {
-              "id": "ac853d65-c3d0-45d8-8230-f53efa8faaf9",
+              "id": "270ebf22-3bce-42dd-afef-4576d7287b37",
               "name": "logoUrl",
               "value": "https://alpacaai.nl/brand_assets/logo-email.png",
               "type": "string"
             },
             {
-              "id": "8ddc604b-5696-4264-b873-280367184f80",
+              "id": "4526b47a-afa2-4890-86d3-1445fa3ae911",
               "name": "anthropicModel",
               "value": "claude-opus-5",
               "type": "string"
@@ -191,7 +191,7 @@
         },
         "options": {}
       },
-      "id": "78b18876-96f3-4d4e-8519-b23b583c74db",
+      "id": "ce2f6bb9-121c-41f9-87b4-0bd3aa08fdb3",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -226,7 +226,7 @@
           "timeout": 60000
         }
       },
-      "id": "2a35d808-e0af-4795-a212-2805f6eab378",
+      "id": "6f88c397-c7e1-454f-9f13-89f8fc2c79d5",
       "name": "Sheets · Read grid + colours",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -243,9 +243,9 @@
     },
     {
       "parameters": {
-        "jsCode": "\n// Turns the Sheets API grid (values + background colours) into one item per highlighted row.\nconst cfg = $('Config').first().json;\nconst resp = $input.first().json;\nif (!resp || !resp.sheets || !resp.sheets.length) {\n  throw new Error(`Tab \"${cfg.sheetName}\" not found in spreadsheet ${cfg.spreadsheetId}. Check Config → sheetName.`);\n}\nconst sheet = resp.sheets[0];\nconst data = (sheet.data && sheet.data[0]) || {};\nconst startRow = data.startRow || 0;\nconst rowData = data.rowData || [];\n\n// --- target colour (#eae287) → 0..1 floats, compared per channel ---\nconst hex = String(cfg.highlightHex || '#eae287').replace('#', '');\nconst target = [0, 2, 4].map(i => parseInt(hex.substr(i, 2), 16) / 255);\nconst tol = Number(cfg.colorTolerance || 0.03);\nconst isTargetColor = (bg) => {\n  if (!bg) return false;\n  const c = [bg.red || 0, bg.green || 0, bg.blue || 0];\n  return c.every((v, i) => Math.abs(v - target[i]) <= tol);\n};\nconst cellBg = (cell) => cell && cell.effectiveFormat && cell.effectiveFormat.backgroundColor;\nconst cellVal = (cell) => (cell && cell.formattedValue !== undefined && cell.formattedValue !== null) ? String(cell.formattedValue).trim() : '';\nconst colLetter = (idx) => { let s = ''; idx += 1; while (idx > 0) { const m = (idx - 1) % 26; s = String.fromCharCode(65 + m) + s; idx = Math.floor((idx - 1) / 26); } return s; };\n\n// --- header row ---\nconst headerCells = (rowData[0] && rowData[0].values) || [];\nconst headers = headerCells.map(cellVal);\nconst norm = (s) => String(s || '').toLowerCase().trim();\nconst findCol = (...cands) => {\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h) === c);\n    if (i >= 0) return i;\n  }\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h).startsWith(c));\n    if (i >= 0) return i;\n  }\n  return -1;\n};\nconst src = {\n  company: findCol('company / person name', 'company', 'bedrijf', 'naam'),\n  phone: findCol('phone', 'telefoon'),\n  email: findCol('email', 'e-mail'),\n  sector: findCol('sector', 'branche', 'industry'),\n  street: findCol('street address', 'adres', 'street'),\n  postcode: findCol('postcode', 'zip'),\n  city: findCol('city', 'plaats', 'stad'),\n  facebook: findCol('facebook'),\n  instagram: findCol('instagram'),\n};\nif (src.company < 0 || src.email < 0) {\n  throw new Error(`Could not find the company/email columns. Headers seen: ${headers.join(' | ')}`);\n}\n\n// --- status columns (created after the last header when missing) ---\nconst wanted = [\n  ['status', 'Status'],\n  ['sentAt', 'Verzonden op'],\n  ['firstName', 'Voornaam'],\n  ['nameSource', 'Naam bron'],\n  ['error', 'Fout'],\n];\nlet nextFree = headers.length;\nwhile (nextFree > 0 && !headers[nextFree - 1]) nextFree--;\nconst cols = {};\nfor (const [key, label] of wanted) {\n  let idx = headers.findIndex(h => norm(h) === norm(label));\n  const missing = idx < 0;\n  if (missing) { idx = nextFree++; }\n  cols[key] = { idx, col: colLetter(idx), header: label, missing };\n}\n\n// --- rows ---\nconst emailRe = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\nconst out = [];\nfor (let r = 1; r < rowData.length; r++) {\n  const cells = (rowData[r] && rowData[r].values) || [];\n  const get = (i) => (i >= 0 ? cellVal(cells[i]) : '');\n  const company = get(src.company);\n  if (!company) continue;\n  const highlighted = isTargetColor(cellBg(cells[src.company])) || isTargetColor(cellBg(cells[src.email]));\n  const emailRaw = get(src.email);\n  const email = emailRaw.toLowerCase().replace(/^mailto:/, '').split(/[;,\\s]/)[0] || '';\n  out.push({\n    json: {\n      row: startRow + r + 1,          // 1-based sheet row number\n      highlighted,\n      company,\n      email,\n      emailValid: emailRe.test(email),\n      phone: get(src.phone),\n      sector: get(src.sector),\n      street: get(src.street),\n      postcode: get(src.postcode),\n      city: get(src.city),\n      facebook: get(src.facebook),\n      instagram: get(src.instagram),\n      status: get(cols.status.idx),\n      sentAt: get(cols.sentAt.idx),\n      firstName: get(cols.firstName.idx),\n      nameSource: get(cols.nameSource.idx),\n      _cols: cols,\n      _sheetName: sheet.properties.title,\n    },\n  });\n}\nconst nHi = out.filter(i => i.json.highlighted).length;\nif (!out.length) throw new Error('No data rows found under the header row.');\n// Attach a small summary to every item so it is visible in the execution log.\nfor (const i of out) i.json._summary = `${out.length} rows read, ${nHi} highlighted (${cfg.highlightHex})`;\nreturn out;\n"
+        "jsCode": "\n// Turns the Sheets API grid (values + background colours) into one item per highlighted row.\nconst cfg = $('Config').first().json;\nconst resp = $input.first().json;\nif (!resp || !resp.sheets || !resp.sheets.length) {\n  throw new Error(`Tab \"${cfg.sheetName}\" not found in spreadsheet ${cfg.spreadsheetId}. Check Config → sheetName.`);\n}\nconst sheet = resp.sheets[0];\nconst data = (sheet.data && sheet.data[0]) || {};\nconst startRow = data.startRow || 0;\nconst rowData = data.rowData || [];\n\n// --- target colour (#eae287) → 0..1 floats, compared per channel ---\nconst hex = String(cfg.highlightHex || '#eae287').replace('#', '');\nconst target = [0, 2, 4].map(i => parseInt(hex.substr(i, 2), 16) / 255);\nconst tol = Number(cfg.colorTolerance || 0.03);\nconst isTargetColor = (bg) => {\n  if (!bg) return false;\n  const c = [bg.red || 0, bg.green || 0, bg.blue || 0];\n  return c.every((v, i) => Math.abs(v - target[i]) <= tol);\n};\nconst cellBg = (cell) => cell && cell.effectiveFormat && cell.effectiveFormat.backgroundColor;\nconst cellVal = (cell) => (cell && cell.formattedValue !== undefined && cell.formattedValue !== null) ? String(cell.formattedValue).trim() : '';\nconst colLetter = (idx) => { let s = ''; idx += 1; while (idx > 0) { const m = (idx - 1) % 26; s = String.fromCharCode(65 + m) + s; idx = Math.floor((idx - 1) / 26); } return s; };\n\n// --- header row ---\nconst headerCells = (rowData[0] && rowData[0].values) || [];\nconst headers = headerCells.map(cellVal);\nconst norm = (s) => String(s || '').toLowerCase().trim();\nconst findCol = (...cands) => {\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h) === c);\n    if (i >= 0) return i;\n  }\n  for (const c of cands) {\n    const i = headers.findIndex(h => norm(h).startsWith(c));\n    if (i >= 0) return i;\n  }\n  return -1;\n};\nconst src = {\n  company: findCol('company / person name', 'company', 'bedrijf', 'naam'),\n  phone: findCol('phone', 'telefoon'),\n  email: findCol('email', 'e-mail'),\n  sector: findCol('sector', 'branche', 'industry'),\n  street: findCol('street address', 'adres', 'street'),\n  postcode: findCol('postcode', 'zip'),\n  city: findCol('city', 'plaats', 'stad'),\n  facebook: findCol('facebook'),\n  instagram: findCol('instagram'),\n};\nif (src.company < 0 || src.email < 0) {\n  throw new Error(`Could not find the company/email columns. Headers seen: ${headers.join(' | ')}`);\n}\n\n// --- status columns (created after the last header when missing) ---\nconst wanted = [\n  ['status', 'Status'],\n  ['sentAt', 'Verzonden op'],\n  ['firstName', 'Voornaam'],\n  ['nameSource', 'Naam bron'],\n  ['error', 'Fout'],\n];\nlet nextFree = headers.length;\nwhile (nextFree > 0 && !headers[nextFree - 1]) nextFree--;\nconst cols = {};\nfor (const [key, label] of wanted) {\n  let idx = headers.findIndex(h => norm(h) === norm(label));\n  const missing = idx < 0;\n  if (missing) { idx = nextFree++; }\n  cols[key] = { idx, col: colLetter(idx), header: label, missing };\n}\n\n// --- rows ---\nconst emailRe = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\nconst out = [];\nfor (let r = 1; r < rowData.length; r++) {\n  const cells = (rowData[r] && rowData[r].values) || [];\n  const get = (i) => (i >= 0 ? cellVal(cells[i]) : '');\n  const company = get(src.company);\n  if (!company) continue;\n  const highlighted = isTargetColor(cellBg(cells[src.company])) || isTargetColor(cellBg(cells[src.email]));\n  const emailRaw = get(src.email);\n  const email = emailRaw.toLowerCase().replace(/^mailto:/, '').split(/[;,\\s]/)[0] || '';\n  out.push({\n    json: {\n      row: startRow + r + 1,          // 1-based sheet row number\n      highlighted,\n      company,\n      email,\n      emailValid: emailRe.test(email),\n      phone: get(src.phone),\n      sector: get(src.sector),\n      street: get(src.street),\n      postcode: get(src.postcode),\n      city: get(src.city),\n      facebook: get(src.facebook),\n      instagram: get(src.instagram),\n      status: get(cols.status.idx),\n      sentAt: get(cols.sentAt.idx),\n      firstName: get(cols.firstName.idx),\n      nameSource: /API-fout|Parsefout|Geweigerd|stop_reason=/.test(get(cols.nameSource.idx)) ? '' : get(cols.nameSource.idx),\n      _cols: cols,\n      _sheetName: sheet.properties.title,\n    },\n  });\n}\nconst nHi = out.filter(i => i.json.highlighted).length;\nif (!out.length) throw new Error('No data rows found under the header row.');\n// Attach a small summary to every item so it is visible in the execution log.\nfor (const i of out) i.json._summary = `${out.length} rows read, ${nHi} highlighted (${cfg.highlightHex})`;\nreturn out;\n"
       },
-      "id": "9b50b374-3935-4e2b-8c0f-feb0a0dea956",
+      "id": "3ab128f0-605a-4b33-b0ec-23a65ff9ff49",
       "name": "Code · Parse rows",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -265,7 +265,7 @@
           },
           "conditions": [
             {
-              "id": "f6e447ae-62b0-4658-883b-c415382f1f98",
+              "id": "01d3cdef-7bdb-4538-84e7-2f8f6041f653",
               "leftValue": "={{ $('Config').first().json.mode }}",
               "rightValue": "send",
               "operator": {
@@ -278,7 +278,7 @@
         },
         "options": {}
       },
-      "id": "547aeda6-4868-4065-817b-ecbfca3124c4",
+      "id": "2d63e9ee-ced9-4bbe-9a8d-5faa11e1433a",
       "name": "IF · Send mode?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -289,9 +289,9 @@
     },
     {
       "parameters": {
-        "jsCode": "\n// Send mode: choose exactly ONE row per run (the schedule fires every 5 minutes).\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map(i => i.json);\nconst isDone = (r) => /^verzonden/i.test(r.status || '') || /^fout/i.test(r.status || '');\nconst candidates = rows.filter(r => r.highlighted && r.emailValid && !isDone(r));\nconst skippedBadEmail = rows.filter(r => r.highlighted && !r.emailValid && !isDone(r)).length;\nif (!candidates.length) {\n  // Nothing left to send: end this run quietly.\n  return [];\n}\nconst next = candidates[0];\nnext._remainingAfterThis = candidates.length - 1;\nnext._skippedInvalidEmail = skippedBadEmail;\nnext.testMode = !!cfg.testMode;\nnext.to = cfg.testMode ? cfg.testEmail : next.email;\nreturn [{ json: next }];\n"
+        "jsCode": "\n// Send mode: choose exactly ONE row per run (the schedule fires every 5 minutes).\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map(i => i.json);\nconst isDone = (r) => /^verzonden/i.test(r.status || '') || /^fout/i.test(r.status || '');\nconst candidates = rows.filter(r => r.highlighted && r.emailValid && !isDone(r));\nconst skippedBadEmail = rows.filter(r => r.highlighted && !r.emailValid && !isDone(r)).length;\nif (!candidates.length) {\n  // Nothing left to send: end this run quietly.\n  return [];\n}\nconst next = cfg.testMode ? candidates[Math.floor(Math.random() * candidates.length)] : candidates[0];  // test runs sample a random row\nnext._remainingAfterThis = candidates.length - 1;\nnext._skippedInvalidEmail = skippedBadEmail;\nnext.testMode = !!cfg.testMode;\nnext.to = cfg.testMode ? cfg.testEmail : next.email;\nreturn [{ json: next }];\n"
       },
-      "id": "3f3d1f55-f55a-434e-bc70-fed6cff9d93d",
+      "id": "18dc52e6-9df7-4c8f-9c4f-f8d0e54cc472",
       "name": "Code · Pick next row",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -302,15 +302,59 @@
     },
     {
       "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "25d4e910-a489-4c18-92cb-79d6cfc45c0d",
+              "leftValue": "={{ $json.firstName }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7434ce92-7f4b-476b-9a32-880b21142fd1",
+              "leftValue": "={{ $json.nameSource }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "7ece4b8b-32ff-459b-be60-70bb9beaa5c8",
+      "name": "IF · Name lookup needed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        380,
+        160
+      ]
+    },
+    {
+      "parameters": {
         "jsCode": "\n// Builds subject + HTML body for one lead. Text is kept verbatim from the approved template.\nconst cfg = $('Config').first().json;\nconst r = $input.first().json;\nconst esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');\n\nconst company = esc(r.company);\nconst firstName = esc((r.firstName || '').trim());\nconst greeting = firstName ? `Beste ${firstName},` : `Beste ${company},`;\nconst subject = (r.testMode ? '[TEST] ' : '') + `Gratis website-ontwerp voor ${r.company}`;\n\nconst p = (t) => `<p style=\"margin:0 0 16px\">${t}</p>`;\nconst html = `<div style=\"font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#1A1613;max-width:640px\">\n${p(greeting)}\n${p(`Mijn naam is Wouter Altepost, oprichter van Alpaca AI hier uit Amsterdam. Ik zag dat ${company} nog geen eigen website heeft, en dat leek me zonde voor een zaak met zo'n herkenbare uitstraling.`)}\n${p(`Ik kan <strong>binnen een dag een <em>gratis</em> ontwerp voor je klaarzetten</strong>, in de stijl van jullie zaak. <strong>Geen verplichting en geen kosten.</strong> Daarna plannen we, wanneer het jou uitkomt, een kort en vrijblijvend telefoontje om het samen door te nemen en eventuele wijzigingen te bespreken, ook dat helemaal gratis.`)}\n${p(`Mocht je enthousiast zijn: kunnen we het ontwerp binnen een week omzetten in een live website. Dat is eenmalig 595 euro, verder geen abonnement verplicht, en ik koppel hem aan je Google Bedrijfsprofiel en Facebook-pagina, zodat je reviews, openingstijden en berichten automatisch op de site komen te staan.`)}\n${p(`Laat het weten als je interesse hebt, dan zet ik een voorbeeld voor je klaar.`)}\n<p style=\"margin:24px 0 12px\">Met vriendelijke groet,</p>\n<table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n<tr>\n<td style=\"vertical-align:top;padding:0 18px 0 0;border-right:1px solid #E8E2D8\"><img src=\"${cfg.logoUrl}\" alt=\"Alpaca AI\" width=\"110\" style=\"display:block;width:110px;height:auto\"></td>\n<td style=\"vertical-align:top;padding:0 0 0 18px;font-size:14px;line-height:1.5\">\n<strong style=\"color:#1A1613\">Wouter Altepost</strong><br>\n<span style=\"color:#6B655D\">Alpaca AI</span><br>\n<a href=\"mailto:wout@alpacaai.nl\" style=\"color:#1A1613;text-decoration:none\">wout@alpacaai.nl</a><br>\n<a href=\"https://alpacaai.nl/diensten\" style=\"color:#F09537;text-decoration:none\">alpacaai.nl/diensten</a><br>\n<a href=\"tel:+31628283985\" style=\"color:#1A1613;text-decoration:none\">06 28 28 39 85</a>\n</td>\n</tr>\n</table>\n<hr style=\"border:none;border-top:1px solid #EEE;margin:24px 0 12px\">\n<p style=\"color:#A39D94;font-size:12px;line-height:1.5;margin:0\">Privacyverklaring: <a href=\"https://alpacaai.nl/privacy\" style=\"color:#A39D94\">alpacaai.nl/privacy</a>. Wil je dit soort berichten niet ontvangen? Laat het gewoon weten, dan verwijder ik je gegevens meteen en stuur ik niets meer.</p>\n</div>`;\n\nreturn [{ json: { ...r, subject, html, greeting } }];\n"
       },
-      "id": "b501c3f4-a020-4435-8899-25c4a3293593",
+      "id": "4a3a769b-c691-4306-9d4e-ebe56d6ebeb2",
       "name": "Code · Build email",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        380,
-        160
+        600,
+        60
       ]
     },
     {
@@ -324,13 +368,13 @@
           "appendAttribution": false
         }
       },
-      "id": "140af902-9582-45ec-9e0c-5fe074e59c3d",
+      "id": "a25323a6-0a00-464d-944a-9bdefb982185",
       "name": "Gmail · Send",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        600,
-        160
+        820,
+        60
       ],
       "credentials": {
         "gmailOAuth2": {
@@ -344,33 +388,33 @@
       "parameters": {
         "jsCode": "\nconst r = $('Code · Build email').first().json;  // Gmail outputs its API response, so take the lead from the previous node\nif (r.testMode) { return []; }  // test sends are never recorded in the sheet\nconst sheetName = r._sheetName; const cols = r._cols;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\nconst now = new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', hour12: false });\ndata.push({ range: cellRange(cols.status.col, r.row), values: [['Verzonden']] });\ndata.push({ range: cellRange(cols.sentAt.col, r.row), values: [[now]] });\ndata.push({ range: cellRange(cols.error.col, r.row), values: [['']] });\nreturn [{ json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } }];\n"
       },
-      "id": "39f3c8e3-8275-4e80-95b6-133735b2be13",
+      "id": "1dee1a49-f63a-47d7-8753-4beedc850a45",
       "name": "Code · Prepare write (sent)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        840,
-        60
+        1040,
+        -40
       ]
     },
     {
       "parameters": {
         "jsCode": "\nconst src = $('Code · Build email').first().json;\nconst errItem = $input.first().json;\nconst msg = (errItem.error && (errItem.error.message || errItem.error)) || 'Onbekende fout';\nif (src.testMode) { throw new Error('Test send failed: ' + msg); }\nconst sheetName = src._sheetName; const cols = src._cols;\nconst r = src;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\nconst now = new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam', hour12: false });\ndata.push({ range: cellRange(cols.status.col, r.row), values: [['Fout']] });\ndata.push({ range: cellRange(cols.error.col, r.row), values: [[`${now}: ${String(msg).slice(0, 400)}`]] });\nreturn [{ json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } }];\n"
       },
-      "id": "34578090-c6d6-4989-9c33-2e71e0fdc7b5",
+      "id": "0a18f048-49e7-4687-b9ec-5be5dd36c181",
       "name": "Code · Prepare write (error)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        840,
-        260
+        1040,
+        160
       ]
     },
     {
       "parameters": {
-        "jsCode": "\n// Enrich mode: every highlighted row that has no first name yet and has not been searched before.\nconst rows = $input.all().map(i => i.json);\nconst todo = rows.filter(r => r.highlighted && r.emailValid && !r.firstName && !r.nameSource && !/^verzonden/i.test(r.status || ''));\nreturn todo.map(r => ({ json: r }));\n"
+        "jsCode": "\n// Selects the rows that still need a name lookup and builds the Anthropic request for each one.\n// Used by BOTH modes: enrich (all rows) and send (the single row picked for this run).\nconst cfg = $('Config').first().json;\nconst rows = $input.all().map(i => i.json);\nconst todo = rows.filter(r => r.highlighted && r.emailValid && !r.firstName && !r.nameSource && !/^verzonden/i.test(r.status || ''));\n\nconst system = `Je bent een onderzoeksassistent voor Alpaca AI, een klein webbureau in Amsterdam.\nJe taak: de VOORNAAM vinden van de eigenaar of drijvende kracht achter een specifiek klein Nederlands bedrijf, zodat een e-mail persoonlijk geadresseerd kan worden.\n\nLet op: het veld \"Naam in lijst\" komt uit OpenStreetMap en bevat soms geen bedrijfsnaam maar de naam van een persoon (bijv. \"Pieter Jansen\" of \"J. de Vries\"). Beoordeel eerst of dat zo is.\n\nWerkwijze:\n1. Is \"Naam in lijst\" duidelijk een persoonsnaam met voluit geschreven voornaam? Gebruik die voornaam (confidence 90). Alleen initialen? Zoek dan verder.\n2. Kijk naar het e-mailadres. Als het lokale deel duidelijk een persoonsnaam bevat (bijv. judithvanginkel@hotmail.com), is dat een sterk signaal; info@ of de bedrijfsnaam zegt niets.\n3. Zoek op het web (naam + plaats, eventueel + \"eigenaar\"): Google Bedrijfsprofiel, Facebook- of Instagram-pagina, KVK-registersites (kvk.nl, drimble, openkvk, bedrijvenpagina), lokale nieuwsberichten, reacties van de eigenaar op reviews.\n4. Bevestig dat de naam bij DIT bedrijf op DEZE locatie hoort. Bij naamgenoten of twijfel: niet raden.\n\nRegels:\n- Geef alleen een voornaam zoals de persoon die zelf gebruikt (bijv. \"Judith\", \"Jan-Willem\"); geen initialen, geen achternaam in first_name.\n- Confidence is 0-100. Onder 70 hoort first_name null te zijn.\n- Keten, franchise of grote organisatie, of geen betrouwbare naam: first_name null.\n- Antwoord UITSLUITEND met één JSON-object, zonder tekst eromheen en zonder markdown, met exact deze velden:\n{\"first_name\": string|null, \"full_name\": string|null, \"role\": string|null, \"confidence\": number, \"source_url\": string|null, \"reasoning\": string}\n- reasoning: maximaal 25 woorden, in het Nederlands.`;\n\nreturn todo.map(r => {\n  const user = [\n    `Naam in lijst: ${r.company}`,\n    `Sector: ${r.sector || '-'}`,\n    `E-mail: ${r.email}`,\n    `Telefoon: ${r.phone || '-'}`,\n    `Adres: ${[r.street, r.postcode, r.city].filter(Boolean).join(', ') || '-'}`,\n    `Facebook: ${r.facebook || '-'}`,\n    `Instagram: ${r.instagram || '-'}`,\n    '',\n    'Vind de voornaam van de eigenaar en antwoord met het JSON-object.',\n  ].join('\\n');\n  const _anthropicBody = {\n    model: cfg.anthropicModel || 'claude-opus-5',\n    max_tokens: 2000,\n    fallbacks: 'default',\n    system,\n    tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 4,\n              user_location: { type: 'approximate', country: 'NL', timezone: 'Europe/Amsterdam' } }],\n    messages: [{ role: 'user', content: user }],\n  };\n  return { json: { ...r, _anthropicBody } };\n});\n"
       },
-      "id": "7e8db90b-a950-4592-a5b8-a81c7a2cfab5",
+      "id": "1b9b197b-9f30-4d1e-848b-0b2ec28460e6",
       "name": "Code · Rows to enrich",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -400,7 +444,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  model: $('Config').first().json.anthropicModel,\n  max_tokens: 2000,\n  fallbacks: 'default',\n  system: \"Je bent een onderzoeksassistent voor Alpaca AI, een klein webbureau in Amsterdam. Je taak: de VOORNAAM vinden van de eigenaar of drijvende kracht achter een specifiek klein Nederlands bedrijf, zodat een e-mail persoonlijk geadresseerd kan worden.\\n\\nWerkwijze:\\n1. Kijk eerst naar het e-mailadres. Als het lokale deel duidelijk een persoonsnaam bevat (bijv. judithvanginkel@hotmail.com, j.bakker@..., info@ zegt niets), is dat een sterk signaal.\\n2. Zoek daarna op het web (bedrijfsnaam + plaats, eventueel + 'eigenaar'), bijvoorbeeld het Google Bedrijfsprofiel, de Facebook- of Instagram-pagina, KVK-registersites (kvk.nl, drimble, openkvk, bedrijvenpagina), lokale nieuwsberichten, reacties van de eigenaar op reviews.\\n3. Bevestig dat de naam bij DIT bedrijf op DEZE locatie hoort. Bij naamgenoten of twijfel: niet raden.\\n\\nRegels:\\n- Geef alleen een voornaam zoals de persoon die zelf gebruikt (bijv. 'Judith', 'Jan-Willem'); geen initialen, geen achternaam in first_name.\\n- Confidence is 0-100. Onder 70 hoort first_name null te zijn.\\n- Als het bedrijf duidelijk een keten, franchise of grote organisatie is, of als er geen betrouwbare naam is: first_name null.\\n- Antwoord UITSLUITEND met één JSON-object, zonder tekst eromheen en zonder markdown, met exact deze velden:\\n{\\\"first_name\\\": string|null, \\\"full_name\\\": string|null, \\\"role\\\": string|null, \\\"confidence\\\": number, \\\"source_url\\\": string|null, \\\"reasoning\\\": string}\\n- reasoning: maximaal 25 woorden, in het Nederlands.\",\n  tools: [{ type: 'web_search_20260209', name: 'web_search', max_uses: 4,\n            user_location: { type: 'approximate', country: 'NL', timezone: 'Europe/Amsterdam' } }],\n  messages: [{ role: 'user', content: `Bedrijf: {{ $json.company }}\nSector: {{ $json.sector }}\nE-mail: {{ $json.email }}\nTelefoon: {{ $json.phone }}\nAdres: {{ [$json.street, $json.postcode, $json.city].filter(Boolean).join(', ') }}\nFacebook: {{ $json.facebook || '-' }}\nInstagram: {{ $json.instagram || '-' }}\n\nVind de voornaam van de eigenaar en antwoord met het JSON-object.` }]\n}) }}",
+        "jsonBody": "={{ JSON.stringify($json._anthropicBody) }}",
         "options": {
           "timeout": 180000,
           "batching": {
@@ -411,7 +455,7 @@
           }
         }
       },
-      "id": "f4c0581b-4c36-4268-afe9-cfed16291bcd",
+      "id": "008d5c6e-a451-4785-8b29-62d82d295bb9",
       "name": "Anthropic · Find owner name",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -430,9 +474,9 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "\n// Reads the JSON object out of Claude's reply; falls back to \"not found\" on any problem.\nconst lead = $('Code · Rows to enrich').item.json;\nconst resp = $input.item.json;\nlet result = { first_name: null, full_name: null, role: null, confidence: 0, source_url: null, reasoning: '' };\nlet note = '';\ntry {\n  if (resp.error) {\n    note = 'API-fout: ' + (resp.error.message || resp.error.error?.message || JSON.stringify(resp.error)).slice(0, 200);\n  } else if (resp.stop_reason === 'refusal') {\n    note = 'Geweigerd door model';\n  } else {\n    const texts = (resp.content || []).filter(b => b.type === 'text').map(b => b.text);\n    const last = texts.length ? texts[texts.length - 1] : '';\n    const m = last.match(/\\{[\\s\\S]*\\}/);\n    if (m) {\n      const parsed = JSON.parse(m[0]);\n      result = { ...result, ...parsed };\n    } else {\n      note = 'Geen JSON in antwoord';\n    }\n    if (resp.stop_reason === 'pause_turn' || resp.stop_reason === 'max_tokens') note = note || `stop_reason=${resp.stop_reason}`;\n  }\n} catch (e) {\n  note = 'Parsefout: ' + String(e.message).slice(0, 120);\n}\nconst conf = Number(result.confidence) || 0;\nconst clean = (s) => String(s || '').trim();\nlet firstName = clean(result.first_name);\n// Safety net: only accept plausible name tokens with confidence >= 70.\nif (conf < 70 || !/^[A-Za-zÀ-ÿ' -]{2,30}$/.test(firstName) || /^(null|none|onbekend|unknown)$/i.test(firstName)) firstName = '';\nconst parts = [];\nparts.push(firstName ? `${conf}%` : `niet gevonden (${conf}%)`);\nif (clean(result.full_name)) parts.push(clean(result.full_name) + (clean(result.role) ? ` · ${clean(result.role)}` : ''));\nif (clean(result.source_url)) parts.push(clean(result.source_url));\nif (clean(result.reasoning)) parts.push(clean(result.reasoning));\nif (note) parts.push(note);\nreturn { json: { ...lead, firstName, nameSource: parts.join(' | ').slice(0, 480) } };\n"
+        "jsCode": "\n// Reads the JSON object out of Claude's reply; falls back to \"not found\" on any problem.\nconst lead = $('Code · Rows to enrich').item.json;\nconst resp = $input.item.json;\nlet result = { first_name: null, full_name: null, role: null, confidence: 0, source_url: null, reasoning: '' };\nlet note = '';\ntry {\n  if (resp.error) {\n    note = 'API-fout: ' + [resp.error.message, resp.error.description].filter(Boolean).join(' – ').slice(0, 300);\n  } else if (resp.stop_reason === 'refusal') {\n    note = 'Geweigerd door model';\n  } else {\n    const texts = (resp.content || []).filter(b => b.type === 'text').map(b => b.text);\n    const last = texts.length ? texts[texts.length - 1] : '';\n    const m = last.match(/\\{[\\s\\S]*\\}/);\n    if (m) {\n      const parsed = JSON.parse(m[0]);\n      result = { ...result, ...parsed };\n    } else {\n      note = 'Geen JSON in antwoord';\n    }\n    if (resp.stop_reason === 'pause_turn' || resp.stop_reason === 'max_tokens') note = note || `stop_reason=${resp.stop_reason}`;\n  }\n} catch (e) {\n  note = 'Parsefout: ' + String(e.message).slice(0, 120);\n}\nconst conf = Number(result.confidence) || 0;\nconst clean = (s) => String(s || '').trim();\nlet firstName = clean(result.first_name);\n// Safety net: only accept plausible name tokens with confidence >= 70.\nif (conf < 70 || !/^[A-Za-zÀ-ÿ' -]{2,30}$/.test(firstName) || /^(null|none|onbekend|unknown)$/i.test(firstName)) firstName = '';\nconst parts = [];\nparts.push(firstName ? `${conf}%` : `niet gevonden (${conf}%)`);\nif (clean(result.full_name)) parts.push(clean(result.full_name) + (clean(result.role) ? ` · ${clean(result.role)}` : ''));\nif (clean(result.source_url)) parts.push(clean(result.source_url));\nif (clean(result.reasoning)) parts.push(clean(result.reasoning));\nif (note) parts.push(note);\nreturn { json: { ...lead, firstName, nameSource: parts.join(' | ').slice(0, 480) } };\n"
       },
-      "id": "8d841fe0-dfa6-4465-ab54-19234f54970a",
+      "id": "e0bb10dd-58f3-4994-a20c-def5b2f5340d",
       "name": "Code · Parse name",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -443,10 +487,23 @@
     },
     {
       "parameters": {
+        "jsCode": "\n// Send mode only: hand the freshly enriched row straight to the email builder (same run, no extra tick).\nconst cfg = $('Config').first().json;\nif (cfg.mode !== 'send') return [];\nreturn $input.all();\n"
+      },
+      "id": "15346482-5017-4bdd-bee4-6b26c93a2a4b",
+      "name": "Code · Continue to send",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        320
+      ]
+    },
+    {
+      "parameters": {
         "mode": "runOnceForEachItem",
         "jsCode": "\nconst r = $input.item.json;\nconst sheetName = r._sheetName; const cols = r._cols;\n\n// Builds the values:batchUpdate payload. Also writes any missing status headers on row 1.\nconst cfg = $('Config').first().json;\nconst cellRange = (col, row) => `'${sheetName}'!${col}${row}`;\nconst data = [];\nfor (const key of Object.keys(cols)) {\n  if (cols[key].missing) data.push({ range: cellRange(cols[key].col, 1), values: [[cols[key].header]] });\n}\n\ndata.push({ range: cellRange(cols.firstName.col, r.row), values: [[r.firstName || '']] });\ndata.push({ range: cellRange(cols.nameSource.col, r.row), values: [[r.nameSource || '']] });\nreturn { json: { row: r.row, body: { valueInputOption: 'USER_ENTERED', data } } };\n"
       },
-      "id": "cd7e5044-9e74-4d2c-bf31-33aad163bb1b",
+      "id": "23b6ab0a-a61c-49d2-941a-3fee8fb6670a",
       "name": "Code · Prepare write (name)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -474,12 +531,12 @@
           }
         }
       },
-      "id": "f9279235-d1d5-434f-b7e8-8734736cbde9",
+      "id": "696b299b-e78d-4f83-bb6f-4e9de96a0af5",
       "name": "Sheets · Write back",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1100,
+        1300,
         300
       ],
       "credentials": {
@@ -612,6 +669,24 @@
       "main": [
         [
           {
+            "node": "IF · Name lookup needed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF · Name lookup needed?": {
+      "main": [
+        [
+          {
+            "node": "Code · Rows to enrich",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
             "node": "Code · Build email",
             "type": "main",
             "index": 0
@@ -699,6 +774,11 @@
             "node": "Code · Prepare write (name)",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Code · Continue to send",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -713,6 +793,17 @@
           }
         ]
       ]
+    },
+    "Code · Continue to send": {
+      "main": [
+        [
+          {
+            "node": "Code · Build email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -722,7 +813,7 @@
   },
   "pinData": {},
   "active": false,
-  "versionId": "a519ee06-10d4-46e4-9535-70093894153b",
+  "versionId": "dd44e321-3209-4688-aecd-a67f6c54d167",
   "meta": {
     "instanceId": "alpaca-leadlist-outreach"
   },
